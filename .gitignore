@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+dist/
+.turbo/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Personal data (never commit these)
+journal/*
+!journal/.gitkeep
+scratch/ideas.md
+scratch/queue.md
+logs/*
+!logs/.gitkeep
+wiki/raw/transcripts/*.txt
+wiki/raw/transcripts/*.md
+wiki/raw/show-notes/*.txt
+wiki/raw/show-notes/*.md
+research/*/log.md
+memory/status.md
+memory/decisions.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Claude local state
+.claude/projects/

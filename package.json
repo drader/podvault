@@ -1,0 +1,35 @@
+{
+  "name": "podvault",
+  "version": "0.1.0",
+  "description": "Agentic podcast wiki: ingest episode transcripts, build a searchable knowledge base automatically",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "setup": "bash scripts/setup.sh",
+    "install-daemon": "bash scripts/install.sh",
+    "check-deps": "obsidian-hybrid-search --version 2>/dev/null || echo 'obsidian-hybrid-search not installed. Run: npm install -g obsidian-hybrid-search'",
+    "fetch": "tsx src/fetcher/cli.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.0",
+    "@ai-sdk/google": "^1.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "@ai-sdk/xai": "^1.0.0",
+    "ai": "^4.0.0",
+    "gray-matter": "^4.0.3",
+    "node-cron": "^3.0.3",
+    "rss-parser": "^3.13.0",
+    "youtube-transcript": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/node-cron": "^3.0.11",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

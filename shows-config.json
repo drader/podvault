@@ -1,0 +1,9 @@
+{
+  "shows": [
+    {
+      "name": "Your Podcast Name",
+      "youtube_channel": "UCxxxxxxxxxxxxxxxxxxxxxxx",
+      "rss_feed": "https://feeds.example.com/your-podcast"
+    }
+  ]
+}

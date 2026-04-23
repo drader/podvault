@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memex → Podvault: Mimari Yolculuk</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --green: #3fb950;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --red: #f85149;
+    --yellow: #e3b341;
+    --teal: #56d364;
+    --accent: #238636;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ── Cover Page ─────────────────────────────── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(35,134,54,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: rgba(35,134,54,0.2);
+    border: 1px solid var(--accent);
+    color: var(--green);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #e6edf3, #58a6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .cover-meta span { color: var(--green); }
+
+  /* ── Page layout ────────────────────────────── */
+  .page {
+    padding: 48px 56px;
+    max-width: 900px;
+    margin: 0 auto;
+    page-break-after: always;
+  }
+
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── Section headers ────────────────────────── */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--blue);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .lead {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    max-width: 680px;
+    line-height: 1.7;
+  }
+
+  /* ── Divider ─────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* ── Problem Cards ─────────────────────────── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .problem-card.p1::before { background: var(--red); }
+  .problem-card.p2::before { background: var(--orange); }
+  .problem-card.p3::before { background: var(--yellow); }
+  .problem-card.p4::before { background: var(--purple); }
+
+  .problem-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .p1 .problem-num { color: var(--red); }
+  .p2 .problem-num { color: var(--orange); }
+  .p3 .problem-num { color: var(--yellow); }
+  .p4 .problem-num { color: var(--purple); }
+
+  .problem-card h3 { font-size: 15px; margin-bottom: 8px; }
+
+  .problem-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .problem-symptom {
+    background: var(--surface2);
+    border-left: 3px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 0 4px 4px 0;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── Solution mapping ────────────────────────── */
+  .solution-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+
+  .sol-problem {
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 180px;
+    flex-shrink: 0;
+  }
+
+  .arrow-right {
+    color: var(--green);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .sol-solution {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green);
+  }
+
+  /* ── Architecture diagram ───────────────────── */
+  .arch-svg { width: 100%; margin: 24px 0; }
+
+  /* ── Project cards ──────────────────────────── */
+  .project-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .project-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .project-card h3 { font-size: 14px; margin-bottom: 6px; }
+
+  .project-card .proj-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .tag {
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.2);
+    color: var(--blue);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tag.green {
+    background: rgba(63,185,80,0.1);
+    border-color: rgba(63,185,80,0.2);
+    color: var(--green);
+  }
+
+  .tag.purple {
+    background: rgba(188,140,255,0.1);
+    border-color: rgba(188,140,255,0.2);
+    color: var(--purple);
+  }
+
+  /* ── Flow diagram ────────────────────────────── */
+  .flow-svg { width: 100%; margin: 16px 0; }
+
+  /* ── Code block ─────────────────────────────── */
+  .code-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.7;
+    margin: 16px 0;
+  }
+
+  .code-block .kw { color: var(--purple); }
+  .code-block .str { color: var(--green); }
+  .code-block .comment { color: var(--muted); }
+  .code-block .type { color: var(--blue); }
+
+  /* ── Info boxes ─────────────────────────────── */
+  .info-box {
+    background: rgba(88,166,255,0.07);
+    border: 1px solid rgba(88,166,255,0.25);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .info-box .ib-title {
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .warn-box {
+    background: rgba(255,166,87,0.07);
+    border: 1px solid rgba(255,166,87,0.25);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    font-size: 12px;
+  }
+
+  .warn-box .ib-title { color: var(--orange); }
+
+  /* ── Timeline ────────────────────────────────── */
+  .timeline { margin: 24px 0; position: relative; }
+
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .tl-left {
+    flex-shrink: 0;
+    width: 120px;
+    text-align: right;
+  }
+
+  .tl-phase {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tl-phase.setup { color: var(--blue); border-color: rgba(88,166,255,0.3); }
+  .tl-phase.cycle { color: var(--green); border-color: rgba(63,185,80,0.3); }
+  .tl-phase.query { color: var(--purple); border-color: rgba(188,140,255,0.3); }
+  .tl-phase.grow { color: var(--orange); border-color: rgba(255,166,87,0.3); }
+
+  .tl-dot {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 4px;
+    position: relative;
+  }
+
+  .tl-dot.setup { background: var(--blue); }
+  .tl-dot.cycle { background: var(--green); }
+  .tl-dot.query { background: var(--purple); }
+  .tl-dot.grow { background: var(--orange); }
+
+  .tl-content { flex: 1; }
+
+  .tl-content h4 { font-size: 13px; margin-bottom: 6px; }
+
+  .tl-content ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .tl-content li {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .tl-content li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 10px;
+  }
+
+  /* ── Component table ─────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 12px;
+  }
+
+  th {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green); }
+
+  /* ── Print ───────────────────────────────────── */
+  @media print {
+    body { background: #0d1117 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover { page-break-after: always; }
+    .page { page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Mimari Rapor · 2026-04-23</div>
+  <h1>Memex'ten<br>Podvault'a</h1>
+  <p class="subtitle">
+    Agent tabanlı bir kişisel bilgi tabanının neden inşa edildiği, nasıl çalıştığı ve hangi ihtiyaçları hangi aşamada karşıladığı
+  </p>
+  <div class="cover-meta">
+    <div><span>Proje</span><br>memex → podvault</div>
+    <div><span>Model</span><br>Claude Sonnet 4.6</div>
+    <div><span>Tarih</span><br>2026-04-23</div>
+  </div>
+</div>
+
+<!-- ══ PAGE 1: PROBLEM SPACE ══════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 1 — Başlangıç Noktası</div>
+  <h2>Neden Böyle Bir Şeye<br>İhtiyaç Duyuldu?</h2>
+  <p class="lead">
+    Her hafta podcast dinleniyor, videolar izleniyor, makaleler okunuyor — ama bu bilgiler birkaç gün içinde buharlaşıyor. Sorun "bilgi eksikliği" değil; bilginin <em>tutulamaması</em> ve <em>birbiriyle bağlanamaması</em>.
+  </p>
+
+  <div class="problem-grid">
+    <div class="problem-card p1">
+      <div class="problem-num">Problem 01 — Bilgi Dağınıklığı</div>
+      <h3>Parçalanmış Kaynaklar</h3>
+      <p>Bilgi YouTube'da, Spotify'da, PDF'lerde, tarayıcı sekmelerinde dağılmış halde. Hiçbir yerde tam resim yok. Konular arasındaki bağlantılar görünmüyor.</p>
+      <div class="problem-symptom">"Bunu nerede görmüştüm?" sorusu yanıtsız kalıyor.</div>
+    </div>
+
+    <div class="problem-card p2">
+      <div class="problem-num">Problem 02 — Hafıza Kaybı</div>
+      <h3>Seanslar Arası Bağlam Yitiyor</h3>
+      <p>Her Claude oturumu sıfırdan başlıyor. Daha önce ne konuşulduğu, hangi hipotezlerin ortaya çıktığı, hangi soruların yanıtlanmadığı bilinmiyor.</p>
+      <div class="problem-symptom">Her seferinde her şeyi baştan anlatmak gerekiyor.</div>
+    </div>
+
+    <div class="problem-card p3">
+      <div class="problem-num">Problem 03 — Soğuk Başlangıç</div>
+      <h3>Boş Sayfa Sorunu</h3>
+      <p>Yeni bir konu alanına girildiğinde agent'ın hiçbir arka planı yok. Grafik tamamen kopuk, bağlantısız. Nereden başlanacağı belirsiz.</p>
+      <div class="problem-symptom">Obsidian'da izole düğümler var, çizgi yok.</div>
+    </div>
+
+    <div class="problem-card p4">
+      <div class="problem-num">Problem 04 — Sentez Eksikliği</div>
+      <h3>Veri Var, İçgörü Yok</h3>
+      <p>Transcriptler mevcut ama "Bu farklı podcastler ne zaman çelişiyor?", "Bu hafta ne öğrendim?" gibi sorular yanıtsız. Veriden anlam üretilemiyor.</p>
+      <div class="problem-symptom">Ham içerik biriyor ama zihinsel model oluşmuyor.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Her Problem için Mimarinin Yanıtı</h3>
+
+  <div class="solution-row">
+    <div class="sol-problem">Bilgi dağınıklığı</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">Tek bir wiki/ dizini — episodes/, shows/, guests/, topics/, concepts/</div>
+  </div>
+  <div class="solution-row">
+    <div class="sol-problem">Hafıza kaybı</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">memory/ + agents/*/MEMORY.md — kalıcı, dosya tabanlı bellek</div>
+  </div>
+  <div class="solution-row">
+    <div class="sol-problem">Soğuk başlangıç</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">Intake interview + bootstrap wiki — ilk gün bağlantılı başlangıç</div>
+  </div>
+  <div class="solution-row">
+    <div class="sol-problem">Sentez eksikliği</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">Consolidator + /query komutu — haftalık otomatik sentez</div>
+  </div>
+</div>
+
+<!-- ══ PAGE 2: MEMEX TEMPLATE ═══════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 2 — Memex Template</div>
+  <h2>Temel Şablonun<br>Anatomisi</h2>
+  <p class="lead">
+    Memex, herhangi bir domain için kopyalanıp özelleştirilebilen genel amaçlı bir bilgi tabanı şablonudur. TypeScript motor + Markdown içerik + MCP server üçlüsünden oluşur.
+  </p>
+
+  <!-- Memex architecture SVG -->
+  <svg class="arch-svg" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="760" height="420" fill="#161b22" rx="10"/>
+
+    <!-- Title -->
+    <text x="380" y="30" text-anchor="middle" fill="#8b949e" font-size="11" font-family="JetBrains Mono" letter-spacing="2">MEMEX — GENEL MİMARİ</text>
+
+    <!-- Layer: Motor (src/) -->
+    <rect x="20" y="50" width="720" height="65" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+    <text x="40" y="72" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1">TYPESCRIPT MOTOR — src/</text>
+    <!-- Motor components -->
+    <rect x="40" y="80" width="95" height="24" rx="4" fill="#238636" fill-opacity="0.2" stroke="#238636" stroke-opacity="0.4"/>
+    <text x="87" y="96" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">scheduler</text>
+    <rect x="145" y="80" width="85" height="24" rx="4" fill="#238636" fill-opacity="0.2" stroke="#238636" stroke-opacity="0.4"/>
+    <text x="187" y="96" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">runner</text>
+    <rect x="240" y="80" width="80" height="24" rx="4" fill="#238636" fill-opacity="0.2" stroke="#238636" stroke-opacity="0.4"/>
+    <text x="280" y="96" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">locker</text>
+    <rect x="330" y="80" width="90" height="24" rx="4" fill="#238636" fill-opacity="0.2" stroke="#238636" stroke-opacity="0.4"/>
+    <text x="375" y="96" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">validator</text>
+    <rect x="430" y="80" width="80" height="24" rx="4" fill="#238636" fill-opacity="0.2" stroke="#238636" stroke-opacity="0.4"/>
+    <text x="470" y="96" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">budget</text>
+    <rect x="520" y="80" width="110" height="24" rx="4" fill="#238636" fill-opacity="0.2" stroke="#238636" stroke-opacity="0.4"/>
+    <text x="575" y="96" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">consolidator</text>
+
+    <!-- Layer: Content -->
+    <rect x="20" y="130" width="480" height="150" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+    <text x="40" y="152" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1">MARKDOWN İÇERİK</text>
+
+    <!-- wiki/ -->
+    <rect x="40" y="162" width="200" height="105" rx="6" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.35" stroke-width="1"/>
+    <text x="140" y="180" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono">wiki/</text>
+    <text x="55" y="198" fill="#8b949e" font-size="9" font-family="JetBrains Mono">episodes/  shows/</text>
+    <text x="55" y="213" fill="#8b949e" font-size="9" font-family="JetBrains Mono">guests/    topics/</text>
+    <text x="55" y="228" fill="#8b949e" font-size="9" font-family="JetBrains Mono">concepts/  syntheses/</text>
+    <text x="55" y="243" fill="#8b949e" font-size="9" font-family="JetBrains Mono">raw/       archive/</text>
+    <text x="55" y="258" fill="#3fb950" font-size="9" font-family="JetBrains Mono">→ Domain bilgi tabanı</text>
+
+    <!-- agents/ + memory/ + commands/ -->
+    <rect x="258" y="162" width="105" height="45" rx="5" fill="#0d1117" stroke="#bc8cff" stroke-opacity="0.35"/>
+    <text x="310" y="180" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono">agents/</text>
+    <text x="270" y="198" fill="#8b949e" font-size="9" font-family="JetBrains Mono">MEMORY.md</text>
+
+    <rect x="258" y="216" width="105" height="30" rx="5" fill="#0d1117" stroke="#bc8cff" stroke-opacity="0.35"/>
+    <text x="310" y="235" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono">memory/</text>
+
+    <rect x="372" y="162" width="110" height="45" rx="5" fill="#0d1117" stroke="#ffa657" stroke-opacity="0.35"/>
+    <text x="427" y="180" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">commands/</text>
+    <text x="382" y="198" fill="#8b949e" font-size="9" font-family="JetBrains Mono">/ingest  /query</text>
+
+    <rect x="372" y="216" width="110" height="30" rx="5" fill="#0d1117" stroke="#ffa657" stroke-opacity="0.35"/>
+    <text x="427" y="235" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">CLAUDE.md</text>
+
+    <rect x="258" y="256" width="224" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+    <text x="370" y="272" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">scratch/   journal/   outputs/</text>
+
+    <!-- MCP Server -->
+    <rect x="514" y="130" width="226" height="150" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+    <text x="534" y="152" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1">MCP SERVER</text>
+    <rect x="534" y="162" width="186" height="55" rx="5" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.3"/>
+    <text x="627" y="183" text-anchor="middle" fill="#58a6ff" font-size="11" font-family="JetBrains Mono">obsidian-hybrid</text>
+    <text x="627" y="199" text-anchor="middle" fill="#58a6ff" font-size="11" font-family="JetBrains Mono">-search</text>
+    <text x="627" y="215" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">semantic search / wiki</text>
+
+    <text x="534" y="242" fill="#8b949e" font-size="10" font-family="JetBrains Mono">► BM25 + embedding</text>
+    <text x="534" y="258" fill="#8b949e" font-size="10" font-family="JetBrains Mono">► wiki/üzerinde çalışır</text>
+    <text x="534" y="274" fill="#8b949e" font-size="10" font-family="JetBrains Mono">► Obsidian ile uyumlu</text>
+
+    <!-- CLAUDE.md top -->
+    <rect x="20" y="296" width="720" height="40" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
+    <text x="380" y="312" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1">ANAYASA (CLAUDE.md) — Master şema, hard rules, tier sistemi, operasyon tanımları</text>
+    <text x="380" y="328" text-anchor="middle" fill="#e6edf3" font-size="10" font-family="JetBrains Mono">Her oturumda ilk okunan dosya — agent bu dosyaya göre davranır</text>
+
+    <!-- Two Memory Layers -->
+    <rect x="20" y="352" width="349" height="52" rx="6" fill="#0d1117" stroke="#bc8cff" stroke-opacity="0.4"/>
+    <text x="194" y="370" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="1">HAFIZA KATMANı 1 — SÜREÇ HAFIZASI</text>
+    <text x="194" y="387" text-anchor="middle" fill="#8b949e" font-size="10">agents/*/MEMORY.md — Patterns, hipotezler, anti-patterns</text>
+    <text x="194" y="401" text-anchor="middle" fill="#8b949e" font-size="10">Her agent kendi hafızasını yönetir</text>
+
+    <rect x="391" y="352" width="349" height="52" rx="6" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.4"/>
+    <text x="565" y="370" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="1">HAFIZA KATMANı 2 — DOMAIN BİLGİSİ</text>
+    <text x="565" y="387" text-anchor="middle" fill="#8b949e" font-size="10">wiki/ — Episodes, concepts, syntheses</text>
+    <text x="565" y="401" text-anchor="middle" fill="#8b949e" font-size="10">Consolidator haftalık köprü kurar: katman1 → katman2</text>
+
+    <!-- Connecting arrows -->
+    <line x1="370" y1="352" x2="391" y2="352" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <text x="380" y="348" text-anchor="middle" fill="#3fb950" font-size="9">sync</text>
+  </svg>
+
+  <div class="info-box">
+    <div class="ib-title">Tier Sistemi — Ne Zaman Ne Yüklenir?</div>
+    <strong>Tier 1</strong> (her oturumda): <span class="mono">memory/</span>, <span class="mono">scratch/ideas.md</span>, <span class="mono">journal/</span> (son 3 gün) — agent her zaman bu bağlamı bilir<br>
+    <strong>Tier 2</strong> (domain aktifken): <span class="mono">wiki/index.md</span>, <span class="mono">agents/[aktif]/AGENT.md + MEMORY.md</span><br>
+    <strong>Tier 3</strong> (açıkça istenince): <span class="mono">wiki/archive/</span>, <span class="mono">outputs/</span>, eski journal — nadiren yüklenir
+  </div>
+</div>
+
+<!-- ══ PAGE 3: THE 3 PROJECTS ════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 3 — Örnek Projeler</div>
+  <h2>Memex'ten Türeyen<br>3 Domain Projesi</h2>
+  <p class="lead">
+    Memex şablonu, farklı içerik türleri için kopyalanır ve domain'e özel hale getirilir. Altyapı (motor, MCP, hafıza sistemi) aynı kalır; değişen yalnızca <em>ne tür içerik işlendiği</em> ve <em>wiki şeması</em>dır.
+  </p>
+
+  <div class="project-row">
+    <div class="project-card">
+      <span class="project-icon">🎙️</span>
+      <h3>Podvault</h3>
+      <p class="proj-sub">Podcast Bilgi Tabanı</p>
+      <div class="tag-list">
+        <span class="tag green">YouTube transcript</span>
+        <span class="tag green">RSS feed</span>
+        <span class="tag green">Whisper (audio)</span>
+      </div>
+      <br>
+      <div style="font-size:11px; color:#8b949e; text-align:left; margin-top:8px;">
+        <strong style="color:#e6edf3;">Kaynak:</strong> YouTube URL, RSS feed, Spotify<br>
+        <strong style="color:#e6edf3;">Wiki:</strong> episodes/, shows/, guests/, topics/<br>
+        <strong style="color:#e6edf3;">Sıklık:</strong> Haftalık ingest<br>
+        <strong style="color:#e6edf3;">Sorular:</strong> Konu A neden önemli? Konu B nasıl gelişiyor?
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-icon">📄</span>
+      <h3>Docvault</h3>
+      <p class="proj-sub">Geliştirici Dokümantasyon Tabanı</p>
+      <div class="tag-list">
+        <span class="tag">Library docs</span>
+        <span class="tag">Changelogs</span>
+        <span class="tag">RFCs</span>
+      </div>
+      <br>
+      <div style="font-size:11px; color:#8b949e; text-align:left; margin-top:8px;">
+        <strong style="color:#e6edf3;">Kaynak:</strong> wiki/raw/docs/ klasörüne bırakılan dosyalar<br>
+        <strong style="color:#e6edf3;">Wiki:</strong> libraries/, patterns/, gotchas/<br>
+        <strong style="color:#e6edf3;">Sıklık:</strong> Yeni kütüphane eklenince<br>
+        <strong style="color:#e6edf3;">Çıktı:</strong> API özeti, breaking changes, upgrade paths
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-icon">📊</span>
+      <h3>Papervault</h3>
+      <p class="proj-sub">Araştırma Makalesi Tabanı</p>
+      <div class="tag-list">
+        <span class="tag purple">arXiv PDF</span>
+        <span class="tag purple">Abstract</span>
+        <span class="tag purple">Citation graph</span>
+      </div>
+      <br>
+      <div style="font-size:11px; color:#8b949e; text-align:left; margin-top:8px;">
+        <strong style="color:#e6edf3;">Kaynak:</strong> wiki/raw/papers/ klasörüne bırakılan PDF'ler<br>
+        <strong style="color:#e6edf3;">Wiki:</strong> papers/, authors/, methods/, venues/<br>
+        <strong style="color:#e6edf3;">Sıklık:</strong> Makale okununca<br>
+        <strong style="color:#e6edf3;">Çıktı:</strong> Katkı, yöntem, limitation özeti
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Comparison table -->
+  <h3>Ne Değişiyor, Ne Aynı Kalıyor?</h3>
+  <table>
+    <tr>
+      <th>Bileşen</th>
+      <th>Memex (template)</th>
+      <th>Podvault</th>
+      <th>Docvault</th>
+      <th>Papervault</th>
+    </tr>
+    <tr>
+      <td><span class="mono">src/</span> TypeScript motor</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+    </tr>
+    <tr>
+      <td>MCP Server</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+    </tr>
+    <tr>
+      <td>Hafıza sistemi</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+    </tr>
+    <tr>
+      <td>CLAUDE.md kuralları</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950">✓ Aynı</td>
+    </tr>
+    <tr>
+      <td>Fetcher / src/fetcher/</td>
+      <td style="color:#ffa657">— Generic</td>
+      <td style="color:#ffa657">✎ YT+RSS+Whisper</td>
+      <td style="color:#ffa657">✎ File copy</td>
+      <td style="color:#ffa657">✎ PDF parser</td>
+    </tr>
+    <tr>
+      <td>Wiki şeması</td>
+      <td style="color:#ffa657">— Generic</td>
+      <td style="color:#ffa657">✎ episodes/shows/guests</td>
+      <td style="color:#ffa657">✎ libraries/patterns</td>
+      <td style="color:#ffa657">✎ papers/authors/venues</td>
+    </tr>
+    <tr>
+      <td>CLAUDE.md Purpose</td>
+      <td style="color:#ffa657">— Blank</td>
+      <td style="color:#ffa657">✎ 6 podcast, haftalık</td>
+      <td style="color:#ffa657">✎ Dev docs, stack</td>
+      <td style="color:#ffa657">✎ Research alan</td>
+    </tr>
+    <tr>
+      <td>Bootstrap hipotezleri</td>
+      <td style="color:#ffa657">— Yok</td>
+      <td style="color:#ffa657">✎ Intake interview</td>
+      <td style="color:#ffa657">✎ Stack survey</td>
+      <td style="color:#ffa657">✎ Research brief</td>
+    </tr>
+  </table>
+
+  <div class="info-box">
+    <div class="ib-title">Kalıp — Template Method</div>
+    Bu, yazılımda "template method pattern"ının bir uygulamasıdır: <strong>algoritma şablonu Memex'te sabit</strong> (ingest → query → consolidate), <strong>domain-spesifik adımlar alt projede override edilir</strong> (fetcher, wiki şeması, CLAUDE.md purpose). Her yeni alan için sıfırdan başlamak gerekmez.
+  </div>
+</div>
+
+<!-- ══ PAGE 4: PODVAULT PIPELINE ════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 4 — Podvault Detayı</div>
+  <h2>Podvault Pipeline:<br>Kaynaktan Wiki'ye</h2>
+  <p class="lead">
+    Bir podcast URL'si girildiği andan yapılandırılmış wiki sayfasına dönüşmesine kadar geçen süreç. Her adımın neden orada olduğu ve hangi ihtiyaca yanıt verdiği.
+  </p>
+
+  <!-- Full pipeline SVG -->
+  <svg class="flow-svg" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg">
+    <rect width="760" height="500" fill="#161b22" rx="10"/>
+    <text x="380" y="28" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="2">TAM PIPELINE — URL → STRUCTURED KNOWLEDGE</text>
+
+    <!-- Step 1: Input -->
+    <rect x="30" y="45" width="140" height="55" rx="8" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="100" y="68" text-anchor="middle" fill="#58a6ff" font-size="12" font-family="JetBrains Mono" font-weight="600">/fetch-transcript</text>
+    <text x="100" y="85" text-anchor="middle" fill="#8b949e" font-size="10">YouTube / RSS / Spotify</text>
+    <text x="100" y="97" text-anchor="middle" fill="#8b949e" font-size="10">URL girişi</text>
+
+    <!-- Arrow 1 -->
+    <line x1="170" y1="72" x2="200" y2="72" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <!-- Step 2: Cascade Fetcher -->
+    <rect x="200" y="45" width="170" height="350" rx="8" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="285" y="68" text-anchor="middle" fill="#3fb950" font-size="12" font-family="JetBrains Mono" font-weight="600">CASCADE FETCHER</text>
+    <text x="285" y="82" text-anchor="middle" fill="#8b949e" font-size="9">3 adımlı deneme zinciri</text>
+
+    <!-- Cascade steps inside -->
+    <rect x="216" y="92" width="138" height="60" rx="5" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.5"/>
+    <text x="285" y="110" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono">Adım 1 — YouTube</text>
+    <text x="285" y="125" text-anchor="middle" fill="#8b949e" font-size="9">youtube-transcript API</text>
+    <text x="285" y="140" text-anchor="middle" fill="#8b949e" font-size="9">API key gerekmez</text>
+
+    <!-- Down arrow -->
+    <text x="285" y="168" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">▼ başarısız / devre dışı</text>
+
+    <rect x="216" y="177" width="138" height="70" rx="5" fill="#0d1117" stroke="#ffa657" stroke-opacity="0.5"/>
+    <text x="285" y="196" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">Adım 2 — RSS</text>
+    <text x="285" y="211" text-anchor="middle" fill="#8b949e" font-size="9">shows-config.json</text>
+    <text x="285" y="226" text-anchor="middle" fill="#8b949e" font-size="9">rss-parser kütüphanesi</text>
+    <text x="285" y="241" text-anchor="middle" fill="#8b949e" font-size="9">En son bölüm içeriği</text>
+
+    <text x="285" y="262" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">▼ tüm feed'ler başarısız</text>
+
+    <rect x="216" y="272" width="138" height="70" rx="5" fill="#0d1117" stroke="#e3b341" stroke-opacity="0.5"/>
+    <text x="285" y="292" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono">Adım 3 — Whisper</text>
+    <text x="285" y="308" text-anchor="middle" fill="#8b949e" font-size="9">yt-dlp → MP3 indir</text>
+    <text x="285" y="323" text-anchor="middle" fill="#8b949e" font-size="9">openai-whisper (local)</text>
+    <text x="285" y="338" text-anchor="middle" fill="#8b949e" font-size="9">GPU yok → model:base</text>
+
+    <rect x="216" y="358" width="138" height="30" rx="5" fill="#238636" fill-opacity="0.25" stroke="#3fb950" stroke-opacity="0.5"/>
+    <text x="285" y="377" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">✓ Transcript elde edildi</text>
+
+    <!-- Arrow 2 -->
+    <line x1="370" y1="210" x2="400" y2="210" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <!-- Step 3: Raw Storage -->
+    <rect x="400" y="150" width="150" height="120" rx="8" fill="#0d1117" stroke="#bc8cff" stroke-width="1.5"/>
+    <text x="475" y="172" text-anchor="middle" fill="#bc8cff" font-size="11" font-family="JetBrains Mono" font-weight="600">RAW STORAGE</text>
+    <text x="475" y="188" text-anchor="middle" fill="#8b949e" font-size="9">wiki/raw/transcripts/</text>
+    <text x="415" y="208" fill="#3fb950" font-size="9" font-family="JetBrains Mono">---</text>
+    <text x="415" y="220" fill="#8b949e" font-size="9" font-family="JetBrains Mono">transcript_source:</text>
+    <text x="415" y="232" fill="#e3b341" font-size="9" font-family="JetBrains Mono">  youtube | rss | whisper</text>
+    <text x="415" y="244" fill="#8b949e" font-size="9" font-family="JetBrains Mono">status: raw</text>
+    <text x="415" y="256" fill="#3fb950" font-size="9" font-family="JetBrains Mono">---</text>
+
+    <!-- Arrow 3 -->
+    <line x1="475" y1="270" x2="475" y2="300" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <text x="486" y="288" fill="#8b949e" font-size="9" font-family="JetBrains Mono">/ingest</text>
+
+    <!-- Step 4: Ingest -->
+    <rect x="400" y="300" width="150" height="95" rx="8" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="475" y="320" text-anchor="middle" fill="#58a6ff" font-size="11" font-family="JetBrains Mono" font-weight="600">INGEST SKILL</text>
+    <text x="415" y="337" fill="#8b949e" font-size="9" font-family="JetBrains Mono">1. Transkript oku</text>
+    <text x="415" y="350" fill="#8b949e" font-size="9" font-family="JetBrains Mono">2. Yapıyı çıkar</text>
+    <text x="415" y="363" fill="#8b949e" font-size="9" font-family="JetBrains Mono">3. Episode sayfası yaz</text>
+    <text x="415" y="376" fill="#8b949e" font-size="9" font-family="JetBrains Mono">4. Show/guest/topic güncelle</text>
+    <text x="415" y="389" fill="#8b949e" font-size="9" font-family="JetBrains Mono">5. log.md'ye yaz</text>
+
+    <!-- Arrow 4 -->
+    <line x1="550" y1="347" x2="580" y2="347" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <!-- Step 5: Wiki -->
+    <rect x="580" y="270" width="155" height="175" rx="8" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="657" y="293" text-anchor="middle" fill="#3fb950" font-size="11" font-family="JetBrains Mono" font-weight="600">WIKI GRAPH</text>
+
+    <rect x="596" y="302" width="123" height="20" rx="3" fill="#238636" fill-opacity="0.2" stroke="#3fb950" stroke-opacity="0.4"/>
+    <text x="657" y="316" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono">episodes/</text>
+
+    <rect x="596" y="328" width="55" height="20" rx="3" fill="#1c2128" stroke="#30363d"/>
+    <text x="623" y="342" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">shows/</text>
+
+    <rect x="658" y="328" width="61" height="20" rx="3" fill="#1c2128" stroke="#30363d"/>
+    <text x="688" y="342" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">guests/</text>
+
+    <rect x="596" y="354" width="55" height="20" rx="3" fill="#1c2128" stroke="#30363d"/>
+    <text x="623" y="368" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">topics/</text>
+
+    <rect x="658" y="354" width="61" height="20" rx="3" fill="#1c2128" stroke="#30363d"/>
+    <text x="688" y="368" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">concepts/</text>
+
+    <text x="657" y="393" text-anchor="middle" fill="#8b949e" font-size="9">Çift yönlü [[links]]</text>
+    <text x="657" y="406" text-anchor="middle" fill="#58a6ff" font-size="9">Obsidian graph view</text>
+    <text x="657" y="420" text-anchor="middle" fill="#8b949e" font-size="9">Her claim → kaynak episode</text>
+    <text x="657" y="434" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono">status: active</text>
+
+    <!-- Arrow to final output -->
+    <line x1="657" y1="445" x2="657" y2="470" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <!-- Final outputs -->
+    <rect x="580" y="470" width="155" height="24" rx="4" fill="#1c2128" stroke="#30363d"/>
+    <text x="657" y="485" text-anchor="middle" fill="#8b949e" font-size="9">/query · /lint · syntheses/</text>
+
+    <!-- Arrow marker -->
+    <defs>
+      <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#30363d"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <div class="warn-box">
+    <div class="ib-title">Cascade'in Varlık Nedeni</div>
+    Tüm podcast'ler YouTube'da transkript sağlamaz (örn. bazı kanallar kısa klipler yayınlar, tam bölümleri RSS üzerinden dağıtır). RSS bazı podcast'lerin tam metnini içerir. Whisper son resort olarak her türlü ses dosyasını metin yapabilir. Bu 3 katman, kaynak ne olursa olsun transcript üretimini garanti altına alır.
+  </div>
+</div>
+
+<!-- ══ PAGE 5: FETCH CASCADE DETAIL ══════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 5 — Cascade Fetcher Detayı</div>
+  <h2>Transcript Cascade:<br>3 Kaynak, 1 Çıktı</h2>
+  <p class="lead">
+    Her kaynak türünün neden hiyerarşide farklı bir yerde olduğu ve gerçek dünya senaryolarında nasıl devreye girdiği.
+  </p>
+
+  <!-- Source type flow diagram -->
+  <svg class="flow-svg" viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg">
+    <rect width="760" height="320" fill="#161b22" rx="10"/>
+    <text x="380" y="25" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="2">KAYNAK TİPİ → YÖNTEM EŞLEMESI</text>
+
+    <!-- YouTube path -->
+    <rect x="20" y="45" width="110" height="35" rx="6" fill="#f85149" fill-opacity="0.15" stroke="#f85149" stroke-opacity="0.4"/>
+    <text x="75" y="67" text-anchor="middle" fill="#f85149" font-size="11" font-family="JetBrains Mono">YouTube URL</text>
+
+    <line x1="130" y1="62" x2="175" y2="62" stroke="#30363d" stroke-width="1.2"/>
+    <rect x="175" y="45" width="130" height="35" rx="5" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.5"/>
+    <text x="240" y="62" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono">Adım 1: YT API</text>
+    <text x="240" y="74" text-anchor="middle" fill="#8b949e" font-size="9">caption alınırsa → biter</text>
+
+    <text x="316" y="62" fill="#f85149" font-size="10">→</text>
+    <rect x="325" y="45" width="130" height="35" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
+    <text x="390" y="62" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">Adım 2: RSS</text>
+    <text x="390" y="74" text-anchor="middle" fill="#8b949e" font-size="9">shows-config ile eşle</text>
+
+    <text x="466" y="62" fill="#f85149" font-size="10">→</text>
+    <rect x="475" y="45" width="130" height="35" rx="5" fill="#1c2128" stroke="#e3b341" stroke-opacity="0.5"/>
+    <text x="540" y="62" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono">Adım 3: Whisper</text>
+    <text x="540" y="74" text-anchor="middle" fill="#8b949e" font-size="9">yt-dlp + local model</text>
+
+    <!-- RSS path -->
+    <rect x="20" y="105" width="110" height="35" rx="6" fill="#ffa657" fill-opacity="0.15" stroke="#ffa657" stroke-opacity="0.4"/>
+    <text x="75" y="127" text-anchor="middle" fill="#ffa657" font-size="11" font-family="JetBrains Mono">RSS URL</text>
+
+    <line x1="130" y1="122" x2="325" y2="122" stroke="#30363d" stroke-width="1.2"/>
+    <rect x="325" y="105" width="130" height="35" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
+    <text x="390" y="122" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">Direkt RSS fetch</text>
+    <text x="390" y="134" text-anchor="middle" fill="#8b949e" font-size="9">En son bölüm → biter</text>
+
+    <!-- Spotify path -->
+    <rect x="20" y="165" width="110" height="35" rx="6" fill="#3fb950" fill-opacity="0.15" stroke="#3fb950" stroke-opacity="0.4"/>
+    <text x="75" y="187" text-anchor="middle" fill="#3fb950" font-size="11" font-family="JetBrains Mono">Spotify URL</text>
+
+    <line x1="130" y1="182" x2="175" y2="182" stroke="#30363d" stroke-width="1.2"/>
+    <rect x="175" y="165" width="130" height="35" rx="5" fill="#1c2128" stroke="#bc8cff" stroke-opacity="0.4"/>
+    <text x="240" y="182" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono">YT transcript yok</text>
+    <text x="240" y="194" text-anchor="middle" fill="#8b949e" font-size="9">source → 'spotify'</text>
+
+    <line x1="305" y1="182" x2="325" y2="182" stroke="#30363d" stroke-width="1.2"/>
+    <rect x="325" y="165" width="130" height="35" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
+    <text x="390" y="182" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">shows-config RSS</text>
+    <text x="390" y="194" text-anchor="middle" fill="#8b949e" font-size="9">spotify_rss olarak etiket</text>
+
+    <line x1="455" y1="182" x2="475" y2="182" stroke="#30363d" stroke-width="1.2"/>
+    <rect x="475" y="165" width="130" height="35" rx="5" fill="#1c2128" stroke="#e3b341" stroke-opacity="0.5"/>
+    <text x="540" y="182" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono">Adım 3: Whisper</text>
+    <text x="540" y="194" text-anchor="middle" fill="#8b949e" font-size="9">fallback</text>
+
+    <!-- Common output -->
+    <rect x="620" y="85" width="120" height="125" rx="6" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="680" y="107" text-anchor="middle" fill="#3fb950" font-size="11" font-family="JetBrains Mono" font-weight="600">ÇIKTI</text>
+    <text x="680" y="123" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">Frontmatter:</text>
+    <text x="680" y="138" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono">transcript_source:</text>
+    <text x="680" y="152" text-anchor="middle" fill="#e3b341" font-size="9" font-family="JetBrains Mono">  youtube</text>
+    <text x="680" y="165" text-anchor="middle" fill="#e3b341" font-size="9" font-family="JetBrains Mono">  rss</text>
+    <text x="680" y="178" text-anchor="middle" fill="#e3b341" font-size="9" font-family="JetBrains Mono">  spotify_rss</text>
+    <text x="680" y="191" text-anchor="middle" fill="#e3b341" font-size="9" font-family="JetBrains Mono">  whisper</text>
+    <text x="680" y="205" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">status: raw</text>
+
+    <line x1="605" y1="62" x2="620" y2="120" stroke="#30363d" stroke-dasharray="3,3"/>
+    <line x1="455" y1="122" x2="620" y2="148" stroke="#30363d" stroke-dasharray="3,3"/>
+    <line x1="605" y1="182" x2="620" y2="175" stroke="#30363d" stroke-dasharray="3,3"/>
+
+    <!-- Real examples -->
+    <text x="20" y="230" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1">GERÇEK SENARYOLAR (2026-04-23)</text>
+
+    <rect x="20" y="243" width="220" height="25" rx="4" fill="#238636" fill-opacity="0.1" stroke="#3fb950" stroke-opacity="0.3"/>
+    <text x="30" y="259" fill="#3fb950" font-size="9" font-family="JetBrains Mono">✓ YT: &lt;video_id&gt; → youtube transcript (Podcast A)</text>
+
+    <rect x="248" y="243" width="250" height="25" rx="4" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.4"/>
+    <text x="258" y="259" fill="#ffa657" font-size="9" font-family="JetBrains Mono">✓ RSS: &lt;video_id&gt; → caption disabled → Podcast B RSS</text>
+
+    <rect x="506" y="243" width="234" height="25" rx="4" fill="#1c2128" stroke="#e3b341" stroke-opacity="0.4"/>
+    <text x="516" y="259" fill="#e3b341" font-size="9" font-family="JetBrains Mono">○ Whisper: Podcast C tam bölümler (henüz test edilmedi)</text>
+
+    <!-- shows-config explanation -->
+    <rect x="20" y="278" width="720" height="32" rx="6" fill="#1c2128" stroke="#30363d"/>
+    <text x="30" y="294" fill="#8b949e" font-size="10" font-family="JetBrains Mono">shows-config.json:</text>
+    <text x="155" y="294" fill="#3fb950" font-size="10" font-family="JetBrains Mono">{ name, youtube_channel, rss_feed }</text>
+    <text x="380" y="294" fill="#8b949e" font-size="10" font-family="JetBrains Mono">— 6 show kaydı, channel ID eşleme</text>
+    <text x="30" y="306" fill="#8b949e" font-size="9" font-family="JetBrains Mono">YouTube channel ID URL'de geçiyorsa → o show'un RSS'ini dene; geçmiyorsa → tüm feed'leri sırayla dene</text>
+  </svg>
+
+  <div class="divider"></div>
+  <h3>Kod: Cascade Mantığı</h3>
+  <div class="code-block">
+<span class="comment">// src/fetcher/index.ts — Ana cascade zinciri</span>
+<span class="kw">const</span> result =
+  (<span class="kw">await</span> <span class="type">tryYoutube</span>(url))      <span class="comment">// Adım 1: caption varsa biter</span>
+  ?? (<span class="kw">await</span> <span class="type">tryRssFeeds</span>(url)) <span class="comment">// Adım 2: shows-config üzerinden</span>
+  ?? (<span class="kw">await</span> <span class="type">tryWhisper</span>(url));   <span class="comment">// Adım 3: local Whisper (fallback)</span>
+
+<span class="comment">// Sonuç: transcript_source frontmatter'ına yazılır</span>
+<span class="comment">// Dosya adı: {date}-{source}-{slugified-identifier}.md</span>
+  </div>
+</div>
+
+<!-- ══ PAGE 6: INGEST DETAIL ════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 6 — Ingest Adımları</div>
+  <h2>Ingest: Ham Transcript'ten<br>Bağlantılı Wiki'ye</h2>
+  <p class="lead">
+    Bir transkript dosyası okunduğunda agent'ın sistematik olarak ne yaptığı. Ingest'in amacı yalnızca özetlemek değil, <strong>çift yönlü bağlantılı bir bilgi ağı oluşturmak</strong>.
+  </p>
+
+  <!-- Ingest flow SVG -->
+  <svg class="flow-svg" viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg">
+    <rect width="760" height="280" fill="#161b22" rx="10"/>
+
+    <!-- Step boxes -->
+    <!-- 1 -->
+    <rect x="15" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.5"/>
+    <text x="65" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 1</text>
+    <text x="65" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Oku &amp; Çıkar</text>
+    <text x="65" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">Show, guest,</text>
+    <text x="65" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">topics, insights</text>
+    <text x="65" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">quotes, resources</text>
+
+    <text x="125" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
+
+    <!-- 2 -->
+    <rect x="135" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#3fb950" stroke-opacity="0.5"/>
+    <text x="185" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 2</text>
+    <text x="185" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Episode Sayfası</text>
+    <text x="185" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/episodes/</text>
+    <text x="185" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">YYYY-MM-DD-</text>
+    <text x="185" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">show-slug.md</text>
+
+    <text x="245" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
+
+    <!-- 3 -->
+    <rect x="255" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
+    <text x="305" y="52" text-anchor="middle" fill="#ffa657" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 3</text>
+    <text x="305" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Show Güncelle</text>
+    <text x="305" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/shows/</text>
+    <text x="305" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">Episodes listesi</text>
+    <text x="305" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">episodes_ingested++</text>
+
+    <text x="365" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
+
+    <!-- 4 -->
+    <rect x="375" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#bc8cff" stroke-opacity="0.5"/>
+    <text x="425" y="52" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 4</text>
+    <text x="425" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Guest Sayfaları</text>
+    <text x="425" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/guests/</text>
+    <text x="425" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">Biyografi +</text>
+    <text x="425" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">episode backlinks</text>
+
+    <text x="485" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
+
+    <!-- 5 -->
+    <rect x="495" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.4"/>
+    <text x="545" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 5</text>
+    <text x="545" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Topic/Concept</text>
+    <text x="545" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/topics/</text>
+    <text x="545" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/concepts/</text>
+    <text x="545" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">Cross-episode links</text>
+
+    <text x="605" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
+
+    <!-- 6 -->
+    <rect x="615" y="30" width="130" height="75" rx="6" fill="#1c2128" stroke="#3fb950" stroke-opacity="0.5"/>
+    <text x="680" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 6-7</text>
+    <text x="680" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Index + Log</text>
+    <text x="680" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/index.md güncelle</text>
+    <text x="680" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/log.md → operasyon</text>
+    <text x="680" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">kaydı ekle</text>
+
+    <!-- Bidirectional links illustration -->
+    <text x="380" y="140" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1">ÇİFT YÖNLÜ BAĞLANTI PRENSİBİ</text>
+
+    <rect x="60" y="155" width="100" height="30" rx="5" fill="#238636" fill-opacity="0.2" stroke="#3fb950" stroke-opacity="0.5"/>
+    <text x="110" y="174" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">episode</text>
+
+    <rect x="310" y="155" width="80" height="30" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
+    <text x="350" y="174" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">show</text>
+
+    <rect x="450" y="155" width="80" height="30" rx="5" fill="#1c2128" stroke="#bc8cff" stroke-opacity="0.5"/>
+    <text x="490" y="174" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono">guest</text>
+
+    <rect x="590" y="155" width="80" height="30" rx="5" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.5"/>
+    <text x="630" y="174" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono">topic</text>
+
+    <!-- Bidirectional arrows -->
+    <line x1="160" y1="170" x2="310" y2="170" stroke="#3fb950" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow2)" marker-start="url(#arrow2r)"/>
+    <line x1="390" y1="170" x2="450" y2="170" stroke="#3fb950" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow2)" marker-start="url(#arrow2r)"/>
+    <line x1="530" y1="170" x2="590" y2="170" stroke="#3fb950" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow2)" marker-start="url(#arrow2r)"/>
+
+    <text x="230" y="163" text-anchor="middle" fill="#3fb950" font-size="8">[[link]]</text>
+    <text x="420" y="163" text-anchor="middle" fill="#3fb950" font-size="8">[[link]]</text>
+    <text x="560" y="163" text-anchor="middle" fill="#3fb950" font-size="8">[[link]]</text>
+
+    <!-- Rule boxes -->
+    <rect x="30" y="210" width="200" height="58" rx="5" fill="#0d1117" stroke="#f85149" stroke-opacity="0.4"/>
+    <text x="130" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">KURAL: raw/ sadece okunur</text>
+    <text x="130" y="242" text-anchor="middle" fill="#8b949e" font-size="9">wiki/raw/ hiçbir zaman</text>
+    <text x="130" y="255" text-anchor="middle" fill="#8b949e" font-size="9">değiştirilmez. Episode sayfası</text>
+    <text x="130" y="268" text-anchor="middle" fill="#8b949e" font-size="9">→ wiki/episodes/ altına gider.</text>
+
+    <rect x="260" y="210" width="200" height="58" rx="5" fill="#0d1117" stroke="#f85149" stroke-opacity="0.4"/>
+    <text x="360" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">KURAL: kaynak zorunlu</text>
+    <text x="360" y="242" text-anchor="middle" fill="#8b949e" font-size="9">Her wiki iddiası [[raw/...]] ile</text>
+    <text x="360" y="255" text-anchor="middle" fill="#8b949e" font-size="9">kaynaklanır. Kaynaksız</text>
+    <text x="360" y="268" text-anchor="middle" fill="#8b949e" font-size="9">iddia yasaktır.</text>
+
+    <rect x="490" y="210" width="250" height="58" rx="5" fill="#0d1117" stroke="#f85149" stroke-opacity="0.4"/>
+    <text x="615" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">KURAL: locker üzerinden yaz</text>
+    <text x="615" y="242" text-anchor="middle" fill="#8b949e" font-size="9">wiki/ yazımları locker'dan geçer.</text>
+    <text x="615" y="255" text-anchor="middle" fill="#8b949e" font-size="9">Paralel yazım çakışmasını</text>
+    <text x="615" y="268" text-anchor="middle" fill="#8b949e" font-size="9">önler, atomiklik sağlar.</text>
+
+    <defs>
+      <marker id="arrow2" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+        <polygon points="0 0, 6 2.5, 0 5" fill="#3fb950" opacity="0.7"/>
+      </marker>
+      <marker id="arrow2r" markerWidth="6" markerHeight="5" refX="0" refY="2.5" orient="auto-start-reverse">
+        <polygon points="0 0, 6 2.5, 0 5" fill="#3fb950" opacity="0.7"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <div class="divider"></div>
+
+  <h3>Bu Oturumda Gerçekleştirilen Ingest</h3>
+  <table>
+    <tr>
+      <th>Episode Sayfası</th>
+      <th>Kaynak</th>
+      <th>Yeni Sayfalar</th>
+    </tr>
+    <tr>
+      <td>Podcast A — Ep.12 · Konu X Genel Bakış</td>
+      <td><span class="mono">youtube</span></td>
+      <td>concepts/kavram-a</td>
+    </tr>
+    <tr>
+      <td>Podcast B — Ep.47 · Konu Y Derinlemesine</td>
+      <td><span class="mono">youtube</span></td>
+      <td>concepts/kavram-b</td>
+    </tr>
+    <tr>
+      <td>Podcast C — Konuk A ile Konu Z</td>
+      <td><span class="mono">youtube</span></td>
+      <td>guests/konuk-a</td>
+    </tr>
+    <tr>
+      <td>Podcast D — Soru Cevap Özel Bölüm</td>
+      <td><span class="mono">youtube</span></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Podcast E — Konuk B / Kitap Röportajı</td>
+      <td><span class="mono">youtube</span></td>
+      <td>guests/konuk-b</td>
+    </tr>
+    <tr>
+      <td>Podcast E — Dinleyici Soruları Pt.4</td>
+      <td><span class="mono">youtube</span></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Podcast F — Konuk C · Teknoloji ve Gelecek</td>
+      <td><span class="mono">youtube</span></td>
+      <td>guests/konuk-c · concepts/kavram-c</td>
+    </tr>
+    <tr>
+      <td>Podcast C — Konu W Tartışması</td>
+      <td><span class="mono" style="color:var(--orange)">rss</span></td>
+      <td>guests/konuk-d</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ══ PAGE 7: LIFECYCLE ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 7 — Yaşam Döngüsü</div>
+  <h2>İhtiyaç Hangi Aşamada<br>Doğuyor?</h2>
+  <p class="lead">
+    Podvault'u ilk kez kurmaktan birkaç ay sonrasına kadar olan süreçte hangi bileşenin devreye girdiği ve neden orada olduğu.
+  </p>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase setup">Kurulum</div></div>
+      <div class="tl-dot setup"></div>
+      <div class="tl-content">
+        <h4>Gün 1 — Soğuk Başlangıç Sorunu</h4>
+        <ul>
+          <li>Intake interview: 6 soru, kullanıcı niyeti netleşiyor</li>
+          <li>Bootstrap wiki: shows/, topics/, guests/ stub sayfaları — Obsidian'da ilk günden bağlantılı başlangıç</li>
+          <li>CLAUDE.md doldurulur: purpose, 6 podcast, dinleme sıklığı, açık sorular</li>
+          <li>agents/researcher/MEMORY.md: 5 bootstrap hipotezi (Konu X ile Konu Y bağlantısı? vb.)</li>
+          <li>shows-config.json: YouTube channel ID + RSS feed eşlemeleri</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase setup">İlk Fetch</div></div>
+      <div class="tl-dot setup"></div>
+      <div class="tl-content">
+        <h4>Gün 1 — Fetcher'ın İhtiyacı</h4>
+        <ul>
+          <li>/fetch-transcript URL → cascade çalışır: YouTube → RSS → Whisper</li>
+          <li>8 transcript indirildi: 7 YouTube caption, 1 RSS (caption kapalı kanal)</li>
+          <li>Dosyalar wiki/raw/transcripts/ altına frontmatter ile kaydedildi</li>
+          <li>Shows-config sayesinde caption devre dışı bırakılmış kanal otomatik RSS'e düştü</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase cycle">İlk Ingest</div></div>
+      <div class="tl-dot cycle"></div>
+      <div class="tl-content">
+        <h4>Gün 1 — Wiki Ağının Kurulması</h4>
+        <ul>
+          <li>/ingest → 8 episode sayfası oluşturuldu (episodes/ altında)</li>
+          <li>4 guest profili açıldı: Konuk A, Konuk B, Konuk C, Konuk D</li>
+          <li>3 concept sayfası: kavram-a, kavram-b, kavram-c</li>
+          <li>Tüm show sayfaları güncellendi: episodes_ingested sayısı, episode listesi</li>
+          <li>index.md ve log.md güncellendi</li>
+          <li>Obsidian'da artık 15+ düğüm ve onlarca [[link]] bağlantısı</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase cycle">Haftalık</div></div>
+      <div class="tl-dot cycle"></div>
+      <div class="tl-content">
+        <h4>Her Hafta — Tekrar Eden Döngü</h4>
+        <ul>
+          <li>Yeni bölümler yayınlandı → /fetch-transcript ile transcript indir</li>
+          <li>/ingest → wiki'ye ekle, mevcut show/guest/topic sayfalarını güncelle</li>
+          <li>Bağlantılar birikir: aynı kavram 3. kez geçince concepts/ sayfası açılır</li>
+          <li>Çelişkiler işaretlenir: ## CONFLICT — örn. Konuk A vs Konuk B aynı konuda farklı pozisyon</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase query">Sorgu</div></div>
+      <div class="tl-dot query"></div>
+      <div class="tl-content">
+        <h4>İstenen Zaman — Soru Sorma</h4>
+        <ul>
+          <li>/query "Konu X ile Konu Y arasındaki bağlantı nedir?" → wiki araması → episode listesi → cevap</li>
+          <li>MCP server (obsidian-hybrid-search) semantic + BM25 arama yapar</li>
+          <li>Cevap wiki'ye syntheses/ altında kaydedilir (geri-dosyalama)</li>
+          <li>İlgili yeni sorular scratch/ideas.md'ye eklenir</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase grow">Konsolidasyon</div></div>
+      <div class="tl-dot grow"></div>
+      <div class="tl-content">
+        <h4>Haftalık Otomatik — Sentez Boşluğu Kapatılıyor</h4>
+        <ul>
+          <li>Consolidator çalışır: agents/researcher/MEMORY.md → wiki/syntheses/</li>
+          <li>Tier 1 (süreç hafızası) → Tier 2 (domain bilgisi) köprüsü</li>
+          <li>Hipotezler test edilir: "Konu X–Konu Y bağlantısı" hipotezi yeni ingest edilen bölümle güçlendi mi?</li>
+          <li>/lint çalışır: orphan sayfalar, kaynaksız iddialar, kırık linkler raporlanır</li>
+          <li>Wiki sağlığı artık otomatik denetleniyor</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-phase grow">Büyüme</div></div>
+      <div class="tl-dot grow"></div>
+      <div class="tl-content">
+        <h4>Aylar Sonra — Değer Kümülatif Birikir</h4>
+        <ul>
+          <li>Aynı konuya (örn. Konu X) farklı podcast'lerden 10+ episode bağlandıkça syntheses/ zenginleşir</li>
+          <li>Obsidian grafında "hub" düğümler ortaya çıkar: en çok geçen kavramlar merkeze yerleşir</li>
+          <li>Yeni bir bölüm ingest edildiğinde agent önceki bilgiyle bağlantı kuruyor</li>
+          <li>Örn: Yeni Konuk A bölümü → "Bkz: [[episodes/...]] ile çelişiyor mu?"</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ PAGE 8: SUMMARY ══════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 8 — Özet</div>
+  <h2>Her Şeyi Birleştiren<br>Tek Tablo</h2>
+  <p class="lead">
+    Hangi bileşen hangi problemi çözüyor ve ne zaman devreye giriyor.
+  </p>
+
+  <table>
+    <tr>
+      <th>Problem</th>
+      <th>Bileşen</th>
+      <th>Konum</th>
+      <th>Ne Zaman İhtiyaç?</th>
+    </tr>
+    <tr>
+      <td>Transcript almak zor / imkansız</td>
+      <td>Cascade Fetcher</td>
+      <td><span class="mono">src/fetcher/</span></td>
+      <td>Her yeni bölüm için</td>
+    </tr>
+    <tr>
+      <td>Farklı kaynaklardan hangi feed?</td>
+      <td>shows-config.json</td>
+      <td><span class="mono">shows-config.json</span></td>
+      <td>Kurulumda → nadiren güncellenir</td>
+    </tr>
+    <tr>
+      <td>Ham içerik yapılandırılmamış</td>
+      <td>WIKI_INGEST skill</td>
+      <td><span class="mono">commands/ingest.md</span></td>
+      <td>Her ingest operasyonunda</td>
+    </tr>
+    <tr>
+      <td>Bilgi bağlantısız / izole</td>
+      <td>Çift yönlü [[links]]</td>
+      <td><span class="mono">wiki/</span></td>
+      <td>Ingest sırasında otomatik</td>
+    </tr>
+    <tr>
+      <td>Agent seanslar arası unutuyor</td>
+      <td>memory/ + MEMORY.md</td>
+      <td><span class="mono">memory/ · agents/*/</span></td>
+      <td>Her oturumda Tier 1 olarak yüklenir</td>
+    </tr>
+    <tr>
+      <td>Soğuk başlangıç, boş grafik</td>
+      <td>Intake + bootstrap wiki</td>
+      <td><span class="mono">wiki/shows/ topics/</span></td>
+      <td>Yalnızca Gün 1 (kurulum)</td>
+    </tr>
+    <tr>
+      <td>Veri var, içgörü yok</td>
+      <td>Consolidator + /query</td>
+      <td><span class="mono">src/ · commands/</span></td>
+      <td>Haftalık otomatik + isteğe bağlı</td>
+    </tr>
+    <tr>
+      <td>Wiki kalitesi bozuluyor</td>
+      <td>/lint komutu</td>
+      <td><span class="mono">commands/lint.md</span></td>
+      <td>Haftalık veya manuel</td>
+    </tr>
+    <tr>
+      <td>Kaynak güvenilirliği belirsiz</td>
+      <td>transcript_source tag</td>
+      <td><span class="mono">wiki/raw/ frontmatter</span></td>
+      <td>Fetch sırasında otomatik</td>
+    </tr>
+    <tr>
+      <td>Paralel yazım çakışması</td>
+      <td>Locker (src/locker)</td>
+      <td><span class="mono">src/locker.ts</span></td>
+      <td>Her wiki yazımında arka planda</td>
+    </tr>
+    <tr>
+      <td>Araştırma konuları podcast içeriğiyle karışıyor</td>
+      <td>research/ katmanı</td>
+      <td><span class="mono">research/{topic}/</span></td>
+      <td>Yeni araştırma konusu açılınca</td>
+    </tr>
+    <tr>
+      <td>Her konu için manuel klasör + routine kurulumu</td>
+      <td>/new-research komutu</td>
+      <td><span class="mono">commands/new-research.md</span></td>
+      <td>Yeni araştırma konusu başlatılırken</td>
+    </tr>
+    <tr>
+      <td>Araştırma güncelliğini kaybediyor</td>
+      <td>Periyodik araştırma agent'ı</td>
+      <td><span class="mono">.github/workflows/ · Claude Routines</span></td>
+      <td>Konuya göre haftalık / aylık otomatik</td>
+    </tr>
+    <tr>
+      <td>LLM vendor bağımlılığı (açık kaynak kullanıcıları)</td>
+      <td>BYOK + GitHub Actions</td>
+      <td><span class="mono">src/research/ · .github/workflows/</span></td>
+      <td>Claude dışı LLM ile çalıştırılırken</td>
+    </tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3>Mimari Prensipleri</h3>
+
+  <div class="problem-grid">
+    <div class="problem-card" style="border-top: 3px solid #3fb950;">
+      <div class="problem-num" style="color: #3fb950;">Prensip 1</div>
+      <h3>Raw asla değişmez</h3>
+      <p>wiki/raw/ sadece okunur. Tüm işlem wiki/ altında gerçekleşir. Kaynak her zaman orijinal haliyle saklanır — hata durumunda sıfırdan yeniden işlenebilir.</p>
+    </div>
+    <div class="problem-card" style="border-top: 3px solid #58a6ff;">
+      <div class="problem-num" style="color: #58a6ff;">Prensip 2</div>
+      <h3>Her iddia kaynaklanır</h3>
+      <p>Hiçbir wiki sayfasında kaynaksız bilgi olamaz. Her insight [[raw/transcripts/...]] ile bağlıdır. Bu, zamanla büyüyen bilgi tabanının güvenilirliğini korur.</p>
+    </div>
+    <div class="problem-card" style="border-top: 3px solid #bc8cff;">
+      <div class="problem-num" style="color: #bc8cff;">Prensip 3</div>
+      <h3>Çift yönlü bağlantı</h3>
+      <p>A, B'ye bağlanıyorsa B de A'ya bağlanır. Bu kural Obsidian grafının bağlı kalmasını sağlar. Orphan düğümler /lint ile tespit edilir.</p>
+    </div>
+    <div class="problem-card" style="border-top: 3px solid #ffa657;">
+      <div class="problem-num" style="color: #ffa657;">Prensip 4</div>
+      <h3>Cascade → güvenilirlik</h3>
+      <p>En ucuz/hızlı kaynak önce denenir. Başarısız olursa sıradakine geçilir. Bu sayede hiçbir podcast hiçbir zaman "işlenemez" değildir — Whisper her zaman orada.</p>
+    </div>
+    <div class="problem-card" style="border-top: 3px solid #56d364;">
+      <div class="problem-num" style="color: #56d364;">Prensip 5</div>
+      <h3>Research izolasyonu</h3>
+      <p>Araştırma konuları wiki/'den ayrı, research/{topic}/ altında izole yaşar. İkisi arasındaki bağlantı bilinçli ve isteğe bağlıdır. Konu sayısı arttıkça çapraz kirlenme olmaz.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box">
+    <div class="ib-title">Sonuç: Neden Bu Kadar Karmaşık Görünüyor?</div>
+    Çünkü çözmeye çalıştığı 4 problem gerçekten de karmaşık: (1) çok kaynaktan içerik çekme, (2) seanslar arası hafıza, (3) bilginin bağlantılı tutulması, (4) zamanla sentez. Her bileşen bu problemlerden birini çözüyor. Tek başına hiçbirisi yeterli değil — birlikte çalıştıklarında kümülatif değer oluşturuyor. Podvault'u bugün kullanmak hafif hissettiriyor; 3 ay sonra 50 bölüm ingest edildiğinde farkı Obsidian grafiğine bakarak görmek mümkün.
+  </div>
+
+</div>
+
+<!-- ══ PAGE 9: RESEARCH LAYER ══════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">◎ Bölüm 9 — Research Katmanı</div>
+  <h2>Podcast İngest'ten Bağımsız<br>Araştırma Konuları</h2>
+  <p class="lead">
+    Belirli bir konu etrafında podcast araştırması yapılırken wiki/'ye ingest edilen içerikle bu araştırma notları zamanla karışır. <code>research/</code> katmanı her araştırma konusunu izole bir alanda tutar; wiki ile bağlantı bilinçli ve isteğe bağlıdır.
+  </p>
+
+  <h3>İki Katman Arasındaki Fark</h3>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0 28px;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--blue); border-radius:8px; padding:20px;">
+      <div style="font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:10px;">wiki/ katmanı</div>
+      <p style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;">Podcast episode'larından gelen bilgi. Her claim bir episode'a bağlı. Ingest → shows, guests, topics, concepts zinciri.</p>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);">
+        wiki/episodes/<br>
+        wiki/shows/<br>
+        wiki/guests/<br>
+        wiki/topics/ · concepts/
+      </div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--green); border-radius:8px; padding:20px;">
+      <div style="font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--green); margin-bottom:10px;">research/ katmanı</div>
+      <p style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;">Konu araştırması: podcast keşfi için çerçeve, keyword haritası, akademik sinyaller. Her konu kendi klasöründe izole.</p>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);">
+        research/{topic}/index.md<br>
+        research/{topic}/podcasts.md<br>
+        research/{topic}/papers.md<br>
+        research/{topic}/log.md
+      </div>
+    </div>
+  </div>
+
+  <h3>research/{topic}/ Klasör Şeması</h3>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px 24px; margin:16px 0 28px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:2;">
+    <div style="color:var(--green);">research/{topic}/</div>
+    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--text);">index.md</span> &nbsp;&nbsp;&nbsp;— konu çerçevesi, keyword haritası, <code style="color:var(--blue);">search_keywords</code> frontmatter</div>
+    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--text);">podcasts.md</span> — ingest adayı podcast kataloğu (☐ durum takibi)</div>
+    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--blue);">papers.md</span> &nbsp;&nbsp;— podcast keşfi için akademik sinyaller (araştırmacı → podcast)</div>
+    <div style="color:var(--muted); padding-left:20px;">└── <span style="color:var(--muted);">log.md</span> &nbsp;&nbsp;&nbsp;&nbsp;— araştırma geçmişi (append-only)</div>
+  </div>
+
+  <h3>/new-research Komutu: Tam Otomatik Kurulum</h3>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.7;">
+    Yeni bir araştırma konusu açmak için tek komut yeterli. Komut konu adını alır, araştırma yapar ve tüm altyapıyı kurar.
+  </p>
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-bottom:28px; background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+    <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
+      <div style="font-size:18px; margin-bottom:6px;">①</div>
+      <div style="font-size:11px; color:var(--green); font-weight:600; margin-bottom:4px;">Araştır</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;">WebSearch ile alt alanlar, keywords, podcast türleri</div>
+    </div>
+    <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
+      <div style="font-size:18px; margin-bottom:6px;">②</div>
+      <div style="font-size:11px; color:var(--blue); font-weight:600; margin-bottom:4px;">Klasör</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;">research/{slug}/ + 4 dosya, araştırma içeriğiyle dolu</div>
+    </div>
+    <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
+      <div style="font-size:18px; margin-bottom:6px;">③</div>
+      <div style="font-size:11px; color:var(--purple); font-weight:600; margin-bottom:4px;">Schedule</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;">Haftalık / aylık / özel — kullanıcı seçer</div>
+    </div>
+    <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
+      <div style="font-size:18px; margin-bottom:6px;">④</div>
+      <div style="font-size:11px; color:var(--orange); font-weight:600; margin-bottom:4px;">Workflow</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;">.github/workflows/research-{slug}.yml otomatik oluşturulur</div>
+    </div>
+    <div style="padding:16px 14px; text-align:center;">
+      <div style="font-size:18px; margin-bottom:6px;">⑤</div>
+      <div style="font-size:11px; color:var(--teal); font-weight:600; margin-bottom:4px;">Routine</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;">Claude Routine aynı cron ile otomatik oluşturulur</div>
+    </div>
+  </div>
+
+  <h3>Araştırma Otomasyonu: İki Yol</h3>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px;">
+      <div style="font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--purple); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">Claude Routines</div>
+      <ul style="list-style:none; font-size:12px; color:var(--muted); line-height:2.0;">
+        <li>✓ Claude Pro+ hesabı gerektirir</li>
+        <li>✓ Anthropic cloud'da çalışır</li>
+        <li>✓ MCP bağlantıları otomatik gelir</li>
+        <li>✓ Bilgisayar kapalıyken de çalışır</li>
+        <li>✓ Kurulum gerekmez</li>
+      </ul>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px;">
+      <div style="font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--green); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">GitHub Actions + BYOK</div>
+      <ul style="list-style:none; font-size:12px; color:var(--muted); line-height:2.0;">
+        <li>✓ Herhangi bir LLM (6 provider)</li>
+        <li>✓ Açık kaynak kullanıcıları için</li>
+        <li>✓ API key GitHub Secrets'ta şifreli</li>
+        <li>✓ Bilgisayar kapalıyken de çalışır</li>
+        <li>✓ Opsiyonel: Tavily web araması</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background:rgba(88,166,255,0.08); border:1px solid rgba(88,166,255,0.2); border-radius:8px; padding:16px 20px; margin-top:24px; font-size:12px; color:var(--muted); line-height:1.7;">
+    <strong style="color:var(--blue);">Her iki yol da aynı çıktıyı üretir.</strong> research/{topic}/ dosyaları güncellenir, commit atılır. Kullanıcı Claude Pro ise Routines; değilse GitHub Actions + BYOK. İkisi de aynı anda aktif olabilir.
+  </div>
+</div>
+
+</body>
+</html>
