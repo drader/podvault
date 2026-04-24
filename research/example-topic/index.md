@@ -34,7 +34,7 @@ Konunun kısa teknik çerçevesi. Neden takip edildiği ve hangi alt alanlara ay
 ## Dosyalar
 
 - [podcasts.md](podcasts.md) — İngest edilecek/edilen podcast kataloğu
-- [papers.md](papers.md) — Podcast keşfi için akademik sinyal kaynakları
+- [literature.md](literature.md) — Podcast keşfi için akademik sinyal kaynakları
 - [log.md](log.md) — Araştırma ve ingest geçmişi
 
 ## Wiki Bağlantısı

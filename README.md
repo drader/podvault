@@ -25,7 +25,7 @@ wiki/
 research/
   <topic>/
     index.md         topic framework + search keywords + schedule
-    papers.md        academic signals for podcast discovery
+    literature.md        academic signals for podcast discovery
     podcasts.md      podcast leads with ingest status
     log.md           append-only research history
 

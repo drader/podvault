@@ -13,7 +13,7 @@ export function readResearchFiles(topic: string) {
   const read = (file: string) => readFileSync(researchPath(topic, file), 'utf-8')
   return {
     index:    read('index.md'),
-    papers:   read('papers.md'),
+    literature: read('literature.md'),
     podcasts: read('podcasts.md'),
     log:      read('log.md'),
   }
@@ -44,12 +44,12 @@ function updateFrontmatterDate(content: string, date: string): string {
 }
 
 export function applyUpdates(topic: string, updates: ResearchUpdate, date: string): void {
-  let papers = readFileSync(researchPath(topic, 'papers.md'), 'utf-8')
-  for (const p of updates.new_papers) {
+  let literature = readFileSync(researchPath(topic, 'literature.md'), 'utf-8')
+  for (const p of updates.new_literature) {
     const row = `| ${p.title} | ${p.journal_date} | ${p.authors} | ${p.podcast_signal} |`
-    papers = insertRowInSection(papers, p.section, row)
+    literature = insertRowInSection(literature, p.section, row)
   }
-  writeFileSync(researchPath(topic, 'papers.md'), papers)
+  writeFileSync(researchPath(topic, 'literature.md'), literature)
 
   let podcasts = readFileSync(researchPath(topic, 'podcasts.md'), 'utf-8')
   for (const p of updates.new_podcasts) {
@@ -61,7 +61,7 @@ export function applyUpdates(topic: string, updates: ResearchUpdate, date: strin
   const index = readFileSync(researchPath(topic, 'index.md'), 'utf-8')
   writeFileSync(researchPath(topic, 'index.md'), updateFrontmatterDate(index, date))
 
-  const logEntry = `\n## [${date}] research | ${updates.log_entry}\nDosyalar: papers.md (+${updates.new_papers.length}), podcasts.md (+${updates.new_podcasts.length})\n`
+  const logEntry = `\n## [${date}] research | ${updates.log_entry}\nDosyalar: literature.md (+${updates.new_literature.length}), podcasts.md (+${updates.new_podcasts.length})\n`
   const logPath = researchPath(topic, 'log.md')
   writeFileSync(logPath, readFileSync(logPath, 'utf-8') + logEntry)
 }

@@ -1,6 +1,6 @@
 ---
 title: Example Topic — Akademik Sinyaller
-type: research-papers
+type: research-literature
 purpose: podcast-discovery
 last_updated: YYYY-MM-DD
 ---

@@ -35,7 +35,7 @@ export function createModel(provider: string, apiKey: string, modelOverride?: st
 }
 
 export interface ResearchUpdate {
-  new_papers: Array<{
+  new_literature: Array<{
     section: string
     title: string
     journal_date: string
@@ -54,7 +54,7 @@ export interface ResearchUpdate {
 
 export async function generateResearchUpdates(
   model: LanguageModel,
-  currentFiles: { index: string; papers: string; podcasts: string; log: string },
+  currentFiles: { index: string; literature: string; podcasts: string; log: string },
   searchContext?: string
 ): Promise<ResearchUpdate> {
   const prompt = `You are a research assistant for a podcast knowledge wiki. The research topic is defined in the index.md file you will read.
@@ -63,8 +63,8 @@ Your task: identify recent (last ~30 days) developments worth adding to these re
 
 ${searchContext ? `## Recent Search Results\n${searchContext}\n` : ''}
 
-## Current papers.md
-${currentFiles.papers}
+## Current literature.md
+${currentFiles.literature}
 
 ## Current podcasts.md
 ${currentFiles.podcasts}
@@ -75,9 +75,9 @@ ${currentFiles.log.split('\n').slice(-20).join('\n')}
 ## Instructions
 Return ONLY a valid JSON object (no markdown, no explanation) with this exact structure:
 {
-  "new_papers": [
+  "new_literature": [
     {
-      "section": "<exact section header from papers.md, e.g. 'Nöromorfik + Fotonik'>",
+      "section": "<exact section header from literature.md, e.g. 'Nöromorfik + Fotonik'>",
       "title": "<paper title>",
       "journal_date": "<Journal, YYYY>",
       "authors": "<Author(s) / Institution>",

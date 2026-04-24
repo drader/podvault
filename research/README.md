@@ -15,7 +15,7 @@ Belirli bir konuyu sistematik olarak takip etmek:
 research/
   {konu-slug}/
     index.md      — konu çerçevesi, arama keyword'leri, schedule
-    papers.md     — akademik sinyal kaynakları (podcast keşfi amaçlı)
+    literature.md     — akademik sinyal kaynakları (podcast keşfi amaçlı)
     podcasts.md   — podcast kataloğu ve ingest durumu
     log.md        — append-only araştırma geçmişi
 ```
@@ -30,4 +30,4 @@ research/
 ## Otomasyon
 
 Her konu `index.md` frontmatter'ındaki `research_schedule` cron ifadesine göre otomatik çalışır.
-GitHub Actions workflow → `src/research/index.ts` → papers.md ve podcasts.md güncellenir.
+GitHub Actions workflow → `src/research/index.ts` → literature.md ve podcasts.md güncellenir.

@@ -56,7 +56,7 @@ async function main() {
   console.log('Generating research updates...')
   const updates = await generateResearchUpdates(model, currentFiles, searchContext)
 
-  console.log(`Found: ${updates.new_papers.length} new papers, ${updates.new_podcasts.length} new podcasts`)
+  console.log(`Found: ${updates.new_literature.length} new literature, ${updates.new_podcasts.length} new podcasts`)
   applyUpdates(topic, updates, date)
   commitChanges(topic, date)
   console.log('Done.')

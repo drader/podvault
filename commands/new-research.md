@@ -53,7 +53,7 @@ search_keywords:
 
 **podcasts.md** — araştırmada bulunan ilgili podcastlerle dolu başlangıç tablosu. Hiç bulunamazsa boş tablo şablonu.
 
-**papers.md** — araştırmada bulunan akademik sinyallerle dolu başlangıç tablosu (podcast keşif amaçlı). Hiç bulunamazsa boş tablo şablonu.
+**literature.md** — araştırmada bulunan akademik sinyallerle dolu başlangıç tablosu (podcast keşif amaçlı). Hiç bulunamazsa boş tablo şablonu.
 
 **log.md** — tek giriş:
 ```
@@ -126,14 +126,14 @@ Your task: find new developments (last ~30 days) relevant to this topic and upda
 
 Read the current state of these files first:
 - research/{slug}/index.md  (topic framework and search keywords)
-- research/{slug}/papers.md  (academic signals for podcast discovery)
+- research/{slug}/literature.md  (academic signals for podcast discovery)
 - research/{slug}/podcasts.md (podcast catalog)
 - research/{slug}/log.md  (research history)
 
 Then search for new developments using the keywords in index.md frontmatter (search_keywords field).
 
 Update rules:
-- papers.md: append new academic publications as table rows in the correct section
+- literature.md: append new academic publications as table rows in the correct section
 - podcasts.md: append newly discovered podcasts as table rows with ☐ ingest status
 - index.md: update last_researched date in frontmatter
 - log.md: append a new entry: ## [YYYY-MM-DD] research | brief summary
