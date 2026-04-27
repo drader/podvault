@@ -511,7 +511,15 @@
   .lang-switch.faded:hover { opacity: 1; }
   .lang-switch:hover { background: rgba(124,58,237,0.18); }
 
-  @media print { .lang-switch { display: none; } }
+  .back-link {
+    position: fixed; top: 16px; left: 24px;
+    font-size: 11px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.1em; z-index: 1000; display: flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace; transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--accent-bright); }
+
+  @media print { .lang-switch, .back-link { display: none; } }
 </style>
 <script>
 function setLang(l){document.documentElement.className='lang-'+l;localStorage.setItem('pv-lang',l);}
@@ -520,6 +528,10 @@ window.addEventListener('scroll',function(){var b=document.querySelector('.lang-
 </script>
 </head>
 <body>
+<a href="../index.html" class="back-link">
+  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+  podvault
+</a>
 <button class="lang-switch" onclick="setLang(document.documentElement.className==='lang-tr'?'en':'tr')"><span class="tr">EN</span><span class="en">TR</span></button>
 
 <!-- ══ COVER ══════════════════════════════════════════════════════════ -->
