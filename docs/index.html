@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="lang-tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,13 +102,31 @@
   .slide-counter span { color: var(--accent); }
   .nav-hint { position: fixed; bottom: 20px; left: 28px; font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; z-index: 500; }
 
+  /* ── Language switcher ────────────────────────── */
+  .lang-tr .en { display: none; }
+  .lang-en .tr { display: none; }
+  .lang-switch {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 600; background: rgba(9,8,15,0.92); border: 1px solid var(--accent-dim);
+    border-radius: 20px; padding: 5px 16px; font-size: 11px;
+    font-family: 'JetBrains Mono', monospace; color: var(--accent);
+    cursor: pointer; letter-spacing: 0.12em; white-space: nowrap; transition: background 0.15s;
+  }
+  .lang-switch:hover { background: var(--accent-muted); }
+  @media print { .lang-switch { display: none; } }
+
   .back-link { position: fixed; top: 16px; left: 24px; font-size: 11px; color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; z-index: 500; display: flex; align-items: center; gap: 6px; transition: color 0.15s; }
   .back-link:hover { color: var(--accent); }
   .report-link { position: fixed; top: 16px; right: 24px; font-size: 11px; color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; z-index: 500; display: flex; align-items: center; gap: 6px; transition: color 0.15s; border: 1px solid var(--accent-dim); padding: 4px 10px; border-radius: 4px; }
   .report-link:hover { color: var(--accent); border-color: var(--accent); }
 </style>
+<script>
+function setLang(l){document.documentElement.className='lang-'+l;localStorage.setItem('pv-lang',l);}
+(function(){var s=localStorage.getItem('pv-lang');if(s)document.documentElement.className='lang-'+s;})();
+</script>
 </head>
 <body>
+<button class="lang-switch" onclick="setLang(document.documentElement.className==='lang-tr'?'en':'tr')"><span class="tr">EN</span><span class="en">TR</span></button>
 
 <a href="https://drader.github.io/memex/" class="back-link">
   <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
@@ -124,16 +142,15 @@
 
   <!-- SLIDE 1: TITLE -->
   <div class="slide active" id="s1">
-    <div class="title-tag">built on memex</div>
+    <div class="title-tag"><span class="tr">memex üzerine inşa edildi</span><span class="en">built on memex</span></div>
     <h1>podvault</h1>
     <div class="divider"></div>
     <p style="font-size:clamp(16px,2.2vw,24px); color:var(--text-dim);">
-      agentic podcast knowledge base
+      <span class="tr">ajan tabanlı podcast bilgi tabanı</span><span class="en">agentic podcast knowledge base</span>
     </p>
     <p class="sub" style="margin-top:32px;">
-      Drop episode transcripts or show notes in.<br>
-      Agents extract insights, quotes, and resources —<br>
-      linking guests, shows, and topics automatically.
+      <span class="tr">Bölüm transkriptlerini veya gösterim notlarını bırak.<br>Ajanlar içgörüleri, alıntıları ve kaynakları çıkarır —<br>konukları, şovları ve konuları otomatik olarak birbirine bağlar.</span>
+      <span class="en">Drop episode transcripts or show notes in.<br>Agents extract insights, quotes, and resources —<br>linking guests, shows, and topics automatically.</span>
     </p>
     <div class="glow-line" style="margin-top:48px;"></div>
     <p class="sub"><span style="color:var(--accent);">github.com/YOUR_USERNAME/podvault</span></p>
@@ -141,146 +158,138 @@
 
   <!-- SLIDE 2: THE PROMISE -->
   <div class="slide" id="s2">
-    <div class="label">The promise</div>
-    <h2>An episode wiki that<br>knows what every guest said.</h2>
+    <div class="label"><span class="tr">Vaat</span><span class="en">The promise</span></div>
+    <h2><span class="tr">Her konuğun ne dediğini bilen<br>bir bölüm wiki'si.</span><span class="en">An episode wiki that<br>knows what every guest said.</span></h2>
     <div class="terminal" style="margin-top:24px;">
       <br>
       <div><span class="prompt">$ </span><span class="cmd">cp lex-fridman-ep400.txt wiki/raw/transcripts/</span></div>
       <div class="out">&nbsp;</div>
-      <div class="out"># Tomorrow morning:</div>
+      <div class="out"># <span class="tr">Ertesi sabah:</span><span class="en">Tomorrow morning:</span></div>
       <div class="out">&nbsp;</div>
       <div><span class="prompt">$ </span><span class="cmd">ls wiki/episodes/</span></div>
       <div><span class="hi">lex-fridman-400-sam-altman.md</span></div>
       <div class="out">&nbsp;</div>
       <div><span class="prompt">$ </span><span class="cmd">ls wiki/guests/</span></div>
-      <div><span class="hi">altman-sam.md  — 3 episodes, 12 topics</span></div>
+      <div><span class="hi">altman-sam.md  — 3 <span class="tr">bölüm</span><span class="en">episodes</span>, 12 <span class="tr">konu</span><span class="en">topics</span></span></div>
       <div class="out">&nbsp;</div>
-      <div class="out"># Insights, quotes, resources — all indexed. No manual work.</div>
+      <div class="out"># <span class="tr">İçgörüler, alıntılar, kaynaklar — hepsi indekslendi. Manuel çalışma yok.</span><span class="en">Insights, quotes, resources — all indexed. No manual work.</span></div>
     </div>
   </div>
 
   <!-- SLIDE 3: THE PROBLEMS -->
   <div class="slide" id="s3">
-    <div class="label">The reality</div>
-    <h2 style="margin-bottom:28px;">You listened to 200 episodes.<br>You remember 4.</h2>
+    <div class="label"><span class="tr">Gerçek</span><span class="en">The reality</span></div>
+    <h2 style="margin-bottom:28px;"><span class="tr">200 bölüm dinledin.<br>4'ünü hatırlıyorsun.</span><span class="en">You listened to 200 episodes.<br>You remember 4.</span></h2>
     <div class="problem-wall">
       <div class="wall-item">
         <div class="wall-num">Problem 01</div>
-        <h3>Insights evaporate</h3>
-        <p>You hear a brilliant idea in an episode. Two weeks later you can't recall who said it or where.</p>
+        <h3><span class="tr">İçgörüler buharlaşıyor</span><span class="en">Insights evaporate</span></h3>
+        <p><span class="tr">Bir bölümde harika bir fikir duyuyorsun. İki hafta sonra kimin söylediğini ya da nerede duyduğunu hatırlayamıyorsun.</span><span class="en">You hear a brilliant idea in an episode. Two weeks later you can't recall who said it or where.</span></p>
       </div>
       <div class="wall-item">
         <div class="wall-num">Problem 02</div>
-        <h3>Guest context fragments</h3>
-        <p>A guest appears on three shows. Their position evolves across episodes. You only know the latest one.</p>
+        <h3><span class="tr">Konuk bağlamı parçalanıyor</span><span class="en">Guest context fragments</span></h3>
+        <p><span class="tr">Bir konuk üç şovda yer alıyor. Pozisyonu bölümlere göre değişiyor. Sen yalnızca en sonuncusunu biliyorsun.</span><span class="en">A guest appears on three shows. Their position evolves across episodes. You only know the latest one.</span></p>
       </div>
       <div class="wall-item">
         <div class="wall-num">Problem 03</div>
-        <h3>Topics have no home</h3>
-        <p>Five guests discuss AI safety. Each episode is a silo. The conversation has no cumulative shape.</p>
+        <h3><span class="tr">Konuların evi yok</span><span class="en">Topics have no home</span></h3>
+        <p><span class="tr">Beş konuk AI güvenliğini tartışıyor. Her bölüm bir silo. Konuşmanın kümülatif bir şekli yok.</span><span class="en">Five guests discuss AI safety. Each episode is a silo. The conversation has no cumulative shape.</span></p>
       </div>
       <div class="wall-item">
         <div class="wall-num">Problem 04</div>
-        <h3>Patterns stay invisible</h3>
-        <p>The same book recommendation appears in four episodes across two years. You never connect the dots.</p>
+        <h3><span class="tr">Örüntüler görünmez kalıyor</span><span class="en">Patterns stay invisible</span></h3>
+        <p><span class="tr">Aynı kitap tavsiyesi iki yılda dört bölümde geçiyor. Noktaları hiç birleştiremedin.</span><span class="en">The same book recommendation appears in four episodes across two years. You never connect the dots.</span></p>
       </div>
     </div>
-    <p class="sub" style="margin-top:24px;">podvault solves all four.</p>
+    <p class="sub" style="margin-top:24px;"><span class="tr">podvault dördünü de çözüyor.</span><span class="en">podvault solves all four.</span></p>
   </div>
 
   <!-- SLIDE 4: PROBLEM 1 + FIX -->
   <div class="slide" id="s4">
-    <div class="label"><span>Problem 01</span> — Insights evaporate</div>
-    <h2>An idea heard once<br>and never written down is lost.</h2>
+    <div class="label"><span>Problem 01</span> — <span class="tr">İçgörüler buharlaşıyor</span><span class="en">Insights evaporate</span></div>
+    <h2><span class="tr">Bir kez duyulan ve hiç yazılmayan<br>bir fikir kaybolur.</span><span class="en">An idea heard once<br>and never written down is lost.</span></h2>
     <div class="problem-card" style="margin-top:24px;">
-      <h3>The situation</h3>
+      <h3><span class="tr">Durum</span><span class="en">The situation</span></h3>
       <p>
-        Podcast listening is passive by design. You're driving, running, cooking.
-        Even when you mean to note something, the moment passes.
-        Even when you do note it, the note sits in a list with no context,
-        no links, no way to find it six months later.
+        <span class="tr">Podcast dinlemek doğası gereği pasif bir etkinliktir. Araba kullanıyorsun, koşuyorsun, yemek yapıyorsun. Bir şeyi not almayı düşünsen bile an geçip gidiyor. Not etsen bile, not bağlamı, bağlantıları ve altı ay sonra bulmanın yolu olmayan bir listede bekliyor.</span>
+        <span class="en">Podcast listening is passive by design. You're driving, running, cooking. Even when you mean to note something, the moment passes. Even when you do note it, the note sits in a list with no context, no links, no way to find it six months later.</span>
       </p>
     </div>
     <div class="solution-card" style="margin-top:16px;">
-      <h3>The fix</h3>
+      <h3><span class="tr">Çözüm</span><span class="en">The fix</span></h3>
       <p>
-        Drop a transcript — from your podcast app, from Whisper, from anywhere —
+        <span class="tr">Bir transkripti — podcast uygulamanızdan, Whisper'dan veya herhangi bir yerden —
+        <span style="color:var(--accent)">wiki/raw/transcripts/</span> klasörüne bırak.
+        Araştırmacı ajan temel içgörüleri, dikkat çekici alıntıları ve bahsedilen kaynakları çıkarır,
+        <span style="color:var(--accent)">wiki/episodes/</span> altında yapılandırılmış bir özet yazar.
+        Herhangi bir Claude oturumundan MCP hibrit aramayla erişilebilir.</span>
+        <span class="en">Drop a transcript — from your podcast app, from Whisper, from anywhere —
         into <span style="color:var(--accent)">wiki/raw/transcripts/</span>.
         The researcher agent extracts key insights, notable quotes, and resources mentioned,
         and writes a structured summary to
         <span style="color:var(--accent)">wiki/episodes/</span>.
-        Searchable via MCP hybrid search from any Claude session.
+        Searchable via MCP hybrid search from any Claude session.</span>
       </p>
     </div>
   </div>
 
   <!-- SLIDE 5: PROBLEM 2 + 3 + FIX -->
   <div class="slide" id="s5">
-    <div class="label"><span>Problem 02 + 03</span> — Guest context and topic silos</div>
-    <h2>Guests and topics<br>get a page of their own.</h2>
+    <div class="label"><span>Problem 02 + 03</span> — <span class="tr">Konuk bağlamı ve konu siloları</span><span class="en">Guest context and topic silos</span></div>
+    <h2><span class="tr">Konuklar ve konular<br>kendine ait bir sayfaya kavuşuyor.</span><span class="en">Guests and topics<br>get a page of their own.</span></h2>
     <div class="problem-card" style="margin-top:24px;">
-      <h3>The situation</h3>
+      <h3><span class="tr">Durum</span><span class="en">The situation</span></h3>
       <p>
-        A researcher appears on three shows with different hosts over two years.
-        Their thinking evolves. Episode 1 contradicts episode 3.
-        You have no way to see the arc — each episode is a closed file.
-        Topics discussed across shows have no cumulative record.
+        <span class="tr">Bir araştırmacı iki yılda üç farklı şovda farklı sunucularla konuşuyor. Düşünceleri gelişiyor. 1. bölüm 3. bölümle çelişiyor. Yayı görmek mümkün değil — her bölüm kapalı bir dosya. Şovlar boyunca tartışılan konuların kümülatif bir kaydı yok.</span>
+        <span class="en">A researcher appears on three shows with different hosts over two years. Their thinking evolves. Episode 1 contradicts episode 3. You have no way to see the arc — each episode is a closed file. Topics discussed across shows have no cumulative record.</span>
       </p>
     </div>
     <div class="solution-card" style="margin-top:16px;">
-      <h3>The fix</h3>
+      <h3><span class="tr">Çözüm</span><span class="en">The fix</span></h3>
       <p>
-        Every ingest creates or updates
-        <span style="color:var(--accent)">wiki/guests/</span> and
-        <span style="color:var(--accent)">wiki/topics/</span> —
-        each guest page linking to every episode they appear in,
-        each topic page aggregating insights across shows.
-        Guest profiles, host profiles, show profiles — all cross-linked bidirectionally.
+        <span class="tr">Her ingest <span style="color:var(--accent)">wiki/guests/</span> ve <span style="color:var(--accent)">wiki/topics/</span> sayfalarını oluşturur veya günceller — her konuk sayfası yer aldıkları her bölüme bağlanır, her konu sayfası şovlar genelinde içgörüleri toplar. Konuk profilleri, sunucu profilleri, şov profilleri — hepsi çift yönlü bağlı.</span>
+        <span class="en">Every ingest creates or updates <span style="color:var(--accent)">wiki/guests/</span> and <span style="color:var(--accent)">wiki/topics/</span> — each guest page linking to every episode they appear in, each topic page aggregating insights across shows. Guest profiles, host profiles, show profiles — all cross-linked bidirectionally.</span>
       </p>
     </div>
   </div>
 
   <!-- SLIDE 6: PROBLEM 4 + FIX -->
   <div class="slide" id="s6">
-    <div class="label"><span>Problem 04</span> — Patterns stay invisible</div>
-    <h2>The Monday orchestrator<br>surfaces what you missed.</h2>
+    <div class="label"><span>Problem 04</span> — <span class="tr">Örüntüler görünmez kalıyor</span><span class="en">Patterns stay invisible</span></div>
+    <h2><span class="tr">Pazartesi orkestrasyonu<br>gözden kaçırdıklarını yüzeye çıkarıyor.</span><span class="en">The Monday orchestrator<br>surfaces what you missed.</span></h2>
     <div class="problem-card" style="margin-top:24px;">
-      <h3>The situation</h3>
+      <h3><span class="tr">Durum</span><span class="en">The situation</span></h3>
       <p>
-        Four guests recommend the same book in four different episodes across 18 months.
-        Seven episodes mention the same framework from different angles.
-        These patterns only become visible to someone who has read everything —
-        and nobody re-reads episode notes.
+        <span class="tr">Dört konuk 18 ayda dört farklı bölümde aynı kitabı öneriyor. Yedi bölüm farklı açılardan aynı çerçeveden bahsediyor. Bu örüntüler yalnızca her şeyi okuyan birine görünür oluyor — kimse bölüm notlarını yeniden okumaz.</span>
+        <span class="en">Four guests recommend the same book in four different episodes across 18 months. Seven episodes mention the same framework from different angles. These patterns only become visible to someone who has read everything — and nobody re-reads episode notes.</span>
       </p>
     </div>
     <div class="solution-card" style="margin-top:16px;">
-      <h3>The fix</h3>
+      <h3><span class="tr">Çözüm</span><span class="en">The fix</span></h3>
       <p>
-        Every Monday the orchestrator scans agent memory for topics appearing across
-        <span style="color:var(--accent)">2+ episodes</span>,
-        promotes them to <span style="color:var(--accent)">wiki/syntheses/</span>,
-        and writes a "topics worth exploring" note to the journal.
-        Single-mention topics that appear repeatedly get flagged for promotion.
+        <span class="tr">Her Pazartesi orkestratör ajan hafızasını <span style="color:var(--accent)">2+ bölümde</span> geçen konular için tarar, bunları <span style="color:var(--accent)">wiki/syntheses/</span> altına taşır ve dergiye "keşfedilmeye değer konular" notu yazar. Tekrar tekrar görünen tek bahisleri konu adayı olarak işaretler.</span>
+        <span class="en">Every Monday the orchestrator scans agent memory for topics appearing across <span style="color:var(--accent)">2+ episodes</span>, promotes them to <span style="color:var(--accent)">wiki/syntheses/</span>, and writes a "topics worth exploring" note to the journal. Single-mention topics that appear repeatedly get flagged for promotion.</span>
       </p>
     </div>
   </div>
 
   <!-- SLIDE 7: ARCHITECTURE -->
   <div class="slide" id="s7">
-    <div class="label">Wiki structure</div>
-    <h2 style="font-size:clamp(20px,2.8vw,36px); margin-bottom:28px;">One page per episode. One page per guest.</h2>
+    <div class="label"><span class="tr">Wiki yapısı</span><span class="en">Wiki structure</span></div>
+    <h2 style="font-size:clamp(20px,2.8vw,36px); margin-bottom:28px;"><span class="tr">Her bölüm için bir sayfa. Her konuk için bir sayfa.</span><span class="en">One page per episode. One page per guest.</span></h2>
     <div class="grid-3">
       <div class="arch-box">
-        <div class="arch-title">Input</div>
+        <div class="arch-title"><span class="tr">Girdi</span><span class="en">Input</span></div>
         <ul>
           <li><span>raw/transcripts/</span></li>
-          <li><span>episode transcripts</span></li>
-          <li><span>show notes</span></li>
+          <li><span><span class="tr">bölüm transkriptleri</span><span class="en">episode transcripts</span></span></li>
+          <li><span><span class="tr">gösterim notları</span><span class="en">show notes</span></span></li>
           <li><span>Whisper output</span></li>
         </ul>
       </div>
       <div class="arch-box">
-        <div class="arch-title">Agent Output</div>
+        <div class="arch-title"><span class="tr">Ajan Çıktısı</span><span class="en">Agent Output</span></div>
         <ul>
           <li><span>episodes/</span></li>
           <li><span>shows/</span></li>
@@ -290,37 +299,37 @@
         </ul>
       </div>
       <div class="arch-box">
-        <div class="arch-title">Orchestrator</div>
+        <div class="arch-title"><span class="tr">Orkestratör</span><span class="en">Orchestrator</span></div>
         <ul>
           <li><span>syntheses/</span></li>
           <li><span>journal/</span></li>
-          <li><span>Wakeup routine</span></li>
-          <li><span>Monday scan</span></li>
+          <li><span><span class="tr">Uyandırma rutini</span><span class="en">Wakeup routine</span></span></li>
+          <li><span><span class="tr">Pazartesi taraması</span><span class="en">Monday scan</span></span></li>
         </ul>
       </div>
     </div>
     <p class="sub" style="margin-top:24px;">
-      MCP hybrid search (BM25 + vector + RRF) over the full wiki.<br>
-      Ask "what did [guest] say about [topic]" — get a wiki-backed answer with episode citations.
+      <span class="tr">Tam wiki üzerinde MCP hibrit arama (BM25 + vektör + RRF).<br>"[konuk] [konu] hakkında ne dedi?" diye sor — bölüm alıntılarıyla wiki destekli bir yanıt al.</span>
+      <span class="en">MCP hybrid search (BM25 + vector + RRF) over the full wiki.<br>Ask "what did [guest] say about [topic]" — get a wiki-backed answer with episode citations.</span>
     </p>
   </div>
 
   <!-- SLIDE 8: GET STARTED -->
   <div class="slide" id="s8">
-    <div class="label">Get started</div>
-    <h2 style="margin-bottom:28px;">Three commands.</h2>
+    <div class="label"><span class="tr">Başlayın</span><span class="en">Get started</span></div>
+    <h2 style="margin-bottom:28px;"><span class="tr">Üç komut.</span><span class="en">Three commands.</span></h2>
     <div class="terminal" style="max-width:600px;">
       <br>
       <div><span class="prompt">$ </span><span class="cmd">git clone github.com/YOUR_USERNAME/podvault my-podvault</span></div>
       <div><span class="prompt">$ </span><span class="cmd">npm install && npm run setup</span></div>
       <div><span class="prompt">$ </span><span class="cmd">npm start</span></div>
       <div class="out">&nbsp;</div>
-      <div class="hi">✓ Agents scheduled (Tue–Fri 09:00).</div>
-      <div class="hi">✓ Wiki seeded with your shows and topics.</div>
-      <div class="hi">✓ Daemon running in background.</div>
+      <div class="hi">✓ <span class="tr">Ajanlar zamanlandı (Sal–Cum 09:00).</span><span class="en">Agents scheduled (Tue–Fri 09:00).</span></div>
+      <div class="hi">✓ <span class="tr">Wiki şovlarınız ve konularınızla dolduruldu.</span><span class="en">Wiki seeded with your shows and topics.</span></div>
+      <div class="hi">✓ <span class="tr">Daemon arka planda çalışıyor.</span><span class="en">Daemon running in background.</span></div>
       <div class="out">&nbsp;</div>
-      <div class="out">Drop any transcript into wiki/raw/transcripts/</div>
-      <div class="out">— or run /ingest to process immediately.</div>
+      <div class="out"><span class="tr">Herhangi bir transkripti wiki/raw/transcripts/ klasörüne bırak</span><span class="en">Drop any transcript into wiki/raw/transcripts/</span></div>
+      <div class="out"><span class="tr">— ya da hemen işlemek için /ingest komutunu çalıştır.</span><span class="en">— or run /ingest to process immediately.</span></div>
       <div class="out cursor">&nbsp;</div>
     </div>
     <div class="stack-row" style="margin-top:28px;">
@@ -334,7 +343,7 @@
 
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides"></span></div>
-<div class="nav-hint">← → arrow keys &nbsp;·&nbsp; space</div>
+<div class="nav-hint"><span class="tr">← → ok tuşları &nbsp;·&nbsp; boşluk</span><span class="en">← → arrow keys &nbsp;·&nbsp; space</span></div>
 
 <script>
   const slides = document.querySelectorAll('.slide');

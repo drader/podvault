@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html class="lang-tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -481,94 +481,128 @@
     size: A4;
     margin: 0;
   }
+
+  /* ── Language switcher ────────────────────────── */
+  .lang-tr .en { display: none; }
+  .lang-en .tr { display: none; }
+
+  .lang-switch {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(13,17,23,0.92);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green);
+    cursor: pointer;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .lang-switch:hover { background: rgba(35,134,54,0.2); }
+
+  @media print { .lang-switch { display: none; } }
 </style>
+<script>
+function setLang(l){document.documentElement.className='lang-'+l;localStorage.setItem('pv-lang',l);}
+(function(){var s=localStorage.getItem('pv-lang');if(s)document.documentElement.className='lang-'+s;})();
+</script>
 </head>
 <body>
+<button class="lang-switch" onclick="setLang(document.documentElement.className==='lang-tr'?'en':'tr')"><span class="tr">EN</span><span class="en">TR</span></button>
 
 <!-- ══ COVER ══════════════════════════════════════════════════════════ -->
 <div class="cover">
-  <div class="cover-badge">Mimari Rapor · 2026-04-23</div>
-  <h1>Memex'ten<br>Podvault'a</h1>
+  <div class="cover-badge"><span class="tr">Mimari Rapor · 2026-04-23</span><span class="en">Architecture Report · 2026-04-23</span></div>
+  <h1><span class="tr">Memex'ten<br>Podvault'a</span><span class="en">From Memex<br>to Podvault</span></h1>
   <p class="subtitle">
-    Agent tabanlı bir kişisel bilgi tabanının neden inşa edildiği, nasıl çalıştığı ve hangi ihtiyaçları hangi aşamada karşıladığı
+    <span class="tr">Agent tabanlı bir kişisel bilgi tabanının neden inşa edildiği, nasıl çalıştığı ve hangi ihtiyaçları hangi aşamada karşıladığı</span>
+    <span class="en">Why an agent-based personal knowledge base was built, how it works, and which needs it meets at which stage</span>
   </p>
   <div class="cover-meta">
-    <div><span>Proje</span><br>memex → podvault</div>
+    <div><span><span class="tr">Proje</span><span class="en">Project</span></span><br>memex → podvault</div>
     <div><span>Model</span><br>Claude Sonnet 4.6</div>
-    <div><span>Tarih</span><br>2026-04-23</div>
+    <div><span><span class="tr">Tarih</span><span class="en">Date</span></span><br>2026-04-23</div>
   </div>
 </div>
 
 <!-- ══ PAGE 1: PROBLEM SPACE ══════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 1 — Başlangıç Noktası</div>
-  <h2>Neden Böyle Bir Şeye<br>İhtiyaç Duyuldu?</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 1 — Başlangıç Noktası</span><span class="en">◎ Section 1 — Starting Point</span></div>
+  <h2><span class="tr">Neden Böyle Bir Şeye<br>İhtiyaç Duyuldu?</span><span class="en">Why Was Something<br>Like This Needed?</span></h2>
   <p class="lead">
-    Her hafta podcast dinleniyor, videolar izleniyor, makaleler okunuyor — ama bu bilgiler birkaç gün içinde buharlaşıyor. Sorun "bilgi eksikliği" değil; bilginin <em>tutulamaması</em> ve <em>birbiriyle bağlanamaması</em>.
+    <span class="tr">Her hafta podcast dinleniyor, videolar izleniyor, makaleler okunuyor — ama bu bilgiler birkaç gün içinde buharlaşıyor. Sorun "bilgi eksikliği" değil; bilginin <em>tutulamaması</em> ve <em>birbiriyle bağlanamaması</em>.</span>
+    <span class="en">Every week podcasts are listened to, videos watched, articles read — but this knowledge evaporates within days. The problem isn't "lack of knowledge"; it's the inability to <em>retain</em> and <em>connect</em> it.</span>
   </p>
 
   <div class="problem-grid">
     <div class="problem-card p1">
-      <div class="problem-num">Problem 01 — Bilgi Dağınıklığı</div>
-      <h3>Parçalanmış Kaynaklar</h3>
-      <p>Bilgi YouTube'da, Spotify'da, PDF'lerde, tarayıcı sekmelerinde dağılmış halde. Hiçbir yerde tam resim yok. Konular arasındaki bağlantılar görünmüyor.</p>
-      <div class="problem-symptom">"Bunu nerede görmüştüm?" sorusu yanıtsız kalıyor.</div>
+      <div class="problem-num"><span class="tr">Problem 01 — Bilgi Dağınıklığı</span><span class="en">Problem 01 — Knowledge Fragmentation</span></div>
+      <h3><span class="tr">Parçalanmış Kaynaklar</span><span class="en">Fragmented Sources</span></h3>
+      <p><span class="tr">Bilgi YouTube'da, Spotify'da, PDF'lerde, tarayıcı sekmelerinde dağılmış halde. Hiçbir yerde tam resim yok. Konular arasındaki bağlantılar görünmüyor.</span><span class="en">Knowledge is scattered across YouTube, Spotify, PDFs, browser tabs. No complete picture anywhere. Connections between topics are invisible.</span></p>
+      <div class="problem-symptom"><span class="tr">"Bunu nerede görmüştüm?" sorusu yanıtsız kalıyor.</span><span class="en">"Where did I see this?" goes unanswered.</span></div>
     </div>
 
     <div class="problem-card p2">
-      <div class="problem-num">Problem 02 — Hafıza Kaybı</div>
-      <h3>Seanslar Arası Bağlam Yitiyor</h3>
-      <p>Her Claude oturumu sıfırdan başlıyor. Daha önce ne konuşulduğu, hangi hipotezlerin ortaya çıktığı, hangi soruların yanıtlanmadığı bilinmiyor.</p>
-      <div class="problem-symptom">Her seferinde her şeyi baştan anlatmak gerekiyor.</div>
+      <div class="problem-num"><span class="tr">Problem 02 — Hafıza Kaybı</span><span class="en">Problem 02 — Memory Loss</span></div>
+      <h3><span class="tr">Seanslar Arası Bağlam Yitiyor</span><span class="en">Context Lost Between Sessions</span></h3>
+      <p><span class="tr">Her Claude oturumu sıfırdan başlıyor. Daha önce ne konuşulduğu, hangi hipotezlerin ortaya çıktığı, hangi soruların yanıtlanmadığı bilinmiyor.</span><span class="en">Every Claude session starts from scratch. What was discussed before, which hypotheses emerged, which questions remain unanswered — all unknown.</span></p>
+      <div class="problem-symptom"><span class="tr">Her seferinde her şeyi baştan anlatmak gerekiyor.</span><span class="en">Everything has to be explained from the beginning every time.</span></div>
     </div>
 
     <div class="problem-card p3">
-      <div class="problem-num">Problem 03 — Soğuk Başlangıç</div>
-      <h3>Boş Sayfa Sorunu</h3>
-      <p>Yeni bir konu alanına girildiğinde agent'ın hiçbir arka planı yok. Grafik tamamen kopuk, bağlantısız. Nereden başlanacağı belirsiz.</p>
-      <div class="problem-symptom">Obsidian'da izole düğümler var, çizgi yok.</div>
+      <div class="problem-num"><span class="tr">Problem 03 — Soğuk Başlangıç</span><span class="en">Problem 03 — Cold Start</span></div>
+      <h3><span class="tr">Boş Sayfa Sorunu</span><span class="en">Blank Page Problem</span></h3>
+      <p><span class="tr">Yeni bir konu alanına girildiğinde agent'ın hiçbir arka planı yok. Grafik tamamen kopuk, bağlantısız. Nereden başlanacağı belirsiz.</span><span class="en">When entering a new topic area, the agent has no background. The graph is completely disconnected. Where to begin is unclear.</span></p>
+      <div class="problem-symptom"><span class="tr">Obsidian'da izole düğümler var, çizgi yok.</span><span class="en">Isolated nodes in Obsidian, no edges.</span></div>
     </div>
 
     <div class="problem-card p4">
-      <div class="problem-num">Problem 04 — Sentez Eksikliği</div>
-      <h3>Veri Var, İçgörü Yok</h3>
-      <p>Transcriptler mevcut ama "Bu farklı podcastler ne zaman çelişiyor?", "Bu hafta ne öğrendim?" gibi sorular yanıtsız. Veriden anlam üretilemiyor.</p>
-      <div class="problem-symptom">Ham içerik biriyor ama zihinsel model oluşmuyor.</div>
+      <div class="problem-num"><span class="tr">Problem 04 — Sentez Eksikliği</span><span class="en">Problem 04 — Synthesis Gap</span></div>
+      <h3><span class="tr">Veri Var, İçgörü Yok</span><span class="en">Data Exists, No Insight</span></h3>
+      <p><span class="tr">Transcriptler mevcut ama "Bu farklı podcastler ne zaman çelişiyor?", "Bu hafta ne öğrendim?" gibi sorular yanıtsız. Veriden anlam üretilemiyor.</span><span class="en">Transcripts exist but questions like "When do these podcasts contradict each other?" or "What did I learn this week?" go unanswered. Meaning cannot be extracted from data.</span></p>
+      <div class="problem-symptom"><span class="tr">Ham içerik biriyor ama zihinsel model oluşmuyor.</span><span class="en">Raw content accumulates but no mental model forms.</span></div>
     </div>
   </div>
 
   <div class="divider"></div>
 
-  <h3>Her Problem için Mimarinin Yanıtı</h3>
+  <h3><span class="tr">Her Problem için Mimarinin Yanıtı</span><span class="en">Architecture's Answer to Each Problem</span></h3>
 
   <div class="solution-row">
-    <div class="sol-problem">Bilgi dağınıklığı</div>
+    <div class="sol-problem"><span class="tr">Bilgi dağınıklığı</span><span class="en">Knowledge fragmentation</span></div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution">Tek bir wiki/ dizini — episodes/, shows/, guests/, topics/, concepts/</div>
+    <div class="sol-solution"><span class="tr">Tek bir wiki/ dizini — episodes/, shows/, guests/, topics/, concepts/</span><span class="en">Single wiki/ directory — episodes/, shows/, guests/, topics/, concepts/</span></div>
   </div>
   <div class="solution-row">
-    <div class="sol-problem">Hafıza kaybı</div>
+    <div class="sol-problem"><span class="tr">Hafıza kaybı</span><span class="en">Memory loss</span></div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution">memory/ + agents/*/MEMORY.md — kalıcı, dosya tabanlı bellek</div>
+    <div class="sol-solution"><span class="tr">memory/ + agents/*/MEMORY.md — kalıcı, dosya tabanlı bellek</span><span class="en">memory/ + agents/*/MEMORY.md — persistent, file-based memory</span></div>
   </div>
   <div class="solution-row">
-    <div class="sol-problem">Soğuk başlangıç</div>
+    <div class="sol-problem"><span class="tr">Soğuk başlangıç</span><span class="en">Cold start</span></div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution">Intake interview + bootstrap wiki — ilk gün bağlantılı başlangıç</div>
+    <div class="sol-solution"><span class="tr">Intake interview + bootstrap wiki — ilk gün bağlantılı başlangıç</span><span class="en">Intake interview + bootstrap wiki — connected start from day one</span></div>
   </div>
   <div class="solution-row">
-    <div class="sol-problem">Sentez eksikliği</div>
+    <div class="sol-problem"><span class="tr">Sentez eksikliği</span><span class="en">Synthesis gap</span></div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution">Consolidator + /query komutu — haftalık otomatik sentez</div>
+    <div class="sol-solution"><span class="tr">Consolidator + /query komutu — haftalık otomatik sentez</span><span class="en">Consolidator + /query command — weekly automated synthesis</span></div>
   </div>
 </div>
 
 <!-- ══ PAGE 2: MEMEX TEMPLATE ═══════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 2 — Memex Template</div>
-  <h2>Temel Şablonun<br>Anatomisi</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 2 — Memex Template</span><span class="en">◎ Section 2 — Memex Template</span></div>
+  <h2><span class="tr">Temel Şablonun<br>Anatomisi</span><span class="en">Anatomy of the<br>Base Template</span></h2>
   <p class="lead">
-    Memex, herhangi bir domain için kopyalanıp özelleştirilebilen genel amaçlı bir bilgi tabanı şablonudur. TypeScript motor + Markdown içerik + MCP server üçlüsünden oluşur.
+    <span class="tr">Memex, herhangi bir domain için kopyalanıp özelleştirilebilen genel amaçlı bir bilgi tabanı şablonudur. TypeScript motor + Markdown içerik + MCP server üçlüsünden oluşur.</span>
+    <span class="en">Memex is a general-purpose knowledge base template that can be copied and customized for any domain. It consists of three elements: TypeScript motor + Markdown content + MCP server.</span>
   </p>
 
   <!-- Memex architecture SVG -->
@@ -577,7 +611,8 @@
     <rect width="760" height="420" fill="#161b22" rx="10"/>
 
     <!-- Title -->
-    <text x="380" y="30" text-anchor="middle" fill="#8b949e" font-size="11" font-family="JetBrains Mono" letter-spacing="2">MEMEX — GENEL MİMARİ</text>
+    <text x="380" y="30" text-anchor="middle" fill="#8b949e" font-size="11" font-family="JetBrains Mono" letter-spacing="2" class="tr">MEMEX — GENEL MİMARİ</text>
+    <text x="380" y="30" text-anchor="middle" fill="#8b949e" font-size="11" font-family="JetBrains Mono" letter-spacing="2" class="en">MEMEX — GENERAL ARCHITECTURE</text>
 
     <!-- Layer: Motor (src/) -->
     <rect x="20" y="50" width="720" height="65" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
@@ -598,7 +633,8 @@
 
     <!-- Layer: Content -->
     <rect x="20" y="130" width="480" height="150" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
-    <text x="40" y="152" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1">MARKDOWN İÇERİK</text>
+    <text x="40" y="152" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="tr">MARKDOWN İÇERİK</text>
+    <text x="40" y="152" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="en">MARKDOWN CONTENT</text>
 
     <!-- wiki/ -->
     <rect x="40" y="162" width="200" height="105" rx="6" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.35" stroke-width="1"/>
@@ -607,7 +643,8 @@
     <text x="55" y="213" fill="#8b949e" font-size="9" font-family="JetBrains Mono">guests/    topics/</text>
     <text x="55" y="228" fill="#8b949e" font-size="9" font-family="JetBrains Mono">concepts/  syntheses/</text>
     <text x="55" y="243" fill="#8b949e" font-size="9" font-family="JetBrains Mono">raw/       archive/</text>
-    <text x="55" y="258" fill="#3fb950" font-size="9" font-family="JetBrains Mono">→ Domain bilgi tabanı</text>
+    <text x="55" y="258" fill="#3fb950" font-size="9" font-family="JetBrains Mono" class="tr">→ Domain bilgi tabanı</text>
+    <text x="55" y="258" fill="#3fb950" font-size="9" font-family="JetBrains Mono" class="en">→ Domain knowledge base</text>
 
     <!-- agents/ + memory/ + commands/ -->
     <rect x="258" y="162" width="105" height="45" rx="5" fill="#0d1117" stroke="#bc8cff" stroke-opacity="0.35"/>
@@ -636,24 +673,33 @@
     <text x="627" y="215" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">semantic search / wiki</text>
 
     <text x="534" y="242" fill="#8b949e" font-size="10" font-family="JetBrains Mono">► BM25 + embedding</text>
-    <text x="534" y="258" fill="#8b949e" font-size="10" font-family="JetBrains Mono">► wiki/üzerinde çalışır</text>
-    <text x="534" y="274" fill="#8b949e" font-size="10" font-family="JetBrains Mono">► Obsidian ile uyumlu</text>
+    <text x="534" y="258" fill="#8b949e" font-size="10" font-family="JetBrains Mono" class="tr">► wiki/üzerinde çalışır</text>
+    <text x="534" y="258" fill="#8b949e" font-size="10" font-family="JetBrains Mono" class="en">► works over wiki/</text>
+    <text x="534" y="274" fill="#8b949e" font-size="10" font-family="JetBrains Mono" class="tr">► Obsidian ile uyumlu</text>
+    <text x="534" y="274" fill="#8b949e" font-size="10" font-family="JetBrains Mono" class="en">► Obsidian compatible</text>
 
     <!-- CLAUDE.md top -->
     <rect x="20" y="296" width="720" height="40" rx="6" fill="#1c2128" stroke="#30363d" stroke-width="1"/>
-    <text x="380" y="312" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1">ANAYASA (CLAUDE.md) — Master şema, hard rules, tier sistemi, operasyon tanımları</text>
-    <text x="380" y="328" text-anchor="middle" fill="#e6edf3" font-size="10" font-family="JetBrains Mono">Her oturumda ilk okunan dosya — agent bu dosyaya göre davranır</text>
+    <text x="380" y="312" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="tr">ANAYASA (CLAUDE.md) — Master şema, hard rules, tier sistemi, operasyon tanımları</text>
+    <text x="380" y="312" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="en">CONSTITUTION (CLAUDE.md) — Master schema, hard rules, tier system, operation definitions</text>
+    <text x="380" y="328" text-anchor="middle" fill="#e6edf3" font-size="10" font-family="JetBrains Mono" class="tr">Her oturumda ilk okunan dosya — agent bu dosyaya göre davranır</text>
+    <text x="380" y="328" text-anchor="middle" fill="#e6edf3" font-size="10" font-family="JetBrains Mono" class="en">First file read every session — agent behaves according to this file</text>
 
     <!-- Two Memory Layers -->
     <rect x="20" y="352" width="349" height="52" rx="6" fill="#0d1117" stroke="#bc8cff" stroke-opacity="0.4"/>
-    <text x="194" y="370" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="1">HAFIZA KATMANı 1 — SÜREÇ HAFIZASI</text>
-    <text x="194" y="387" text-anchor="middle" fill="#8b949e" font-size="10">agents/*/MEMORY.md — Patterns, hipotezler, anti-patterns</text>
-    <text x="194" y="401" text-anchor="middle" fill="#8b949e" font-size="10">Her agent kendi hafızasını yönetir</text>
+    <text x="194" y="370" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="tr">HAFIZA KATMANı 1 — SÜREÇ HAFIZASI</text>
+    <text x="194" y="370" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="en">MEMORY LAYER 1 — PROCESS MEMORY</text>
+    <text x="194" y="387" text-anchor="middle" fill="#8b949e" font-size="10" class="tr">agents/*/MEMORY.md — Patterns, hipotezler, anti-patterns</text>
+    <text x="194" y="387" text-anchor="middle" fill="#8b949e" font-size="10" class="en">agents/*/MEMORY.md — Patterns, hypotheses, anti-patterns</text>
+    <text x="194" y="401" text-anchor="middle" fill="#8b949e" font-size="10" class="tr">Her agent kendi hafızasını yönetir</text>
+    <text x="194" y="401" text-anchor="middle" fill="#8b949e" font-size="10" class="en">Each agent manages its own memory</text>
 
     <rect x="391" y="352" width="349" height="52" rx="6" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.4"/>
-    <text x="565" y="370" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="1">HAFIZA KATMANı 2 — DOMAIN BİLGİSİ</text>
+    <text x="565" y="370" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="tr">HAFIZA KATMANı 2 — DOMAIN BİLGİSİ</text>
+    <text x="565" y="370" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="1" class="en">MEMORY LAYER 2 — DOMAIN KNOWLEDGE</text>
     <text x="565" y="387" text-anchor="middle" fill="#8b949e" font-size="10">wiki/ — Episodes, concepts, syntheses</text>
-    <text x="565" y="401" text-anchor="middle" fill="#8b949e" font-size="10">Consolidator haftalık köprü kurar: katman1 → katman2</text>
+    <text x="565" y="401" text-anchor="middle" fill="#8b949e" font-size="10" class="tr">Consolidator haftalık köprü kurar: katman1 → katman2</text>
+    <text x="565" y="401" text-anchor="middle" fill="#8b949e" font-size="10" class="en">Consolidator builds weekly bridge: layer1 → layer2</text>
 
     <!-- Connecting arrows -->
     <line x1="370" y1="352" x2="391" y2="352" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3,3"/>
@@ -661,26 +707,30 @@
   </svg>
 
   <div class="info-box">
-    <div class="ib-title">Tier Sistemi — Ne Zaman Ne Yüklenir?</div>
-    <strong>Tier 1</strong> (her oturumda): <span class="mono">memory/</span>, <span class="mono">scratch/ideas.md</span>, <span class="mono">journal/</span> (son 3 gün) — agent her zaman bu bağlamı bilir<br>
-    <strong>Tier 2</strong> (domain aktifken): <span class="mono">wiki/index.md</span>, <span class="mono">agents/[aktif]/AGENT.md + MEMORY.md</span><br>
-    <strong>Tier 3</strong> (açıkça istenince): <span class="mono">wiki/archive/</span>, <span class="mono">outputs/</span>, eski journal — nadiren yüklenir
+    <div class="ib-title"><span class="tr">Tier Sistemi — Ne Zaman Ne Yüklenir?</span><span class="en">Tier System — What Loads When?</span></div>
+    <span class="tr"><strong>Tier 1</strong> (her oturumda): <span class="mono">memory/</span>, <span class="mono">scratch/ideas.md</span>, <span class="mono">journal/</span> (son 3 gün) — agent her zaman bu bağlamı bilir</span>
+    <span class="en"><strong>Tier 1</strong> (every session): <span class="mono">memory/</span>, <span class="mono">scratch/ideas.md</span>, <span class="mono">journal/</span> (last 3 days) — agent always knows this context</span><br>
+    <span class="tr"><strong>Tier 2</strong> (domain aktifken): <span class="mono">wiki/index.md</span>, <span class="mono">agents/[aktif]/AGENT.md + MEMORY.md</span></span>
+    <span class="en"><strong>Tier 2</strong> (while domain is active): <span class="mono">wiki/index.md</span>, <span class="mono">agents/[active]/AGENT.md + MEMORY.md</span></span><br>
+    <span class="tr"><strong>Tier 3</strong> (açıkça istenince): <span class="mono">wiki/archive/</span>, <span class="mono">outputs/</span>, eski journal — nadiren yüklenir</span>
+    <span class="en"><strong>Tier 3</strong> (only when explicitly requested): <span class="mono">wiki/archive/</span>, <span class="mono">outputs/</span>, old journal — rarely loaded</span>
   </div>
 </div>
 
 <!-- ══ PAGE 3: THE 3 PROJECTS ════════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 3 — Örnek Projeler</div>
-  <h2>Memex'ten Türeyen<br>3 Domain Projesi</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 3 — Örnek Projeler</span><span class="en">◎ Section 3 — Example Projects</span></div>
+  <h2><span class="tr">Memex'ten Türeyen<br>3 Domain Projesi</span><span class="en">3 Domain Projects<br>Derived from Memex</span></h2>
   <p class="lead">
-    Memex şablonu, farklı içerik türleri için kopyalanır ve domain'e özel hale getirilir. Altyapı (motor, MCP, hafıza sistemi) aynı kalır; değişen yalnızca <em>ne tür içerik işlendiği</em> ve <em>wiki şeması</em>dır.
+    <span class="tr">Memex şablonu, farklı içerik türleri için kopyalanır ve domain'e özel hale getirilir. Altyapı (motor, MCP, hafıza sistemi) aynı kalır; değişen yalnızca <em>ne tür içerik işlendiği</em> ve <em>wiki şeması</em>dır.</span>
+    <span class="en">The Memex template is copied for different content types and customized for each domain. The infrastructure (motor, MCP, memory system) stays the same; only <em>what type of content is processed</em> and the <em>wiki schema</em> changes.</span>
   </p>
 
   <div class="project-row">
     <div class="project-card">
       <span class="project-icon">🎙️</span>
       <h3>Podvault</h3>
-      <p class="proj-sub">Podcast Bilgi Tabanı</p>
+      <p class="proj-sub"><span class="tr">Podcast Bilgi Tabanı</span><span class="en">Podcast Knowledge Base</span></p>
       <div class="tag-list">
         <span class="tag green">YouTube transcript</span>
         <span class="tag green">RSS feed</span>
@@ -688,17 +738,17 @@
       </div>
       <br>
       <div style="font-size:11px; color:#8b949e; text-align:left; margin-top:8px;">
-        <strong style="color:#e6edf3;">Kaynak:</strong> YouTube URL, RSS feed, Spotify<br>
+        <strong style="color:#e6edf3;"><span class="tr">Kaynak:</span><span class="en">Source:</span></strong> YouTube URL, RSS feed, Spotify<br>
         <strong style="color:#e6edf3;">Wiki:</strong> episodes/, shows/, guests/, topics/<br>
-        <strong style="color:#e6edf3;">Sıklık:</strong> Haftalık ingest<br>
-        <strong style="color:#e6edf3;">Sorular:</strong> Konu A neden önemli? Konu B nasıl gelişiyor?
+        <strong style="color:#e6edf3;"><span class="tr">Sıklık:</span><span class="en">Frequency:</span></strong> <span class="tr">Haftalık ingest</span><span class="en">Weekly ingest</span><br>
+        <strong style="color:#e6edf3;"><span class="tr">Sorular:</span><span class="en">Questions:</span></strong> <span class="tr">BCI-AI bağlantısı? Nöromorfik gelişmeler?</span><span class="en">BCI-AI connection? Neuromorphic developments?</span>
       </div>
     </div>
 
     <div class="project-card">
       <span class="project-icon">📄</span>
       <h3>Docvault</h3>
-      <p class="proj-sub">Geliştirici Dokümantasyon Tabanı</p>
+      <p class="proj-sub"><span class="tr">Geliştirici Dokümantasyon Tabanı</span><span class="en">Developer Documentation Base</span></p>
       <div class="tag-list">
         <span class="tag">Library docs</span>
         <span class="tag">Changelogs</span>
@@ -706,17 +756,17 @@
       </div>
       <br>
       <div style="font-size:11px; color:#8b949e; text-align:left; margin-top:8px;">
-        <strong style="color:#e6edf3;">Kaynak:</strong> wiki/raw/docs/ klasörüne bırakılan dosyalar<br>
+        <strong style="color:#e6edf3;"><span class="tr">Kaynak:</span><span class="en">Source:</span></strong> <span class="tr">wiki/raw/docs/ klasörüne bırakılan dosyalar</span><span class="en">Files dropped into wiki/raw/docs/</span><br>
         <strong style="color:#e6edf3;">Wiki:</strong> libraries/, patterns/, gotchas/<br>
-        <strong style="color:#e6edf3;">Sıklık:</strong> Yeni kütüphane eklenince<br>
-        <strong style="color:#e6edf3;">Çıktı:</strong> API özeti, breaking changes, upgrade paths
+        <strong style="color:#e6edf3;"><span class="tr">Sıklık:</span><span class="en">Frequency:</span></strong> <span class="tr">Yeni kütüphane eklenince</span><span class="en">When new library added</span><br>
+        <strong style="color:#e6edf3;"><span class="tr">Çıktı:</span><span class="en">Output:</span></strong> API özeti, breaking changes, upgrade paths
       </div>
     </div>
 
     <div class="project-card">
       <span class="project-icon">📊</span>
       <h3>Papervault</h3>
-      <p class="proj-sub">Araştırma Makalesi Tabanı</p>
+      <p class="proj-sub"><span class="tr">Araştırma Makalesi Tabanı</span><span class="en">Research Paper Base</span></p>
       <div class="tag-list">
         <span class="tag purple">arXiv PDF</span>
         <span class="tag purple">Abstract</span>
@@ -724,10 +774,10 @@
       </div>
       <br>
       <div style="font-size:11px; color:#8b949e; text-align:left; margin-top:8px;">
-        <strong style="color:#e6edf3;">Kaynak:</strong> wiki/raw/papers/ klasörüne bırakılan PDF'ler<br>
+        <strong style="color:#e6edf3;"><span class="tr">Kaynak:</span><span class="en">Source:</span></strong> <span class="tr">wiki/raw/papers/ klasörüne bırakılan PDF'ler</span><span class="en">PDFs dropped into wiki/raw/papers/</span><br>
         <strong style="color:#e6edf3;">Wiki:</strong> papers/, authors/, methods/, venues/<br>
-        <strong style="color:#e6edf3;">Sıklık:</strong> Makale okununca<br>
-        <strong style="color:#e6edf3;">Çıktı:</strong> Katkı, yöntem, limitation özeti
+        <strong style="color:#e6edf3;"><span class="tr">Sıklık:</span><span class="en">Frequency:</span></strong> <span class="tr">Makale okununca</span><span class="en">When article read</span><br>
+        <strong style="color:#e6edf3;"><span class="tr">Çıktı:</span><span class="en">Output:</span></strong> <span class="tr">Katkı, yöntem, limitation özeti</span><span class="en">Contribution, method, limitation summary</span>
       </div>
     </div>
   </div>
@@ -735,10 +785,10 @@
   <div class="divider"></div>
 
   <!-- Comparison table -->
-  <h3>Ne Değişiyor, Ne Aynı Kalıyor?</h3>
+  <h3><span class="tr">Ne Değişiyor, Ne Aynı Kalıyor?</span><span class="en">What Changes, What Stays the Same?</span></h3>
   <table>
     <tr>
-      <th>Bileşen</th>
+      <th><span class="tr">Bileşen</span><span class="en">Component</span></th>
       <th>Memex (template)</th>
       <th>Podvault</th>
       <th>Docvault</th>
@@ -746,31 +796,31 @@
     </tr>
     <tr>
       <td><span class="mono">src/</span> TypeScript motor</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
     </tr>
     <tr>
       <td>MCP Server</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
     </tr>
     <tr>
-      <td>Hafıza sistemi</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
+      <td><span class="tr">Hafıza sistemi</span><span class="en">Memory system</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
     </tr>
     <tr>
-      <td>CLAUDE.md kuralları</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
-      <td style="color:#3fb950">✓ Aynı</td>
+      <td><span class="tr">CLAUDE.md kuralları</span><span class="en">CLAUDE.md rules</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
+      <td style="color:#3fb950"><span class="tr">✓ Aynı</span><span class="en">✓ Same</span></td>
     </tr>
     <tr>
       <td>Fetcher / src/fetcher/</td>
@@ -780,7 +830,7 @@
       <td style="color:#ffa657">✎ PDF parser</td>
     </tr>
     <tr>
-      <td>Wiki şeması</td>
+      <td><span class="tr">Wiki şeması</span><span class="en">Wiki schema</span></td>
       <td style="color:#ffa657">— Generic</td>
       <td style="color:#ffa657">✎ episodes/shows/guests</td>
       <td style="color:#ffa657">✎ libraries/patterns</td>
@@ -788,14 +838,14 @@
     </tr>
     <tr>
       <td>CLAUDE.md Purpose</td>
-      <td style="color:#ffa657">— Blank</td>
-      <td style="color:#ffa657">✎ 6 podcast, haftalık</td>
+      <td style="color:#ffa657">— <span class="tr">Blank</span><span class="en">Blank</span></td>
+      <td style="color:#ffa657">✎ <span class="tr">6 podcast, haftalık</span><span class="en">6 podcasts, weekly</span></td>
       <td style="color:#ffa657">✎ Dev docs, stack</td>
-      <td style="color:#ffa657">✎ Research alan</td>
+      <td style="color:#ffa657">✎ <span class="tr">Research alan</span><span class="en">Research area</span></td>
     </tr>
     <tr>
-      <td>Bootstrap hipotezleri</td>
-      <td style="color:#ffa657">— Yok</td>
+      <td><span class="tr">Bootstrap hipotezleri</span><span class="en">Bootstrap hypotheses</span></td>
+      <td style="color:#ffa657">— <span class="tr">Yok</span><span class="en">None</span></td>
       <td style="color:#ffa657">✎ Intake interview</td>
       <td style="color:#ffa657">✎ Stack survey</td>
       <td style="color:#ffa657">✎ Research brief</td>
@@ -803,17 +853,19 @@
   </table>
 
   <div class="info-box">
-    <div class="ib-title">Kalıp — Template Method</div>
-    Bu, yazılımda "template method pattern"ının bir uygulamasıdır: <strong>algoritma şablonu Memex'te sabit</strong> (ingest → query → consolidate), <strong>domain-spesifik adımlar alt projede override edilir</strong> (fetcher, wiki şeması, CLAUDE.md purpose). Her yeni alan için sıfırdan başlamak gerekmez.
+    <div class="ib-title"><span class="tr">Kalıp — Template Method</span><span class="en">Pattern — Template Method</span></div>
+    <span class="tr">Bu, yazılımda "template method pattern"ının bir uygulamasıdır: <strong>algoritma şablonu Memex'te sabit</strong> (ingest → query → consolidate), <strong>domain-spesifik adımlar alt projede override edilir</strong> (fetcher, wiki şeması, CLAUDE.md purpose). Her yeni alan için sıfırdan başlamak gerekmez.</span>
+    <span class="en">This is an implementation of the "template method pattern" in software: <strong>the algorithm template is fixed in Memex</strong> (ingest → query → consolidate), <strong>domain-specific steps are overridden in the sub-project</strong> (fetcher, wiki schema, CLAUDE.md purpose). No need to start from scratch for each new domain.</span>
   </div>
 </div>
 
 <!-- ══ PAGE 4: PODVAULT PIPELINE ════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 4 — Podvault Detayı</div>
-  <h2>Podvault Pipeline:<br>Kaynaktan Wiki'ye</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 4 — Podvault Detayı</span><span class="en">◎ Section 4 — Podvault Detail</span></div>
+  <h2><span class="tr">Podvault Pipeline:<br>Kaynaktan Wiki'ye</span><span class="en">Podvault Pipeline:<br>From Source to Wiki</span></h2>
   <p class="lead">
-    Bir podcast URL'si girildiği andan yapılandırılmış wiki sayfasına dönüşmesine kadar geçen süreç. Her adımın neden orada olduğu ve hangi ihtiyaca yanıt verdiği.
+    <span class="tr">Bir podcast URL'si girildiği andan yapılandırılmış wiki sayfasına dönüşmesine kadar geçen süreç. Her adımın neden orada olduğu ve hangi ihtiyaca yanıt verdiği.</span>
+    <span class="en">The process from entering a podcast URL to becoming a structured wiki page. Why each step is there and which need it addresses.</span>
   </p>
 
   <!-- Full pipeline SVG -->
@@ -825,7 +877,8 @@
     <rect x="30" y="45" width="140" height="55" rx="8" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
     <text x="100" y="68" text-anchor="middle" fill="#58a6ff" font-size="12" font-family="JetBrains Mono" font-weight="600">/fetch-transcript</text>
     <text x="100" y="85" text-anchor="middle" fill="#8b949e" font-size="10">YouTube / RSS / Spotify</text>
-    <text x="100" y="97" text-anchor="middle" fill="#8b949e" font-size="10">URL girişi</text>
+    <text x="100" y="97" text-anchor="middle" fill="#8b949e" font-size="10" class="tr">URL girişi</text>
+    <text x="100" y="97" text-anchor="middle" fill="#8b949e" font-size="10" class="en">URL input</text>
 
     <!-- Arrow 1 -->
     <line x1="170" y1="72" x2="200" y2="72" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -833,33 +886,44 @@
     <!-- Step 2: Cascade Fetcher -->
     <rect x="200" y="45" width="170" height="350" rx="8" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
     <text x="285" y="68" text-anchor="middle" fill="#3fb950" font-size="12" font-family="JetBrains Mono" font-weight="600">CASCADE FETCHER</text>
-    <text x="285" y="82" text-anchor="middle" fill="#8b949e" font-size="9">3 adımlı deneme zinciri</text>
+    <text x="285" y="82" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">3 adımlı deneme zinciri</text>
+    <text x="285" y="82" text-anchor="middle" fill="#8b949e" font-size="9" class="en">3-step attempt chain</text>
 
     <!-- Cascade steps inside -->
     <rect x="216" y="92" width="138" height="60" rx="5" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.5"/>
-    <text x="285" y="110" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono">Adım 1 — YouTube</text>
+    <text x="285" y="110" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono" class="tr">Adım 1 — YouTube</text>
+    <text x="285" y="110" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono" class="en">Step 1 — YouTube</text>
     <text x="285" y="125" text-anchor="middle" fill="#8b949e" font-size="9">youtube-transcript API</text>
-    <text x="285" y="140" text-anchor="middle" fill="#8b949e" font-size="9">API key gerekmez</text>
+    <text x="285" y="140" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">API key gerekmez</text>
+    <text x="285" y="140" text-anchor="middle" fill="#8b949e" font-size="9" class="en">No API key required</text>
 
     <!-- Down arrow -->
-    <text x="285" y="168" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">▼ başarısız / devre dışı</text>
+    <text x="285" y="168" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="tr">▼ başarısız / devre dışı</text>
+    <text x="285" y="168" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="en">▼ failed / disabled</text>
 
     <rect x="216" y="177" width="138" height="70" rx="5" fill="#0d1117" stroke="#ffa657" stroke-opacity="0.5"/>
-    <text x="285" y="196" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">Adım 2 — RSS</text>
+    <text x="285" y="196" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono" class="tr">Adım 2 — RSS</text>
+    <text x="285" y="196" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono" class="en">Step 2 — RSS</text>
     <text x="285" y="211" text-anchor="middle" fill="#8b949e" font-size="9">shows-config.json</text>
-    <text x="285" y="226" text-anchor="middle" fill="#8b949e" font-size="9">rss-parser kütüphanesi</text>
-    <text x="285" y="241" text-anchor="middle" fill="#8b949e" font-size="9">En son bölüm içeriği</text>
+    <text x="285" y="226" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">rss-parser kütüphanesi</text>
+    <text x="285" y="226" text-anchor="middle" fill="#8b949e" font-size="9" class="en">rss-parser library</text>
+    <text x="285" y="241" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">En son bölüm içeriği</text>
+    <text x="285" y="241" text-anchor="middle" fill="#8b949e" font-size="9" class="en">Latest episode content</text>
 
-    <text x="285" y="262" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">▼ tüm feed'ler başarısız</text>
+    <text x="285" y="262" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="tr">▼ tüm feed'ler başarısız</text>
+    <text x="285" y="262" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="en">▼ all feeds failed</text>
 
     <rect x="216" y="272" width="138" height="70" rx="5" fill="#0d1117" stroke="#e3b341" stroke-opacity="0.5"/>
-    <text x="285" y="292" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono">Adım 3 — Whisper</text>
-    <text x="285" y="308" text-anchor="middle" fill="#8b949e" font-size="9">yt-dlp → MP3 indir</text>
+    <text x="285" y="292" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono" class="tr">Adım 3 — Whisper</text>
+    <text x="285" y="292" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono" class="en">Step 3 — Whisper</text>
+    <text x="285" y="308" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">yt-dlp → MP3 indir</text>
+    <text x="285" y="308" text-anchor="middle" fill="#8b949e" font-size="9" class="en">yt-dlp → download MP3</text>
     <text x="285" y="323" text-anchor="middle" fill="#8b949e" font-size="9">openai-whisper (local)</text>
     <text x="285" y="338" text-anchor="middle" fill="#8b949e" font-size="9">GPU yok → model:base</text>
 
     <rect x="216" y="358" width="138" height="30" rx="5" fill="#238636" fill-opacity="0.25" stroke="#3fb950" stroke-opacity="0.5"/>
-    <text x="285" y="377" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">✓ Transcript elde edildi</text>
+    <text x="285" y="377" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono" class="tr">✓ Transcript elde edildi</text>
+    <text x="285" y="377" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono" class="en">✓ Transcript obtained</text>
 
     <!-- Arrow 2 -->
     <line x1="370" y1="210" x2="400" y2="210" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -881,11 +945,16 @@
     <!-- Step 4: Ingest -->
     <rect x="400" y="300" width="150" height="95" rx="8" fill="#0d1117" stroke="#58a6ff" stroke-width="1.5"/>
     <text x="475" y="320" text-anchor="middle" fill="#58a6ff" font-size="11" font-family="JetBrains Mono" font-weight="600">INGEST SKILL</text>
-    <text x="415" y="337" fill="#8b949e" font-size="9" font-family="JetBrains Mono">1. Transkript oku</text>
-    <text x="415" y="350" fill="#8b949e" font-size="9" font-family="JetBrains Mono">2. Yapıyı çıkar</text>
-    <text x="415" y="363" fill="#8b949e" font-size="9" font-family="JetBrains Mono">3. Episode sayfası yaz</text>
-    <text x="415" y="376" fill="#8b949e" font-size="9" font-family="JetBrains Mono">4. Show/guest/topic güncelle</text>
-    <text x="415" y="389" fill="#8b949e" font-size="9" font-family="JetBrains Mono">5. log.md'ye yaz</text>
+    <text x="415" y="337" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="tr">1. Transkript oku</text>
+    <text x="415" y="337" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="en">1. Read transcript</text>
+    <text x="415" y="350" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="tr">2. Yapıyı çıkar</text>
+    <text x="415" y="350" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="en">2. Extract structure</text>
+    <text x="415" y="363" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="tr">3. Episode sayfası yaz</text>
+    <text x="415" y="363" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="en">3. Write episode page</text>
+    <text x="415" y="376" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="tr">4. Show/guest/topic güncelle</text>
+    <text x="415" y="376" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="en">4. Update show/guest/topic</text>
+    <text x="415" y="389" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="tr">5. log.md'ye yaz</text>
+    <text x="415" y="389" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="en">5. Write to log.md</text>
 
     <!-- Arrow 4 -->
     <line x1="550" y1="347" x2="580" y2="347" stroke="#30363d" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -909,9 +978,11 @@
     <rect x="658" y="354" width="61" height="20" rx="3" fill="#1c2128" stroke="#30363d"/>
     <text x="688" y="368" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">concepts/</text>
 
-    <text x="657" y="393" text-anchor="middle" fill="#8b949e" font-size="9">Çift yönlü [[links]]</text>
+    <text x="657" y="393" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">Çift yönlü [[links]]</text>
+    <text x="657" y="393" text-anchor="middle" fill="#8b949e" font-size="9" class="en">Bidirectional [[links]]</text>
     <text x="657" y="406" text-anchor="middle" fill="#58a6ff" font-size="9">Obsidian graph view</text>
-    <text x="657" y="420" text-anchor="middle" fill="#8b949e" font-size="9">Her claim → kaynak episode</text>
+    <text x="657" y="420" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">Her claim → kaynak episode</text>
+    <text x="657" y="420" text-anchor="middle" fill="#8b949e" font-size="9" class="en">Every claim → source episode</text>
     <text x="657" y="434" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono">status: active</text>
 
     <!-- Arrow to final output -->
@@ -930,23 +1001,26 @@
   </svg>
 
   <div class="warn-box">
-    <div class="ib-title">Cascade'in Varlık Nedeni</div>
-    Tüm podcast'ler YouTube'da transkript sağlamaz (örn. bazı kanallar kısa klipler yayınlar, tam bölümleri RSS üzerinden dağıtır). RSS bazı podcast'lerin tam metnini içerir. Whisper son resort olarak her türlü ses dosyasını metin yapabilir. Bu 3 katman, kaynak ne olursa olsun transcript üretimini garanti altına alır.
+    <div class="ib-title"><span class="tr">Cascade'in Varlık Nedeni</span><span class="en">Why Cascade Exists</span></div>
+    <span class="tr">Tüm podcast'ler YouTube'da transkript sağlamaz (örn. bazı kanallar kısa klipler yayınlar, tam bölümleri RSS üzerinden dağıtır). RSS bazı podcast'lerin tam metnini içerir. Whisper son resort olarak her türlü ses dosyasını metin yapabilir. Bu 3 katman, kaynak ne olursa olsun transcript üretimini garanti altına alır.</span>
+    <span class="en">Not all podcasts provide transcripts on YouTube (e.g. some channels publish short clips, distributing full episodes via RSS). RSS contains the full text of some podcasts. Whisper as a last resort can transcribe any audio file. These 3 layers guarantee transcript generation regardless of the source.</span>
   </div>
 </div>
 
 <!-- ══ PAGE 5: FETCH CASCADE DETAIL ══════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 5 — Cascade Fetcher Detayı</div>
-  <h2>Transcript Cascade:<br>3 Kaynak, 1 Çıktı</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 5 — Cascade Fetcher Detayı</span><span class="en">◎ Section 5 — Cascade Fetcher Detail</span></div>
+  <h2><span class="tr">Transcript Cascade:<br>3 Kaynak, 1 Çıktı</span><span class="en">Transcript Cascade:<br>3 Sources, 1 Output</span></h2>
   <p class="lead">
-    Her kaynak türünün neden hiyerarşide farklı bir yerde olduğu ve gerçek dünya senaryolarında nasıl devreye girdiği.
+    <span class="tr">Her kaynak türünün neden hiyerarşide farklı bir yerde olduğu ve gerçek dünya senaryolarında nasıl devreye girdiği.</span>
+    <span class="en">Why each source type is at a different position in the hierarchy and how it comes into play in real-world scenarios.</span>
   </p>
 
   <!-- Source type flow diagram -->
   <svg class="flow-svg" viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg">
     <rect width="760" height="320" fill="#161b22" rx="10"/>
-    <text x="380" y="25" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="2">KAYNAK TİPİ → YÖNTEM EŞLEMESI</text>
+    <text x="380" y="25" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="2" class="tr">KAYNAK TİPİ → YÖNTEM EŞLEMESI</text>
+    <text x="380" y="25" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="2" class="en">SOURCE TYPE → METHOD MAPPING</text>
 
     <!-- YouTube path -->
     <rect x="20" y="45" width="110" height="35" rx="6" fill="#f85149" fill-opacity="0.15" stroke="#f85149" stroke-opacity="0.4"/>
@@ -954,17 +1028,22 @@
 
     <line x1="130" y1="62" x2="175" y2="62" stroke="#30363d" stroke-width="1.2"/>
     <rect x="175" y="45" width="130" height="35" rx="5" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.5"/>
-    <text x="240" y="62" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono">Adım 1: YT API</text>
-    <text x="240" y="74" text-anchor="middle" fill="#8b949e" font-size="9">caption alınırsa → biter</text>
+    <text x="240" y="62" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono" class="tr">Adım 1: YT API</text>
+    <text x="240" y="62" text-anchor="middle" fill="#58a6ff" font-size="10" font-family="JetBrains Mono" class="en">Step 1: YT API</text>
+    <text x="240" y="74" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">caption alınırsa → biter</text>
+    <text x="240" y="74" text-anchor="middle" fill="#8b949e" font-size="9" class="en">if caption received → done</text>
 
     <text x="316" y="62" fill="#f85149" font-size="10">→</text>
     <rect x="325" y="45" width="130" height="35" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
-    <text x="390" y="62" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">Adım 2: RSS</text>
-    <text x="390" y="74" text-anchor="middle" fill="#8b949e" font-size="9">shows-config ile eşle</text>
+    <text x="390" y="62" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono" class="tr">Adım 2: RSS</text>
+    <text x="390" y="62" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono" class="en">Step 2: RSS</text>
+    <text x="390" y="74" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">shows-config ile eşle</text>
+    <text x="390" y="74" text-anchor="middle" fill="#8b949e" font-size="9" class="en">match via shows-config</text>
 
     <text x="466" y="62" fill="#f85149" font-size="10">→</text>
     <rect x="475" y="45" width="130" height="35" rx="5" fill="#1c2128" stroke="#e3b341" stroke-opacity="0.5"/>
-    <text x="540" y="62" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono">Adım 3: Whisper</text>
+    <text x="540" y="62" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono" class="tr">Adım 3: Whisper</text>
+    <text x="540" y="62" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono" class="en">Step 3: Whisper</text>
     <text x="540" y="74" text-anchor="middle" fill="#8b949e" font-size="9">yt-dlp + local model</text>
 
     <!-- RSS path -->
@@ -973,8 +1052,10 @@
 
     <line x1="130" y1="122" x2="325" y2="122" stroke="#30363d" stroke-width="1.2"/>
     <rect x="325" y="105" width="130" height="35" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
-    <text x="390" y="122" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">Direkt RSS fetch</text>
-    <text x="390" y="134" text-anchor="middle" fill="#8b949e" font-size="9">En son bölüm → biter</text>
+    <text x="390" y="122" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono" class="tr">Direkt RSS fetch</text>
+    <text x="390" y="122" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono" class="en">Direct RSS fetch</text>
+    <text x="390" y="134" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">En son bölüm → biter</text>
+    <text x="390" y="134" text-anchor="middle" fill="#8b949e" font-size="9" class="en">Latest episode → done</text>
 
     <!-- Spotify path -->
     <rect x="20" y="165" width="110" height="35" rx="6" fill="#3fb950" fill-opacity="0.15" stroke="#3fb950" stroke-opacity="0.4"/>
@@ -982,22 +1063,26 @@
 
     <line x1="130" y1="182" x2="175" y2="182" stroke="#30363d" stroke-width="1.2"/>
     <rect x="175" y="165" width="130" height="35" rx="5" fill="#1c2128" stroke="#bc8cff" stroke-opacity="0.4"/>
-    <text x="240" y="182" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono">YT transcript yok</text>
+    <text x="240" y="182" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono" class="tr">YT transcript yok</text>
+    <text x="240" y="182" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="JetBrains Mono" class="en">No YT transcript</text>
     <text x="240" y="194" text-anchor="middle" fill="#8b949e" font-size="9">source → 'spotify'</text>
 
     <line x1="305" y1="182" x2="325" y2="182" stroke="#30363d" stroke-width="1.2"/>
     <rect x="325" y="165" width="130" height="35" rx="5" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
     <text x="390" y="182" text-anchor="middle" fill="#ffa657" font-size="10" font-family="JetBrains Mono">shows-config RSS</text>
-    <text x="390" y="194" text-anchor="middle" fill="#8b949e" font-size="9">spotify_rss olarak etiket</text>
+    <text x="390" y="194" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">spotify_rss olarak etiket</text>
+    <text x="390" y="194" text-anchor="middle" fill="#8b949e" font-size="9" class="en">tagged as spotify_rss</text>
 
     <line x1="455" y1="182" x2="475" y2="182" stroke="#30363d" stroke-width="1.2"/>
     <rect x="475" y="165" width="130" height="35" rx="5" fill="#1c2128" stroke="#e3b341" stroke-opacity="0.5"/>
-    <text x="540" y="182" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono">Adım 3: Whisper</text>
+    <text x="540" y="182" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono" class="tr">Adım 3: Whisper</text>
+    <text x="540" y="182" text-anchor="middle" fill="#e3b341" font-size="10" font-family="JetBrains Mono" class="en">Step 3: Whisper</text>
     <text x="540" y="194" text-anchor="middle" fill="#8b949e" font-size="9">fallback</text>
 
     <!-- Common output -->
     <rect x="620" y="85" width="120" height="125" rx="6" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
-    <text x="680" y="107" text-anchor="middle" fill="#3fb950" font-size="11" font-family="JetBrains Mono" font-weight="600">ÇIKTI</text>
+    <text x="680" y="107" text-anchor="middle" fill="#3fb950" font-size="11" font-family="JetBrains Mono" font-weight="600" class="tr">ÇIKTI</text>
+    <text x="680" y="107" text-anchor="middle" fill="#3fb950" font-size="11" font-family="JetBrains Mono" font-weight="600" class="en">OUTPUT</text>
     <text x="680" y="123" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono">Frontmatter:</text>
     <text x="680" y="138" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono">transcript_source:</text>
     <text x="680" y="152" text-anchor="middle" fill="#e3b341" font-size="9" font-family="JetBrains Mono">  youtube</text>
@@ -1011,28 +1096,32 @@
     <line x1="605" y1="182" x2="620" y2="175" stroke="#30363d" stroke-dasharray="3,3"/>
 
     <!-- Real examples -->
-    <text x="20" y="230" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1">GERÇEK SENARYOLAR (2026-04-23)</text>
+    <text x="20" y="230" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1" class="tr">GERÇEK SENARYOLAR (2026-04-23)</text>
+    <text x="20" y="230" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1" class="en">REAL SCENARIOS (2026-04-23)</text>
 
     <rect x="20" y="243" width="220" height="25" rx="4" fill="#238636" fill-opacity="0.1" stroke="#3fb950" stroke-opacity="0.3"/>
-    <text x="30" y="259" fill="#3fb950" font-size="9" font-family="JetBrains Mono">✓ YT: &lt;video_id&gt; → youtube transcript (Podcast A)</text>
+    <text x="30" y="259" fill="#3fb950" font-size="9" font-family="JetBrains Mono">✓ YT: LZeMZgJszKU → youtube transcript (AI Daily Brief)</text>
 
     <rect x="248" y="243" width="250" height="25" rx="4" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.4"/>
-    <text x="258" y="259" fill="#ffa657" font-size="9" font-family="JetBrains Mono">✓ RSS: &lt;video_id&gt; → caption disabled → Podcast B RSS</text>
+    <text x="258" y="259" fill="#ffa657" font-size="9" font-family="JetBrains Mono">✓ RSS: D7kmBc5kOVE → caption disabled → Hard Fork RSS</text>
 
     <rect x="506" y="243" width="234" height="25" rx="4" fill="#1c2128" stroke="#e3b341" stroke-opacity="0.4"/>
-    <text x="516" y="259" fill="#e3b341" font-size="9" font-family="JetBrains Mono">○ Whisper: Podcast C tam bölümler (henüz test edilmedi)</text>
+    <text x="516" y="259" fill="#e3b341" font-size="9" font-family="JetBrains Mono" class="tr">○ Whisper: 111Hz tam bölümler (henüz test edilmedi)</text>
+    <text x="516" y="259" fill="#e3b341" font-size="9" font-family="JetBrains Mono" class="en">○ Whisper: 111Hz full episodes (not yet tested)</text>
 
     <!-- shows-config explanation -->
     <rect x="20" y="278" width="720" height="32" rx="6" fill="#1c2128" stroke="#30363d"/>
     <text x="30" y="294" fill="#8b949e" font-size="10" font-family="JetBrains Mono">shows-config.json:</text>
     <text x="155" y="294" fill="#3fb950" font-size="10" font-family="JetBrains Mono">{ name, youtube_channel, rss_feed }</text>
-    <text x="380" y="294" fill="#8b949e" font-size="10" font-family="JetBrains Mono">— 6 show kaydı, channel ID eşleme</text>
-    <text x="30" y="306" fill="#8b949e" font-size="9" font-family="JetBrains Mono">YouTube channel ID URL'de geçiyorsa → o show'un RSS'ini dene; geçmiyorsa → tüm feed'leri sırayla dene</text>
+    <text x="380" y="294" fill="#8b949e" font-size="10" font-family="JetBrains Mono" class="tr">— 6 show kaydı, channel ID eşleme</text>
+    <text x="380" y="294" fill="#8b949e" font-size="10" font-family="JetBrains Mono" class="en">— 6 show records, channel ID mapping</text>
+    <text x="30" y="306" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="tr">YouTube channel ID URL'de geçiyorsa → o show'un RSS'ini dene; geçmiyorsa → tüm feed'leri sırayla dene</text>
+    <text x="30" y="306" fill="#8b949e" font-size="9" font-family="JetBrains Mono" class="en">If YouTube channel ID appears in URL → try that show's RSS; otherwise → try all feeds in order</text>
   </svg>
 
   <div class="divider"></div>
-  <h3>Kod: Cascade Mantığı</h3>
-  <div class="code-block">
+  <h3><span class="tr">Kod: Cascade Mantığı</span><span class="en">Code: Cascade Logic</span></h3>
+  <div class="code-block tr">
 <span class="comment">// src/fetcher/index.ts — Ana cascade zinciri</span>
 <span class="kw">const</span> result =
   (<span class="kw">await</span> <span class="type">tryYoutube</span>(url))      <span class="comment">// Adım 1: caption varsa biter</span>
@@ -1042,14 +1131,25 @@
 <span class="comment">// Sonuç: transcript_source frontmatter'ına yazılır</span>
 <span class="comment">// Dosya adı: {date}-{source}-{slugified-identifier}.md</span>
   </div>
+  <div class="code-block en">
+<span class="comment">// src/fetcher/index.ts — Main cascade chain</span>
+<span class="kw">const</span> result =
+  (<span class="kw">await</span> <span class="type">tryYoutube</span>(url))      <span class="comment">// Step 1: done if caption exists</span>
+  ?? (<span class="kw">await</span> <span class="type">tryRssFeeds</span>(url)) <span class="comment">// Step 2: via shows-config</span>
+  ?? (<span class="kw">await</span> <span class="type">tryWhisper</span>(url));   <span class="comment">// Step 3: local Whisper (fallback)</span>
+
+<span class="comment">// Result: written to transcript_source frontmatter</span>
+<span class="comment">// Filename: {date}-{source}-{slugified-identifier}.md</span>
+  </div>
 </div>
 
 <!-- ══ PAGE 6: INGEST DETAIL ════════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 6 — Ingest Adımları</div>
-  <h2>Ingest: Ham Transcript'ten<br>Bağlantılı Wiki'ye</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 6 — Ingest Adımları</span><span class="en">◎ Section 6 — Ingest Steps</span></div>
+  <h2><span class="tr">Ingest: Ham Transcript'ten<br>Bağlantılı Wiki'ye</span><span class="en">Ingest: From Raw Transcript<br>to Linked Wiki</span></h2>
   <p class="lead">
-    Bir transkript dosyası okunduğunda agent'ın sistematik olarak ne yaptığı. Ingest'in amacı yalnızca özetlemek değil, <strong>çift yönlü bağlantılı bir bilgi ağı oluşturmak</strong>.
+    <span class="tr">Bir transkript dosyası okunduğunda agent'ın sistematik olarak ne yaptığı. Ingest'in amacı yalnızca özetlemek değil, <strong>çift yönlü bağlantılı bir bilgi ağı oluşturmak</strong>.</span>
+    <span class="en">What the agent systematically does when a transcript file is read. The purpose of ingest is not just summarizing but <strong>building a bidirectionally linked knowledge network</strong>.</span>
   </p>
 
   <!-- Ingest flow SVG -->
@@ -1059,8 +1159,10 @@
     <!-- Step boxes -->
     <!-- 1 -->
     <rect x="15" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.5"/>
-    <text x="65" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 1</text>
-    <text x="65" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Oku &amp; Çıkar</text>
+    <text x="65" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="tr">ADIM 1</text>
+    <text x="65" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="en">STEP 1</text>
+    <text x="65" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="tr">Oku &amp; Çıkar</text>
+    <text x="65" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="en">Read &amp; Extract</text>
     <text x="65" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">Show, guest,</text>
     <text x="65" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">topics, insights</text>
     <text x="65" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">quotes, resources</text>
@@ -1069,8 +1171,10 @@
 
     <!-- 2 -->
     <rect x="135" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#3fb950" stroke-opacity="0.5"/>
-    <text x="185" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 2</text>
-    <text x="185" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Episode Sayfası</text>
+    <text x="185" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="tr">ADIM 2</text>
+    <text x="185" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="en">STEP 2</text>
+    <text x="185" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="tr">Episode Sayfası</text>
+    <text x="185" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="en">Episode Page</text>
     <text x="185" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/episodes/</text>
     <text x="185" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">YYYY-MM-DD-</text>
     <text x="185" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">show-slug.md</text>
@@ -1079,27 +1183,34 @@
 
     <!-- 3 -->
     <rect x="255" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#ffa657" stroke-opacity="0.5"/>
-    <text x="305" y="52" text-anchor="middle" fill="#ffa657" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 3</text>
-    <text x="305" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Show Güncelle</text>
+    <text x="305" y="52" text-anchor="middle" fill="#ffa657" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="tr">ADIM 3</text>
+    <text x="305" y="52" text-anchor="middle" fill="#ffa657" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="en">STEP 3</text>
+    <text x="305" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="tr">Show Güncelle</text>
+    <text x="305" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="en">Update Show</text>
     <text x="305" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/shows/</text>
-    <text x="305" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">Episodes listesi</text>
+    <text x="305" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5" class="tr">Episodes listesi</text>
+    <text x="305" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5" class="en">Episodes list</text>
     <text x="305" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">episodes_ingested++</text>
 
     <text x="365" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
 
     <!-- 4 -->
     <rect x="375" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#bc8cff" stroke-opacity="0.5"/>
-    <text x="425" y="52" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 4</text>
-    <text x="425" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Guest Sayfaları</text>
+    <text x="425" y="52" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="tr">ADIM 4</text>
+    <text x="425" y="52" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="en">STEP 4</text>
+    <text x="425" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="tr">Guest Sayfaları</text>
+    <text x="425" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600" class="en">Guest Pages</text>
     <text x="425" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/guests/</text>
-    <text x="425" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">Biyografi +</text>
+    <text x="425" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5" class="tr">Biyografi +</text>
+    <text x="425" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5" class="en">Biography +</text>
     <text x="425" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">episode backlinks</text>
 
     <text x="485" y="72" text-anchor="middle" fill="#3fb950" font-size="14">→</text>
 
     <!-- 5 -->
     <rect x="495" y="30" width="100" height="75" rx="6" fill="#1c2128" stroke="#58a6ff" stroke-opacity="0.4"/>
-    <text x="545" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 5</text>
+    <text x="545" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="tr">ADIM 5</text>
+    <text x="545" y="52" text-anchor="middle" fill="#58a6ff" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="en">STEP 5</text>
     <text x="545" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Topic/Concept</text>
     <text x="545" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/topics/</text>
     <text x="545" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/concepts/</text>
@@ -1109,14 +1220,19 @@
 
     <!-- 6 -->
     <rect x="615" y="30" width="130" height="75" rx="6" fill="#1c2128" stroke="#3fb950" stroke-opacity="0.5"/>
-    <text x="680" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5">ADIM 6-7</text>
+    <text x="680" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="tr">ADIM 6-7</text>
+    <text x="680" y="52" text-anchor="middle" fill="#3fb950" font-size="9" font-family="JetBrains Mono" letter-spacing="0.5" class="en">STEP 6-7</text>
     <text x="680" y="67" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="600">Index + Log</text>
-    <text x="680" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/index.md güncelle</text>
-    <text x="680" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5">wiki/log.md → operasyon</text>
-    <text x="680" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5">kaydı ekle</text>
+    <text x="680" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5" class="tr">wiki/index.md güncelle</text>
+    <text x="680" y="80" text-anchor="middle" fill="#8b949e" font-size="8.5" class="en">update wiki/index.md</text>
+    <text x="680" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5" class="tr">wiki/log.md → operasyon</text>
+    <text x="680" y="92" text-anchor="middle" fill="#8b949e" font-size="8.5" class="en">wiki/log.md → operation</text>
+    <text x="680" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5" class="tr">kaydı ekle</text>
+    <text x="680" y="104" text-anchor="middle" fill="#8b949e" font-size="8.5" class="en">add record</text>
 
     <!-- Bidirectional links illustration -->
-    <text x="380" y="140" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1">ÇİFT YÖNLÜ BAĞLANTI PRENSİBİ</text>
+    <text x="380" y="140" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1" class="tr">ÇİFT YÖNLÜ BAĞLANTI PRENSİBİ</text>
+    <text x="380" y="140" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono" letter-spacing="1" class="en">BIDIRECTIONAL LINK PRINCIPLE</text>
 
     <rect x="60" y="155" width="100" height="30" rx="5" fill="#238636" fill-opacity="0.2" stroke="#3fb950" stroke-opacity="0.5"/>
     <text x="110" y="174" text-anchor="middle" fill="#3fb950" font-size="10" font-family="JetBrains Mono">episode</text>
@@ -1141,22 +1257,34 @@
 
     <!-- Rule boxes -->
     <rect x="30" y="210" width="200" height="58" rx="5" fill="#0d1117" stroke="#f85149" stroke-opacity="0.4"/>
-    <text x="130" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">KURAL: raw/ sadece okunur</text>
-    <text x="130" y="242" text-anchor="middle" fill="#8b949e" font-size="9">wiki/raw/ hiçbir zaman</text>
-    <text x="130" y="255" text-anchor="middle" fill="#8b949e" font-size="9">değiştirilmez. Episode sayfası</text>
-    <text x="130" y="268" text-anchor="middle" fill="#8b949e" font-size="9">→ wiki/episodes/ altına gider.</text>
+    <text x="130" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="tr">KURAL: raw/ sadece okunur</text>
+    <text x="130" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="en">RULE: raw/ is read-only</text>
+    <text x="130" y="242" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">wiki/raw/ hiçbir zaman</text>
+    <text x="130" y="242" text-anchor="middle" fill="#8b949e" font-size="9" class="en">wiki/raw/ is never</text>
+    <text x="130" y="255" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">değiştirilmez. Episode sayfası</text>
+    <text x="130" y="255" text-anchor="middle" fill="#8b949e" font-size="9" class="en">modified. Episode page</text>
+    <text x="130" y="268" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">→ wiki/episodes/ altına gider.</text>
+    <text x="130" y="268" text-anchor="middle" fill="#8b949e" font-size="9" class="en">→ goes under wiki/episodes/.</text>
 
     <rect x="260" y="210" width="200" height="58" rx="5" fill="#0d1117" stroke="#f85149" stroke-opacity="0.4"/>
-    <text x="360" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">KURAL: kaynak zorunlu</text>
-    <text x="360" y="242" text-anchor="middle" fill="#8b949e" font-size="9">Her wiki iddiası [[raw/...]] ile</text>
-    <text x="360" y="255" text-anchor="middle" fill="#8b949e" font-size="9">kaynaklanır. Kaynaksız</text>
-    <text x="360" y="268" text-anchor="middle" fill="#8b949e" font-size="9">iddia yasaktır.</text>
+    <text x="360" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="tr">KURAL: kaynak zorunlu</text>
+    <text x="360" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="en">RULE: source required</text>
+    <text x="360" y="242" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">Her wiki iddiası [[raw/...]] ile</text>
+    <text x="360" y="242" text-anchor="middle" fill="#8b949e" font-size="9" class="en">Every wiki claim is sourced</text>
+    <text x="360" y="255" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">kaynaklanır. Kaynaksız</text>
+    <text x="360" y="255" text-anchor="middle" fill="#8b949e" font-size="9" class="en">with [[raw/...]]. Unsourced</text>
+    <text x="360" y="268" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">iddia yasaktır.</text>
+    <text x="360" y="268" text-anchor="middle" fill="#8b949e" font-size="9" class="en">claims are forbidden.</text>
 
     <rect x="490" y="210" width="250" height="58" rx="5" fill="#0d1117" stroke="#f85149" stroke-opacity="0.4"/>
-    <text x="615" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono">KURAL: locker üzerinden yaz</text>
-    <text x="615" y="242" text-anchor="middle" fill="#8b949e" font-size="9">wiki/ yazımları locker'dan geçer.</text>
-    <text x="615" y="255" text-anchor="middle" fill="#8b949e" font-size="9">Paralel yazım çakışmasını</text>
-    <text x="615" y="268" text-anchor="middle" fill="#8b949e" font-size="9">önler, atomiklik sağlar.</text>
+    <text x="615" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="tr">KURAL: locker üzerinden yaz</text>
+    <text x="615" y="228" text-anchor="middle" fill="#f85149" font-size="9" font-family="JetBrains Mono" class="en">RULE: write via locker</text>
+    <text x="615" y="242" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">wiki/ yazımları locker'dan geçer.</text>
+    <text x="615" y="242" text-anchor="middle" fill="#8b949e" font-size="9" class="en">wiki/ writes go through locker.</text>
+    <text x="615" y="255" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">Paralel yazım çakışmasını</text>
+    <text x="615" y="255" text-anchor="middle" fill="#8b949e" font-size="9" class="en">Prevents parallel write</text>
+    <text x="615" y="268" text-anchor="middle" fill="#8b949e" font-size="9" class="tr">önler, atomiklik sağlar.</text>
+    <text x="615" y="268" text-anchor="middle" fill="#8b949e" font-size="9" class="en">conflicts, ensures atomicity.</text>
 
     <defs>
       <marker id="arrow2" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
@@ -1170,12 +1298,12 @@
 
   <div class="divider"></div>
 
-  <h3>Bu Oturumda Gerçekleştirilen Ingest</h3>
+  <h3><span class="tr">Bu Oturumda Gerçekleştirilen Ingest</span><span class="en">Ingest Performed in This Session</span></h3>
   <table>
     <tr>
-      <th>Episode Sayfası</th>
-      <th>Kaynak</th>
-      <th>Yeni Sayfalar</th>
+      <th><span class="tr">Episode Sayfası</span><span class="en">Episode Page</span></th>
+      <th><span class="tr">Kaynak</span><span class="en">Source</span></th>
+      <th><span class="tr">Yeni Sayfalar</span><span class="en">New Pages</span></th>
     </tr>
     <tr>
       <td>Podcast A — Ep.12 · Konu X Genel Bakış</td>
@@ -1222,112 +1350,113 @@
 
 <!-- ══ PAGE 7: LIFECYCLE ════════════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 7 — Yaşam Döngüsü</div>
-  <h2>İhtiyaç Hangi Aşamada<br>Doğuyor?</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 7 — Yaşam Döngüsü</span><span class="en">◎ Section 7 — Lifecycle</span></div>
+  <h2><span class="tr">İhtiyaç Hangi Aşamada<br>Doğuyor?</span><span class="en">When Does Each<br>Need Arise?</span></h2>
   <p class="lead">
-    Podvault'u ilk kez kurmaktan birkaç ay sonrasına kadar olan süreçte hangi bileşenin devreye girdiği ve neden orada olduğu.
+    <span class="tr">Podvault'u ilk kez kurmaktan birkaç ay sonrasına kadar olan süreçte hangi bileşenin devreye girdiği ve neden orada olduğu.</span>
+    <span class="en">Which component comes into play from initially setting up Podvault to several months later, and why it's there.</span>
   </p>
 
   <div class="timeline">
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase setup">Kurulum</div></div>
+      <div class="tl-left"><div class="tl-phase setup"><span class="tr">Kurulum</span><span class="en">Setup</span></div></div>
       <div class="tl-dot setup"></div>
       <div class="tl-content">
-        <h4>Gün 1 — Soğuk Başlangıç Sorunu</h4>
+        <h4><span class="tr">Gün 1 — Soğuk Başlangıç Sorunu</span><span class="en">Day 1 — Cold Start Problem</span></h4>
         <ul>
-          <li>Intake interview: 6 soru, kullanıcı niyeti netleşiyor</li>
-          <li>Bootstrap wiki: shows/, topics/, guests/ stub sayfaları — Obsidian'da ilk günden bağlantılı başlangıç</li>
-          <li>CLAUDE.md doldurulur: purpose, 6 podcast, dinleme sıklığı, açık sorular</li>
-          <li>agents/researcher/MEMORY.md: 5 bootstrap hipotezi (Konu X ile Konu Y bağlantısı? vb.)</li>
-          <li>shows-config.json: YouTube channel ID + RSS feed eşlemeleri</li>
+          <li><span class="tr">Intake interview: 6 soru, kullanıcı niyeti netleşiyor</span><span class="en">Intake interview: 6 questions, user intent clarified</span></li>
+          <li><span class="tr">Bootstrap wiki: shows/, topics/, guests/ stub sayfaları — Obsidian'da ilk günden bağlantılı başlangıç</span><span class="en">Bootstrap wiki: shows/, topics/, guests/ stub pages — connected start from day one in Obsidian</span></li>
+          <li><span class="tr">CLAUDE.md doldurulur: purpose, 6 podcast, dinleme sıklığı, açık sorular</span><span class="en">CLAUDE.md filled in: purpose, 6 podcasts, listening frequency, open questions</span></li>
+          <li><span class="tr">agents/researcher/MEMORY.md: 5 bootstrap hipotezi (Konu X ile Konu Y bağlantısı? vb.)</span><span class="en">agents/researcher/MEMORY.md: 5 bootstrap hypotheses (Topic X—Topic Y connection? etc.)</span></li>
+          <li><span class="tr">shows-config.json: YouTube channel ID + RSS feed eşlemeleri</span><span class="en">shows-config.json: YouTube channel ID + RSS feed mappings</span></li>
         </ul>
       </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase setup">İlk Fetch</div></div>
+      <div class="tl-left"><div class="tl-phase setup"><span class="tr">İlk Fetch</span><span class="en">First Fetch</span></div></div>
       <div class="tl-dot setup"></div>
       <div class="tl-content">
-        <h4>Gün 1 — Fetcher'ın İhtiyacı</h4>
+        <h4><span class="tr">Gün 1 — Fetcher'ın İhtiyacı</span><span class="en">Day 1 — Need for the Fetcher</span></h4>
         <ul>
-          <li>/fetch-transcript URL → cascade çalışır: YouTube → RSS → Whisper</li>
-          <li>8 transcript indirildi: 7 YouTube caption, 1 RSS (caption kapalı kanal)</li>
-          <li>Dosyalar wiki/raw/transcripts/ altına frontmatter ile kaydedildi</li>
-          <li>Shows-config sayesinde caption devre dışı bırakılmış kanal otomatik RSS'e düştü</li>
+          <li><span class="tr">/fetch-transcript URL → cascade çalışır: YouTube → RSS → Whisper</span><span class="en">/fetch-transcript URL → cascade runs: YouTube → RSS → Whisper</span></li>
+          <li><span class="tr">8 transcript indirildi: 7 YouTube caption, 1 RSS (caption kapalı kanal)</span><span class="en">8 transcripts downloaded: 7 YouTube captions, 1 RSS (channel with captions disabled)</span></li>
+          <li><span class="tr">Dosyalar wiki/raw/transcripts/ altına frontmatter ile kaydedildi</span><span class="en">Files saved with frontmatter under wiki/raw/transcripts/</span></li>
+          <li><span class="tr">Shows-config sayesinde caption devre dışı bırakılmış kanal otomatik RSS'e düştü</span><span class="en">Thanks to shows-config, the channel with captions disabled automatically fell back to RSS</span></li>
         </ul>
       </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase cycle">İlk Ingest</div></div>
+      <div class="tl-left"><div class="tl-phase cycle"><span class="tr">İlk Ingest</span><span class="en">First Ingest</span></div></div>
       <div class="tl-dot cycle"></div>
       <div class="tl-content">
-        <h4>Gün 1 — Wiki Ağının Kurulması</h4>
+        <h4><span class="tr">Gün 1 — Wiki Ağının Kurulması</span><span class="en">Day 1 — Building the Wiki Network</span></h4>
         <ul>
-          <li>/ingest → 8 episode sayfası oluşturuldu (episodes/ altında)</li>
-          <li>4 guest profili açıldı: Konuk A, Konuk B, Konuk C, Konuk D</li>
-          <li>3 concept sayfası: kavram-a, kavram-b, kavram-c</li>
-          <li>Tüm show sayfaları güncellendi: episodes_ingested sayısı, episode listesi</li>
-          <li>index.md ve log.md güncellendi</li>
-          <li>Obsidian'da artık 15+ düğüm ve onlarca [[link]] bağlantısı</li>
+          <li><span class="tr">/ingest → 8 episode sayfası oluşturuldu (episodes/ altında)</span><span class="en">/ingest → 8 episode pages created (under episodes/)</span></li>
+          <li><span class="tr">4 guest profili açıldı: Konuk A, Konuk B, Konuk C, Konuk D</span><span class="en">4 guest profiles created: Guest A, Guest B, Guest C, Guest D</span></li>
+          <li><span class="tr">3 concept sayfası: kavram-a, kavram-b, kavram-c</span><span class="en">3 concept pages: concept-a, concept-b, concept-c</span></li>
+          <li><span class="tr">Tüm show sayfaları güncellendi: episodes_ingested sayısı, episode listesi</span><span class="en">All show pages updated: episodes_ingested count, episode list</span></li>
+          <li><span class="tr">index.md ve log.md güncellendi</span><span class="en">index.md and log.md updated</span></li>
+          <li><span class="tr">Obsidian'da artık 15+ düğüm ve onlarca [[link]] bağlantısı</span><span class="en">Now 15+ nodes and dozens of [[link]] connections in Obsidian</span></li>
         </ul>
       </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase cycle">Haftalık</div></div>
+      <div class="tl-left"><div class="tl-phase cycle"><span class="tr">Haftalık</span><span class="en">Weekly</span></div></div>
       <div class="tl-dot cycle"></div>
       <div class="tl-content">
-        <h4>Her Hafta — Tekrar Eden Döngü</h4>
+        <h4><span class="tr">Her Hafta — Tekrar Eden Döngü</span><span class="en">Every Week — Recurring Cycle</span></h4>
         <ul>
-          <li>Yeni bölümler yayınlandı → /fetch-transcript ile transcript indir</li>
-          <li>/ingest → wiki'ye ekle, mevcut show/guest/topic sayfalarını güncelle</li>
-          <li>Bağlantılar birikir: aynı kavram 3. kez geçince concepts/ sayfası açılır</li>
-          <li>Çelişkiler işaretlenir: ## CONFLICT — örn. Konuk A vs Konuk B aynı konuda farklı pozisyon</li>
+          <li><span class="tr">Yeni bölümler yayınlandı → /fetch-transcript ile transcript indir</span><span class="en">New episodes published → download transcript with /fetch-transcript</span></li>
+          <li><span class="tr">/ingest → wiki'ye ekle, mevcut show/guest/topic sayfalarını güncelle</span><span class="en">/ingest → add to wiki, update existing show/guest/topic pages</span></li>
+          <li><span class="tr">Bağlantılar birikir: aynı kavram 3. kez geçince concepts/ sayfası açılır</span><span class="en">Links accumulate: when the same concept appears a 3rd time, a concepts/ page is created</span></li>
+          <li><span class="tr">Çelişkiler işaretlenir: ## CONFLICT — örn. Konuk A vs Konuk B aynı konuda farklı pozisyon</span><span class="en">Contradictions flagged: ## CONFLICT — e.g. Guest A vs Guest B different positions on the same topic</span></li>
         </ul>
       </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase query">Sorgu</div></div>
+      <div class="tl-left"><div class="tl-phase query"><span class="tr">Sorgu</span><span class="en">Query</span></div></div>
       <div class="tl-dot query"></div>
       <div class="tl-content">
-        <h4>İstenen Zaman — Soru Sorma</h4>
+        <h4><span class="tr">İstenen Zaman — Soru Sorma</span><span class="en">On Demand — Asking Questions</span></h4>
         <ul>
-          <li>/query "Konu X ile Konu Y arasındaki bağlantı nedir?" → wiki araması → episode listesi → cevap</li>
-          <li>MCP server (obsidian-hybrid-search) semantic + BM25 arama yapar</li>
-          <li>Cevap wiki'ye syntheses/ altında kaydedilir (geri-dosyalama)</li>
-          <li>İlgili yeni sorular scratch/ideas.md'ye eklenir</li>
+          <li><span class="tr">/query "Konu X ile Konu Y arasındaki bağlantı nedir?" → wiki araması → episode listesi → cevap</span><span class="en">/query "What is the connection between Topic X and Topic Y?" → wiki search → episode list → answer</span></li>
+          <li><span class="tr">MCP server (obsidian-hybrid-search) semantic + BM25 arama yapar</span><span class="en">MCP server (obsidian-hybrid-search) performs semantic + BM25 search</span></li>
+          <li><span class="tr">Cevap wiki'ye syntheses/ altında kaydedilir (geri-dosyalama)</span><span class="en">Answer saved to wiki under syntheses/ (back-filing)</span></li>
+          <li><span class="tr">İlgili yeni sorular scratch/ideas.md'ye eklenir</span><span class="en">Related new questions added to scratch/ideas.md</span></li>
         </ul>
       </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase grow">Konsolidasyon</div></div>
+      <div class="tl-left"><div class="tl-phase grow"><span class="tr">Konsolidasyon</span><span class="en">Consolidation</span></div></div>
       <div class="tl-dot grow"></div>
       <div class="tl-content">
-        <h4>Haftalık Otomatik — Sentez Boşluğu Kapatılıyor</h4>
+        <h4><span class="tr">Haftalık Otomatik — Sentez Boşluğu Kapatılıyor</span><span class="en">Weekly Automatic — Closing the Synthesis Gap</span></h4>
         <ul>
-          <li>Consolidator çalışır: agents/researcher/MEMORY.md → wiki/syntheses/</li>
-          <li>Tier 1 (süreç hafızası) → Tier 2 (domain bilgisi) köprüsü</li>
-          <li>Hipotezler test edilir: "Konu X–Konu Y bağlantısı" hipotezi yeni ingest edilen bölümle güçlendi mi?</li>
-          <li>/lint çalışır: orphan sayfalar, kaynaksız iddialar, kırık linkler raporlanır</li>
-          <li>Wiki sağlığı artık otomatik denetleniyor</li>
+          <li><span class="tr">Consolidator çalışır: agents/researcher/MEMORY.md → wiki/syntheses/</span><span class="en">Consolidator runs: agents/researcher/MEMORY.md → wiki/syntheses/</span></li>
+          <li><span class="tr">Tier 1 (süreç hafızası) → Tier 2 (domain bilgisi) köprüsü</span><span class="en">Tier 1 (process memory) → Tier 2 (domain knowledge) bridge</span></li>
+          <li><span class="tr">Hipotezler test edilir: "Konu X–Konu Y bağlantısı" hipotezi yeni ingest edilen bölümle güçlendi mi?</span><span class="en">Hypotheses tested: did the "Topic X–Topic Y connection" hypothesis strengthen with the newly ingested episode?</span></li>
+          <li><span class="tr">/lint çalışır: orphan sayfalar, kaynaksız iddialar, kırık linkler raporlanır</span><span class="en">/lint runs: orphan pages, unsourced claims, broken links reported</span></li>
+          <li><span class="tr">Wiki sağlığı artık otomatik denetleniyor</span><span class="en">Wiki health is now automatically monitored</span></li>
         </ul>
       </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-phase grow">Büyüme</div></div>
+      <div class="tl-left"><div class="tl-phase grow"><span class="tr">Büyüme</span><span class="en">Growth</span></div></div>
       <div class="tl-dot grow"></div>
       <div class="tl-content">
-        <h4>Aylar Sonra — Değer Kümülatif Birikir</h4>
+        <h4><span class="tr">Aylar Sonra — Değer Kümülatif Birikir</span><span class="en">Months Later — Value Accumulates Cumulatively</span></h4>
         <ul>
-          <li>Aynı konuya (örn. Konu X) farklı podcast'lerden 10+ episode bağlandıkça syntheses/ zenginleşir</li>
-          <li>Obsidian grafında "hub" düğümler ortaya çıkar: en çok geçen kavramlar merkeze yerleşir</li>
-          <li>Yeni bir bölüm ingest edildiğinde agent önceki bilgiyle bağlantı kuruyor</li>
-          <li>Örn: Yeni Konuk A bölümü → "Bkz: [[episodes/...]] ile çelişiyor mu?"</li>
+          <li><span class="tr">Aynı konuya (örn. Konu X) farklı podcast'lerden 10+ episode bağlandıkça syntheses/ zenginleşir</span><span class="en">As 10+ episodes from different podcasts link to the same topic (e.g. Topic X), syntheses/ grows richer</span></li>
+          <li><span class="tr">Obsidian grafında "hub" düğümler ortaya çıkar: en çok geçen kavramlar merkeze yerleşir</span><span class="en">"Hub" nodes emerge in the Obsidian graph: most frequently occurring concepts settle to the center</span></li>
+          <li><span class="tr">Yeni bir bölüm ingest edildiğinde agent önceki bilgiyle bağlantı kuruyor</span><span class="en">When a new episode is ingested, the agent connects it to prior knowledge</span></li>
+          <li><span class="tr">Örn: Yeni Konuk A bölümü → "Bkz: [[episodes/...]] ile çelişiyor mu?"</span><span class="en">E.g.: New Guest A episode → "See: does it contradict [[episodes/...]]?"</span></li>
         </ul>
       </div>
     </div>
@@ -1337,159 +1466,162 @@
 
 <!-- ══ PAGE 8: SUMMARY ══════════════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 8 — Özet</div>
-  <h2>Her Şeyi Birleştiren<br>Tek Tablo</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 8 — Özet</span><span class="en">◎ Section 8 — Summary</span></div>
+  <h2><span class="tr">Her Şeyi Birleştiren<br>Tek Tablo</span><span class="en">The Single Table That<br>Ties It All Together</span></h2>
   <p class="lead">
-    Hangi bileşen hangi problemi çözüyor ve ne zaman devreye giriyor.
+    <span class="tr">Hangi bileşen hangi problemi çözüyor ve ne zaman devreye giriyor.</span>
+    <span class="en">Which component solves which problem and when it kicks in.</span>
   </p>
 
   <table>
     <tr>
       <th>Problem</th>
-      <th>Bileşen</th>
-      <th>Konum</th>
-      <th>Ne Zaman İhtiyaç?</th>
+      <th><span class="tr">Bileşen</span><span class="en">Component</span></th>
+      <th><span class="tr">Konum</span><span class="en">Location</span></th>
+      <th><span class="tr">Ne Zaman İhtiyaç?</span><span class="en">When Needed?</span></th>
     </tr>
     <tr>
-      <td>Transcript almak zor / imkansız</td>
+      <td><span class="tr">Transcript almak zor / imkansız</span><span class="en">Getting transcripts is hard / impossible</span></td>
       <td>Cascade Fetcher</td>
       <td><span class="mono">src/fetcher/</span></td>
-      <td>Her yeni bölüm için</td>
+      <td><span class="tr">Her yeni bölüm için</span><span class="en">For every new episode</span></td>
     </tr>
     <tr>
-      <td>Farklı kaynaklardan hangi feed?</td>
+      <td><span class="tr">Farklı kaynaklardan hangi feed?</span><span class="en">Which feed from which source?</span></td>
       <td>shows-config.json</td>
       <td><span class="mono">shows-config.json</span></td>
-      <td>Kurulumda → nadiren güncellenir</td>
+      <td><span class="tr">Kurulumda → nadiren güncellenir</span><span class="en">At setup → rarely updated</span></td>
     </tr>
     <tr>
-      <td>Ham içerik yapılandırılmamış</td>
+      <td><span class="tr">Ham içerik yapılandırılmamış</span><span class="en">Raw content is unstructured</span></td>
       <td>WIKI_INGEST skill</td>
       <td><span class="mono">commands/ingest.md</span></td>
-      <td>Her ingest operasyonunda</td>
+      <td><span class="tr">Her ingest operasyonunda</span><span class="en">Every ingest operation</span></td>
     </tr>
     <tr>
-      <td>Bilgi bağlantısız / izole</td>
-      <td>Çift yönlü [[links]]</td>
+      <td><span class="tr">Bilgi bağlantısız / izole</span><span class="en">Knowledge disconnected / isolated</span></td>
+      <td><span class="tr">Çift yönlü [[links]]</span><span class="en">Bidirectional [[links]]</span></td>
       <td><span class="mono">wiki/</span></td>
-      <td>Ingest sırasında otomatik</td>
+      <td><span class="tr">Ingest sırasında otomatik</span><span class="en">Automatic during ingest</span></td>
     </tr>
     <tr>
-      <td>Agent seanslar arası unutuyor</td>
+      <td><span class="tr">Agent seanslar arası unutuyor</span><span class="en">Agent forgets between sessions</span></td>
       <td>memory/ + MEMORY.md</td>
       <td><span class="mono">memory/ · agents/*/</span></td>
-      <td>Her oturumda Tier 1 olarak yüklenir</td>
+      <td><span class="tr">Her oturumda Tier 1 olarak yüklenir</span><span class="en">Loaded as Tier 1 every session</span></td>
     </tr>
     <tr>
-      <td>Soğuk başlangıç, boş grafik</td>
+      <td><span class="tr">Soğuk başlangıç, boş grafik</span><span class="en">Cold start, empty graph</span></td>
       <td>Intake + bootstrap wiki</td>
       <td><span class="mono">wiki/shows/ topics/</span></td>
-      <td>Yalnızca Gün 1 (kurulum)</td>
+      <td><span class="tr">Yalnızca Gün 1 (kurulum)</span><span class="en">Only Day 1 (setup)</span></td>
     </tr>
     <tr>
-      <td>Veri var, içgörü yok</td>
+      <td><span class="tr">Veri var, içgörü yok</span><span class="en">Data exists, no insight</span></td>
       <td>Consolidator + /query</td>
       <td><span class="mono">src/ · commands/</span></td>
-      <td>Haftalık otomatik + isteğe bağlı</td>
+      <td><span class="tr">Haftalık otomatik + isteğe bağlı</span><span class="en">Weekly automatic + on demand</span></td>
     </tr>
     <tr>
-      <td>Wiki kalitesi bozuluyor</td>
-      <td>/lint komutu</td>
+      <td><span class="tr">Wiki kalitesi bozuluyor</span><span class="en">Wiki quality degrading</span></td>
+      <td>/lint <span class="tr">komutu</span><span class="en">command</span></td>
       <td><span class="mono">commands/lint.md</span></td>
-      <td>Haftalık veya manuel</td>
+      <td><span class="tr">Haftalık veya manuel</span><span class="en">Weekly or manual</span></td>
     </tr>
     <tr>
-      <td>Kaynak güvenilirliği belirsiz</td>
+      <td><span class="tr">Kaynak güvenilirliği belirsiz</span><span class="en">Source reliability unclear</span></td>
       <td>transcript_source tag</td>
       <td><span class="mono">wiki/raw/ frontmatter</span></td>
-      <td>Fetch sırasında otomatik</td>
+      <td><span class="tr">Fetch sırasında otomatik</span><span class="en">Automatic during fetch</span></td>
     </tr>
     <tr>
-      <td>Paralel yazım çakışması</td>
+      <td><span class="tr">Paralel yazım çakışması</span><span class="en">Parallel write conflicts</span></td>
       <td>Locker (src/locker)</td>
       <td><span class="mono">src/locker.ts</span></td>
-      <td>Her wiki yazımında arka planda</td>
+      <td><span class="tr">Her wiki yazımında arka planda</span><span class="en">Background on every wiki write</span></td>
     </tr>
     <tr>
-      <td>Araştırma konuları podcast içeriğiyle karışıyor</td>
-      <td>research/ katmanı</td>
+      <td><span class="tr">Araştırma konuları podcast içeriğiyle karışıyor</span><span class="en">Research topics mixing with podcast content</span></td>
+      <td><span class="tr">research/ katmanı</span><span class="en">research/ layer</span></td>
       <td><span class="mono">research/{topic}/</span></td>
-      <td>Yeni araştırma konusu açılınca</td>
+      <td><span class="tr">Yeni araştırma konusu açılınca</span><span class="en">When new research topic opened</span></td>
     </tr>
     <tr>
-      <td>Her konu için manuel klasör + routine kurulumu</td>
-      <td>/new-research komutu</td>
+      <td><span class="tr">Her konu için manuel klasör + routine kurulumu</span><span class="en">Manual folder + routine setup for each topic</span></td>
+      <td>/new-research <span class="tr">komutu</span><span class="en">command</span></td>
       <td><span class="mono">commands/new-research.md</span></td>
-      <td>Yeni araştırma konusu başlatılırken</td>
+      <td><span class="tr">Yeni araştırma konusu başlatılırken</span><span class="en">When starting a new research topic</span></td>
     </tr>
     <tr>
-      <td>Araştırma güncelliğini kaybediyor</td>
-      <td>Periyodik araştırma agent'ı</td>
+      <td><span class="tr">Araştırma güncelliğini kaybediyor</span><span class="en">Research losing freshness</span></td>
+      <td><span class="tr">Periyodik araştırma agent'ı</span><span class="en">Periodic research agent</span></td>
       <td><span class="mono">.github/workflows/ · Claude Routines</span></td>
-      <td>Konuya göre haftalık / aylık otomatik</td>
+      <td><span class="tr">Konuya göre haftalık / aylık otomatik</span><span class="en">Weekly / monthly automatic per topic</span></td>
     </tr>
     <tr>
-      <td>LLM vendor bağımlılığı (açık kaynak kullanıcıları)</td>
+      <td><span class="tr">LLM vendor bağımlılığı (açık kaynak kullanıcıları)</span><span class="en">LLM vendor lock-in (open-source users)</span></td>
       <td>BYOK + GitHub Actions</td>
       <td><span class="mono">src/research/ · .github/workflows/</span></td>
-      <td>Claude dışı LLM ile çalıştırılırken</td>
+      <td><span class="tr">Claude dışı LLM ile çalıştırılırken</span><span class="en">When running with non-Claude LLM</span></td>
     </tr>
   </table>
 
   <div class="divider"></div>
 
-  <h3>Mimari Prensipleri</h3>
+  <h3><span class="tr">Mimari Prensipleri</span><span class="en">Architectural Principles</span></h3>
 
   <div class="problem-grid">
     <div class="problem-card" style="border-top: 3px solid #3fb950;">
-      <div class="problem-num" style="color: #3fb950;">Prensip 1</div>
-      <h3>Raw asla değişmez</h3>
-      <p>wiki/raw/ sadece okunur. Tüm işlem wiki/ altında gerçekleşir. Kaynak her zaman orijinal haliyle saklanır — hata durumunda sıfırdan yeniden işlenebilir.</p>
+      <div class="problem-num" style="color: #3fb950;"><span class="tr">Prensip 1</span><span class="en">Principle 1</span></div>
+      <h3><span class="tr">Raw asla değişmez</span><span class="en">Raw Never Changes</span></h3>
+      <p><span class="tr">wiki/raw/ sadece okunur. Tüm işlem wiki/ altında gerçekleşir. Kaynak her zaman orijinal haliyle saklanır — hata durumunda sıfırdan yeniden işlenebilir.</span><span class="en">wiki/raw/ is read-only. All processing happens under wiki/. The source is always stored in its original form — reprocessable from scratch in case of error.</span></p>
     </div>
     <div class="problem-card" style="border-top: 3px solid #58a6ff;">
-      <div class="problem-num" style="color: #58a6ff;">Prensip 2</div>
-      <h3>Her iddia kaynaklanır</h3>
-      <p>Hiçbir wiki sayfasında kaynaksız bilgi olamaz. Her insight [[raw/transcripts/...]] ile bağlıdır. Bu, zamanla büyüyen bilgi tabanının güvenilirliğini korur.</p>
+      <div class="problem-num" style="color: #58a6ff;"><span class="tr">Prensip 2</span><span class="en">Principle 2</span></div>
+      <h3><span class="tr">Her iddia kaynaklanır</span><span class="en">Every Claim Is Sourced</span></h3>
+      <p><span class="tr">Hiçbir wiki sayfasında kaynaksız bilgi olamaz. Her insight [[raw/transcripts/...]] ile bağlıdır. Bu, zamanla büyüyen bilgi tabanının güvenilirliğini korur.</span><span class="en">No wiki page can contain unsourced information. Every insight links to [[raw/transcripts/...]]. This preserves the reliability of a knowledge base that grows over time.</span></p>
     </div>
     <div class="problem-card" style="border-top: 3px solid #bc8cff;">
-      <div class="problem-num" style="color: #bc8cff;">Prensip 3</div>
-      <h3>Çift yönlü bağlantı</h3>
-      <p>A, B'ye bağlanıyorsa B de A'ya bağlanır. Bu kural Obsidian grafının bağlı kalmasını sağlar. Orphan düğümler /lint ile tespit edilir.</p>
+      <div class="problem-num" style="color: #bc8cff;"><span class="tr">Prensip 3</span><span class="en">Principle 3</span></div>
+      <h3><span class="tr">Çift yönlü bağlantı</span><span class="en">Bidirectional Links</span></h3>
+      <p><span class="tr">A, B'ye bağlanıyorsa B de A'ya bağlanır. Bu kural Obsidian grafının bağlı kalmasını sağlar. Orphan düğümler /lint ile tespit edilir.</span><span class="en">If A links to B, B also links to A. This rule keeps the Obsidian graph connected. Orphan nodes are detected with /lint.</span></p>
     </div>
     <div class="problem-card" style="border-top: 3px solid #ffa657;">
-      <div class="problem-num" style="color: #ffa657;">Prensip 4</div>
-      <h3>Cascade → güvenilirlik</h3>
-      <p>En ucuz/hızlı kaynak önce denenir. Başarısız olursa sıradakine geçilir. Bu sayede hiçbir podcast hiçbir zaman "işlenemez" değildir — Whisper her zaman orada.</p>
+      <div class="problem-num" style="color: #ffa657;"><span class="tr">Prensip 4</span><span class="en">Principle 4</span></div>
+      <h3><span class="tr">Cascade → güvenilirlik</span><span class="en">Cascade → Reliability</span></h3>
+      <p><span class="tr">En ucuz/hızlı kaynak önce denenir. Başarısız olursa sıradakine geçilir. Bu sayede hiçbir podcast hiçbir zaman "işlenemez" değildir — Whisper her zaman orada.</span><span class="en">The cheapest/fastest source is tried first. On failure, the next one is tried. This ensures no podcast is ever "unprocessable" — Whisper is always there.</span></p>
     </div>
     <div class="problem-card" style="border-top: 3px solid #56d364;">
-      <div class="problem-num" style="color: #56d364;">Prensip 5</div>
-      <h3>Research izolasyonu</h3>
-      <p>Araştırma konuları wiki/'den ayrı, research/{topic}/ altında izole yaşar. İkisi arasındaki bağlantı bilinçli ve isteğe bağlıdır. Konu sayısı arttıkça çapraz kirlenme olmaz.</p>
+      <div class="problem-num" style="color: #56d364;"><span class="tr">Prensip 5</span><span class="en">Principle 5</span></div>
+      <h3><span class="tr">Research izolasyonu</span><span class="en">Research Isolation</span></h3>
+      <p><span class="tr">Araştırma konuları wiki/'den ayrı, research/{topic}/ altında izole yaşar. İkisi arasındaki bağlantı bilinçli ve isteğe bağlıdır. Konu sayısı arttıkça çapraz kirlenme olmaz.</span><span class="en">Research topics live isolated under research/{topic}/, separate from wiki/. The connection between them is intentional and optional. As topics multiply, there is no cross-contamination.</span></p>
     </div>
   </div>
 
   <div class="divider"></div>
 
   <div class="info-box">
-    <div class="ib-title">Sonuç: Neden Bu Kadar Karmaşık Görünüyor?</div>
-    Çünkü çözmeye çalıştığı 4 problem gerçekten de karmaşık: (1) çok kaynaktan içerik çekme, (2) seanslar arası hafıza, (3) bilginin bağlantılı tutulması, (4) zamanla sentez. Her bileşen bu problemlerden birini çözüyor. Tek başına hiçbirisi yeterli değil — birlikte çalıştıklarında kümülatif değer oluşturuyor. Podvault'u bugün kullanmak hafif hissettiriyor; 3 ay sonra 50 bölüm ingest edildiğinde farkı Obsidian grafiğine bakarak görmek mümkün.
+    <div class="ib-title"><span class="tr">Sonuç: Neden Bu Kadar Karmaşık Görünüyor?</span><span class="en">Conclusion: Why Does It Look So Complex?</span></div>
+    <span class="tr">Çünkü çözmeye çalıştığı 4 problem gerçekten de karmaşık: (1) çok kaynaktan içerik çekme, (2) seanslar arası hafıza, (3) bilginin bağlantılı tutulması, (4) zamanla sentez. Her bileşen bu problemlerden birini çözüyor. Tek başına hiçbirisi yeterli değil — birlikte çalıştıklarında kümülatif değer oluşturuyor. Podvault'u bugün kullanmak hafif hissettiriyor; 3 ay sonra 50 bölüm ingest edildiğinde farkı Obsidian grafiğine bakarak görmek mümkün.</span>
+    <span class="en">Because the 4 problems it solves are genuinely complex: (1) fetching content from multiple sources, (2) memory between sessions, (3) keeping knowledge connected, (4) synthesis over time. Each component solves one of these problems. None is sufficient alone — together they create cumulative value. Using Podvault today feels lightweight; 3 months later with 50 episodes ingested, the difference is visible by looking at the Obsidian graph.</span>
   </div>
 
 </div>
 
 <!-- ══ PAGE 9: RESEARCH LAYER ══════════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag">◎ Bölüm 9 — Research Katmanı</div>
-  <h2>Podcast İngest'ten Bağımsız<br>Araştırma Konuları</h2>
+  <div class="section-tag"><span class="tr">◎ Bölüm 9 — Research Katmanı</span><span class="en">◎ Section 9 — Research Layer</span></div>
+  <h2><span class="tr">Podcast İngest'ten Bağımsız<br>Araştırma Konuları</span><span class="en">Research Topics Independent<br>from Podcast Ingest</span></h2>
   <p class="lead">
-    Belirli bir konu etrafında podcast araştırması yapılırken wiki/'ye ingest edilen içerikle bu araştırma notları zamanla karışır. <code>research/</code> katmanı her araştırma konusunu izole bir alanda tutar; wiki ile bağlantı bilinçli ve isteğe bağlıdır.
+    <span class="tr">Belirli bir konu etrafında podcast araştırması yapılırken wiki/'ye ingest edilen içerikle bu araştırma notları zamanla karışır. <code>research/</code> katmanı her araştırma konusunu izole bir alanda tutar; wiki ile bağlantı bilinçli ve isteğe bağlıdır.</span>
+    <span class="en">When researching podcasts around a specific topic, these research notes gradually mix with content ingested into wiki/. The <code>research/</code> layer keeps each research topic in an isolated space; connection to wiki is intentional and optional.</span>
   </p>
 
-  <h3>İki Katman Arasındaki Fark</h3>
+  <h3><span class="tr">İki Katman Arasındaki Fark</span><span class="en">The Difference Between the Two Layers</span></h3>
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0 28px;">
     <div style="background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--blue); border-radius:8px; padding:20px;">
-      <div style="font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:10px;">wiki/ katmanı</div>
-      <p style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;">Podcast episode'larından gelen bilgi. Her claim bir episode'a bağlı. Ingest → shows, guests, topics, concepts zinciri.</p>
+      <div style="font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:10px;"><span class="tr">wiki/ katmanı</span><span class="en">wiki/ layer</span></div>
+      <p style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;"><span class="tr">Podcast episode'larından gelen bilgi. Her claim bir episode'a bağlı. Ingest → shows, guests, topics, concepts zinciri.</span><span class="en">Knowledge from podcast episodes. Every claim links to an episode. Ingest → shows, guests, topics, concepts chain.</span></p>
       <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);">
         wiki/episodes/<br>
         wiki/shows/<br>
@@ -1498,8 +1630,8 @@
       </div>
     </div>
     <div style="background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--green); border-radius:8px; padding:20px;">
-      <div style="font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--green); margin-bottom:10px;">research/ katmanı</div>
-      <p style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;">Konu araştırması: podcast keşfi için çerçeve, keyword haritası, akademik sinyaller. Her konu kendi klasöründe izole.</p>
+      <div style="font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--green); margin-bottom:10px;"><span class="tr">research/ katmanı</span><span class="en">research/ layer</span></div>
+      <p style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;"><span class="tr">Konu araştırması: podcast keşfi için çerçeve, keyword haritası, akademik sinyaller. Her konu kendi klasöründe izole.</span><span class="en">Topic research: framework for podcast discovery, keyword map, academic signals. Each topic isolated in its own folder.</span></p>
       <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);">
         research/{topic}/index.md<br>
         research/{topic}/podcasts.md<br>
@@ -1509,73 +1641,74 @@
     </div>
   </div>
 
-  <h3>research/{topic}/ Klasör Şeması</h3>
+  <h3><span class="tr">research/{topic}/ Klasör Şeması</span><span class="en">research/{topic}/ Folder Schema</span></h3>
   <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px 24px; margin:16px 0 28px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:2;">
     <div style="color:var(--green);">research/{topic}/</div>
-    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--text);">index.md</span> &nbsp;&nbsp;&nbsp;— konu çerçevesi, keyword haritası, <code style="color:var(--blue);">search_keywords</code> frontmatter</div>
-    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--text);">podcasts.md</span> — ingest adayı podcast kataloğu (☐ durum takibi)</div>
-    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--blue);">literature.md</span> &nbsp;&nbsp;— podcast keşfi için akademik sinyaller (araştırmacı → podcast)</div>
-    <div style="color:var(--muted); padding-left:20px;">└── <span style="color:var(--muted);">log.md</span> &nbsp;&nbsp;&nbsp;&nbsp;— araştırma geçmişi (append-only)</div>
+    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--text);">index.md</span> &nbsp;&nbsp;&nbsp;— <span class="tr">konu çerçevesi, keyword haritası, <code style="color:var(--blue);">search_keywords</code> frontmatter</span><span class="en">topic framework, keyword map, <code style="color:var(--blue);">search_keywords</code> frontmatter</span></div>
+    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--text);">podcasts.md</span> — <span class="tr">ingest adayı podcast kataloğu (☐ durum takibi)</span><span class="en">podcast catalog for ingest candidates (☐ status tracking)</span></div>
+    <div style="color:var(--muted); padding-left:20px;">├── <span style="color:var(--blue);">literature.md</span> &nbsp;&nbsp;— <span class="tr">podcast keşfi için akademik sinyaller (araştırmacı → podcast)</span><span class="en">academic signals for podcast discovery (researcher → podcast)</span></div>
+    <div style="color:var(--muted); padding-left:20px;">└── <span style="color:var(--muted);">log.md</span> &nbsp;&nbsp;&nbsp;&nbsp;— <span class="tr">araştırma geçmişi (append-only)</span><span class="en">research history (append-only)</span></div>
   </div>
 
-  <h3>/new-research Komutu: Tam Otomatik Kurulum</h3>
+  <h3>/new-research <span class="tr">Komutu: Tam Otomatik Kurulum</span><span class="en">Command: Fully Automatic Setup</span></h3>
   <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.7;">
-    Yeni bir araştırma konusu açmak için tek komut yeterli. Komut konu adını alır, araştırma yapar ve tüm altyapıyı kurar.
+    <span class="tr">Yeni bir araştırma konusu açmak için tek komut yeterli. Komut konu adını alır, araştırma yapar ve tüm altyapıyı kurar.</span>
+    <span class="en">A single command is enough to open a new research topic. The command takes the topic name, conducts research, and sets up all infrastructure.</span>
   </p>
   <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-bottom:28px; background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
     <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
       <div style="font-size:18px; margin-bottom:6px;">①</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600; margin-bottom:4px;">Araştır</div>
-      <div style="font-size:10px; color:var(--muted); line-height:1.5;">WebSearch ile alt alanlar, keywords, podcast türleri</div>
+      <div style="font-size:11px; color:var(--green); font-weight:600; margin-bottom:4px;"><span class="tr">Araştır</span><span class="en">Research</span></div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;"><span class="tr">WebSearch ile alt alanlar, keywords, podcast türleri</span><span class="en">Sub-fields, keywords, podcast types via WebSearch</span></div>
     </div>
     <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
       <div style="font-size:18px; margin-bottom:6px;">②</div>
-      <div style="font-size:11px; color:var(--blue); font-weight:600; margin-bottom:4px;">Klasör</div>
-      <div style="font-size:10px; color:var(--muted); line-height:1.5;">research/{slug}/ + 4 dosya, araştırma içeriğiyle dolu</div>
+      <div style="font-size:11px; color:var(--blue); font-weight:600; margin-bottom:4px;"><span class="tr">Klasör</span><span class="en">Folder</span></div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;"><span class="tr">research/{slug}/ + 4 dosya, araştırma içeriğiyle dolu</span><span class="en">research/{slug}/ + 4 files, filled with research content</span></div>
     </div>
     <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
       <div style="font-size:18px; margin-bottom:6px;">③</div>
       <div style="font-size:11px; color:var(--purple); font-weight:600; margin-bottom:4px;">Schedule</div>
-      <div style="font-size:10px; color:var(--muted); line-height:1.5;">Haftalık / aylık / özel — kullanıcı seçer</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;"><span class="tr">Haftalık / aylık / özel — kullanıcı seçer</span><span class="en">Weekly / monthly / custom — user selects</span></div>
     </div>
     <div style="padding:16px 14px; border-right:1px solid var(--border); text-align:center;">
       <div style="font-size:18px; margin-bottom:6px;">④</div>
       <div style="font-size:11px; color:var(--orange); font-weight:600; margin-bottom:4px;">Workflow</div>
-      <div style="font-size:10px; color:var(--muted); line-height:1.5;">.github/workflows/research-{slug}.yml otomatik oluşturulur</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;"><span class="tr">.github/workflows/research-{slug}.yml otomatik oluşturulur</span><span class="en">.github/workflows/research-{slug}.yml auto-generated</span></div>
     </div>
     <div style="padding:16px 14px; text-align:center;">
       <div style="font-size:18px; margin-bottom:6px;">⑤</div>
       <div style="font-size:11px; color:var(--teal); font-weight:600; margin-bottom:4px;">Routine</div>
-      <div style="font-size:10px; color:var(--muted); line-height:1.5;">Claude Routine aynı cron ile otomatik oluşturulur</div>
+      <div style="font-size:10px; color:var(--muted); line-height:1.5;"><span class="tr">Claude Routine aynı cron ile otomatik oluşturulur</span><span class="en">Claude Routine auto-created with the same cron</span></div>
     </div>
   </div>
 
-  <h3>Araştırma Otomasyonu: İki Yol</h3>
+  <h3><span class="tr">Araştırma Otomasyonu: İki Yol</span><span class="en">Research Automation: Two Paths</span></h3>
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;">
     <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px;">
       <div style="font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--purple); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">Claude Routines</div>
       <ul style="list-style:none; font-size:12px; color:var(--muted); line-height:2.0;">
-        <li>✓ Claude Pro+ hesabı gerektirir</li>
-        <li>✓ Anthropic cloud'da çalışır</li>
-        <li>✓ MCP bağlantıları otomatik gelir</li>
-        <li>✓ Bilgisayar kapalıyken de çalışır</li>
-        <li>✓ Kurulum gerekmez</li>
+        <li>✓ <span class="tr">Claude Pro+ hesabı gerektirir</span><span class="en">Requires Claude Pro+ account</span></li>
+        <li>✓ <span class="tr">Anthropic cloud'da çalışır</span><span class="en">Runs on Anthropic cloud</span></li>
+        <li>✓ <span class="tr">MCP bağlantıları otomatik gelir</span><span class="en">MCP connections come automatically</span></li>
+        <li>✓ <span class="tr">Bilgisayar kapalıyken de çalışır</span><span class="en">Works even when computer is off</span></li>
+        <li>✓ <span class="tr">Kurulum gerekmez</span><span class="en">No setup required</span></li>
       </ul>
     </div>
     <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px;">
       <div style="font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform:uppercase; color:var(--green); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">GitHub Actions + BYOK</div>
       <ul style="list-style:none; font-size:12px; color:var(--muted); line-height:2.0;">
-        <li>✓ Herhangi bir LLM (6 provider)</li>
-        <li>✓ Açık kaynak kullanıcıları için</li>
-        <li>✓ API key GitHub Secrets'ta şifreli</li>
-        <li>✓ Bilgisayar kapalıyken de çalışır</li>
-        <li>✓ Opsiyonel: Tavily web araması</li>
+        <li>✓ <span class="tr">Herhangi bir LLM (6 provider)</span><span class="en">Any LLM (6 providers)</span></li>
+        <li>✓ <span class="tr">Açık kaynak kullanıcıları için</span><span class="en">For open-source users</span></li>
+        <li>✓ <span class="tr">API key GitHub Secrets'ta şifreli</span><span class="en">API key encrypted in GitHub Secrets</span></li>
+        <li>✓ <span class="tr">Bilgisayar kapalıyken de çalışır</span><span class="en">Works even when computer is off</span></li>
+        <li>✓ <span class="tr">Opsiyonel: Tavily web araması</span><span class="en">Optional: Tavily web search</span></li>
       </ul>
     </div>
   </div>
 
   <div style="background:rgba(88,166,255,0.08); border:1px solid rgba(88,166,255,0.2); border-radius:8px; padding:16px 20px; margin-top:24px; font-size:12px; color:var(--muted); line-height:1.7;">
-    <strong style="color:var(--blue);">Her iki yol da aynı çıktıyı üretir.</strong> research/{topic}/ dosyaları güncellenir, commit atılır. Kullanıcı Claude Pro ise Routines; değilse GitHub Actions + BYOK. İkisi de aynı anda aktif olabilir.
+    <strong style="color:var(--blue);"><span class="tr">Her iki yol da aynı çıktıyı üretir.</span><span class="en">Both paths produce the same output.</span></strong> <span class="tr">research/{topic}/ dosyaları güncellenir, commit atılır. Kullanıcı Claude Pro ise Routines; değilse GitHub Actions + BYOK. İkisi de aynı anda aktif olabilir.</span><span class="en">research/{topic}/ files are updated, commit is made. If user has Claude Pro: Routines; otherwise GitHub Actions + BYOK. Both can be active simultaneously.</span>
   </div>
 </div>
 
